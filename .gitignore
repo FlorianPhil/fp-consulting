@@ -1,0 +1,14 @@
+# Exclude oversized originals (keep web-optimized versions)
+florian/*.png
+florian/*.jpeg
+florian/*.jpg
+florian/*.avif
+!florian/web/
+
+# Exclude client asset originals over 5MB
+client-assets/adam-freed/adam-freed-ai-portrait-*.png
+client-assets/adam-freed/adam-freed-brand-after.png
+
+# OS files
+.DS_Store
+Thumbs.db
