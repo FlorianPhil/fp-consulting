@@ -33,6 +33,19 @@ Every approved asset gets an entry here with:
 |------|----------|------|-------|
 | florian-lens-color.jpg | brand-assets/florian/ | `web-hero`, `social-linkedin`, `email-header`, `avatar-profile` | Signature lens portrait. ALWAYS in color. |
 
+## Cutouts (Transparent PNG, for compositing)
+
+Content-ready transparent PNGs for use in social posts, HTML designs, presentations. Not for direct publishing; these are compositing ingredients.
+
+| File | Location | Source | Tags | Notes |
+|------|----------|--------|------|-------|
+| florian-lens-portrait-cutout.png | brand-assets/florian/cutouts/ | AI-generated | `social-linkedin`, `social-general`, `web-section`, `presentation` | Lens portrait with color eye reveal, transparent BG. B&W + selective color. |
+| florian-portrait-formal-vest-cutout.png | brand-assets/florian/cutouts/ | AI-generated | `social-linkedin`, `social-general`, `web-section`, `presentation` | Formal portrait, vest + white shirt + tie, arms crossed. Color. |
+| florian-speaking-mic-cutout.png | brand-assets/florian/cutouts/ | Real photography | `social-linkedin`, `social-general`, `web-section`, `presentation` | Speaking with mic, vest, gesturing. Real photo. Square crop. |
+| florian-working-desk-cutout.png | brand-assets/florian/cutouts/ | AI-generated | `social-linkedin`, `social-general`, `web-section` | Working at keyboard, casual, side profile. Warm light. |
+| florian-portrait-pocket-square-front-cutout.png | brand-assets/florian/cutouts/ | AI-generated | `social-linkedin`, `social-general`, `web-section`, `presentation` | Formal portrait, gingham + vest + blue pocket square, front-facing. |
+| florian-portrait-pocket-square-angle-cutout.png | brand-assets/florian/cutouts/ | AI-generated | `social-linkedin`, `social-general`, `web-section`, `presentation` | Similar pose, slight angle, blue-toned lighting. |
+
 ## Conceptual Imagery
 
 | File | Location | Tags | Notes |

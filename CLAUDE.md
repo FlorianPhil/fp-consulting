@@ -27,7 +27,7 @@ ALL brand strategy, voice, visual, and content specs live in Notion. Always fetc
 ### Asset Library
 Local: ~/Projects/fp-consulting/brand-assets/
 Manifest: brand-assets/ASSET-MANIFEST.md
-GitHub: github.com/FlorianPhil/fp-brand-assets (private)
+GitHub: github.com/FlorianPhil/fp-consulting (public, web-optimized files only)
 
 ## Hard Rules (Non-Negotiable)
 1. Never change typefaces. Bricolage Grotesque + Inter is locked.

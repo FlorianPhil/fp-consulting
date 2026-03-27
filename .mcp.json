@@ -10,6 +10,17 @@
         "x-freepik-api-key:FPSXac90904ffb033f4d963b7ea22caf77bb"
       ],
       "env": {}
+    },
+    "buffer": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://mcp.buffer.com/mcp",
+        "--header",
+        "Authorization:Bearer SU7jwkjlgSwFSioYGDp5K-vIkkNxtGg3e3ucr9ueBW8"
+      ],
+      "env": {}
     }
   }
 }
