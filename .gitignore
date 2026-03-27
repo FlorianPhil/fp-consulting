@@ -30,6 +30,7 @@ Thumbs.db
 # Secrets
 .env
 *.key
+.mcp.json
 
 # Claude local state
 .claude/
