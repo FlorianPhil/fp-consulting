@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FP. Homepage Prototype v1</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --purple: #5A5CF9;
+  --purple-glow: rgba(90, 92, 249, 0.35);
+  --purple-soft: rgba(90, 92, 249, 0.07);
+  --black: #0A0A0A;
+  --dark: #1D1D1D;
+  --off-white: #F5F5F3;
+  --white: #FAFAF8;
+  --pure-white: #FFFFFF;
+  --mid-gray: #949494;
+  --gray-600: #555;
+  --gray-400: #999;
+  --gray-200: #D4D4D4;
+  --gray-100: #ECECEC;
+  --glass-bg: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.12);
+}
+
+html {
+  scroll-behavior: auto; /* GSAP handles smooth scrolling */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--black);
+  color: var(--pure-white);
+  line-height: 1.6;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+h1, h2, h3, h4, .display {
+  font-family: 'Bricolage Grotesque', sans-serif;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+.container--wide { max-width: 1440px; margin: 0 auto; padding: 0 48px; }
+
+/* ===== CUSTOM CURSOR ===== */
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--purple);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid rgba(90, 92, 249, 0.5);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transition: width 0.3s, height 0.3s, border-color 0.3s;
+}
+.cursor-ring.hover {
+  width: 60px;
+  height: 60px;
+  border-color: var(--purple);
+}
+
+/* ===== GRAIN TEXTURE ===== */
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 150px;
+  z-index: 1;
+}
+
+/* ===== NAV ===== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 24px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(10, 10, 10, 0.6);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transform: translateY(-100%);
+}
+.nav-logo {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800;
+  font-size: 24px;
+  color: var(--pure-white);
+  text-decoration: none;
+}
+.nav-logo span { color: var(--purple); }
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links a {
+  color: var(--mid-gray);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--pure-white); }
+.nav-cta {
+  background: var(--purple) !important;
+  color: var(--pure-white) !important;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: transform 0.3s, box-shadow 0.3s !important;
+}
+.nav-cta:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px var(--purple-glow);
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background: var(--black);
+}
+
+.hero-bg-glow {
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--purple-glow) 0%, transparent 70%);
+  top: 50%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+  opacity: 0.15;
+  filter: blur(100px);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 120px 0;
+  width: 100%;
+}
+
+.hero-label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--purple);
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+
+.hero-title {
+  font-size: clamp(56px, 8vw, 120px);
+  font-weight: 800;
+  line-height: 0.95;
+  color: var(--pure-white);
+  margin-bottom: 32px;
+  max-width: 1000px;
+}
+
+.hero-title .line {
+  display: block;
+  overflow: hidden;
+}
+
+.hero-title .line-inner {
+  display: block;
+  transform: translateY(120%);
+}
+
+.hero-title em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--purple), #8B8DFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: 20px;
+  color: var(--mid-gray);
+  max-width: 540px;
+  line-height: 1.7;
+  margin-bottom: 48px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.hero-cta-group {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--purple);
+  color: var(--pure-white);
+  padding: 16px 36px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 40px var(--purple-glow);
+}
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.btn-primary:hover::after { opacity: 1; }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--mid-gray);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 16px 24px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  transition: color 0.3s, border-color 0.3s;
+  cursor: pointer;
+}
+.btn-ghost:hover {
+  color: var(--pure-white);
+  border-color: rgba(255,255,255,0.3);
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+}
+.scroll-indicator span {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mid-gray);
+}
+.scroll-line {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--purple), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.5); transform-origin: top; }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* ===== MARQUEE TRUST BAR ===== */
+.trust-bar {
+  padding: 60px 0;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  overflow: hidden;
+  background: var(--black);
+}
+.trust-label {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+  margin-bottom: 32px;
+}
+.marquee {
+  display: flex;
+  gap: 80px;
+  animation: marqueeScroll 20s linear infinite;
+}
+.marquee-item {
+  flex-shrink: 0;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--gray-400);
+  white-space: nowrap;
+  opacity: 0.5;
+}
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ===== SECTION: BRAND THERAPY INTRO ===== */
+.intro-section {
+  padding: 160px 0;
+  background: var(--off-white);
+  color: var(--black);
+  position: relative;
+  overflow: hidden;
+}
+
+.intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.intro-image-wrap {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  background: var(--gray-200);
+}
+.intro-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.15);
+}
+.intro-image-accent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--purple);
+}
+
+.intro-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--purple);
+  margin-bottom: 24px;
+}
+
+.intro-title {
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--black);
+  margin-bottom: 24px;
+}
+
+.intro-text {
+  font-size: 17px;
+  color: var(--gray-600);
+  line-height: 1.75;
+  margin-bottom: 32px;
+  max-width: 480px;
+}
+
+/* ===== SECTION: STATEMENT ===== */
+.statement-section {
+  padding: 200px 0;
+  background: var(--black);
+  position: relative;
+  overflow: hidden;
+}
+
+.statement-text {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: clamp(40px, 5.5vw, 80px);
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--pure-white);
+  max-width: 1000px;
+}
+
+.statement-text .word {
+  display: inline-block;
+  opacity: 0.15;
+  transition: opacity 0.1s;
+}
+
+.statement-text .word.active {
+  opacity: 1;
+}
+
+.statement-text em {
+  font-style: normal;
+  color: var(--purple);
+}
+
+/* ===== SECTION: PROCESS (HORIZONTAL SCROLL) ===== */
+.process-section {
+  background: var(--dark);
+  position: relative;
+  overflow: hidden;
+}
+
+.process-pin {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 80px 0;
+}
+
+.process-header {
+  position: absolute;
+  top: 80px;
+  left: 48px;
+  z-index: 5;
+}
+
+.process-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--purple);
+  margin-bottom: 16px;
+}
+
+.process-title {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 800;
+  color: var(--pure-white);
+}
+
+.process-track {
+  display: flex;
+  gap: 40px;
+  padding: 0 48px;
+  padding-left: 48px;
+  padding-top: 140px;
+}
+
+.process-card {
+  flex-shrink: 0;
+  width: 420px;
+  padding: 48px;
+  border-radius: 20px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
+}
+
+.process-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(90, 92, 249, 0.3);
+}
+
+.process-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--purple), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.process-card:hover::before { opacity: 1; }
+
+.process-number {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 72px;
+  font-weight: 800;
+  color: var(--purple);
+  opacity: 0.2;
+  line-height: 1;
+  margin-bottom: 24px;
+}
+
+.process-card-title {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--pure-white);
+  margin-bottom: 16px;
+}
+
+.process-card-text {
+  font-size: 15px;
+  color: var(--mid-gray);
+  line-height: 1.7;
+}
+
+/* ===== SECTION: TESTIMONIALS ===== */
+.testimonials-section {
+  padding: 160px 0;
+  background: var(--black);
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonial-featured {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.testimonial-quote-mark {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 120px;
+  font-weight: 800;
+  color: var(--purple);
+  opacity: 0.15;
+  line-height: 0.5;
+  margin-bottom: 32px;
+}
+
+.testimonial-text {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 700;
+  color: var(--pure-white);
+  line-height: 1.3;
+  margin-bottom: 48px;
+}
+
+.testimonial-text em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--purple), #8B8DFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.testimonial-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--gray-600);
+  border: 2px solid var(--purple);
+}
+
+.testimonial-info { text-align: left; }
+.testimonial-name {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--pure-white);
+}
+.testimonial-role {
+  font-size: 14px;
+  color: var(--mid-gray);
+}
+
+/* Testimonial cards row */
+.testimonial-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 80px;
+}
+
+.testimonial-card {
+  padding: 40px;
+  border-radius: 16px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: transform 0.4s, border-color 0.4s;
+  border-bottom: 3px solid transparent;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  border-bottom-color: var(--purple);
+}
+
+.testimonial-card-text {
+  font-size: 16px;
+  color: var(--gray-400);
+  line-height: 1.7;
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+.testimonial-card-author {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--pure-white);
+}
+
+.testimonial-card-role {
+  font-size: 13px;
+  color: var(--mid-gray);
+}
+
+/* ===== SECTION: STATS ===== */
+.stats-section {
+  padding: 120px 0;
+  background: var(--dark);
+  position: relative;
+  overflow: hidden;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 40px 24px;
+  border-radius: 16px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 0.4s, border-color 0.4s;
+}
+.stat-item:hover {
+  transform: translateY(-4px);
+  border-color: rgba(90, 92, 249, 0.3);
+}
+
+.stat-number {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 800;
+  color: var(--purple);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: var(--mid-gray);
+  font-weight: 500;
+}
+
+/* ===== SECTION: WHAT CLARITY DOES ===== */
+.clarity-section {
+  padding: 160px 0;
+  background: var(--off-white);
+  color: var(--black);
+  position: relative;
+}
+
+.clarity-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.clarity-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--purple);
+  margin-bottom: 16px;
+}
+
+.clarity-title {
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 800;
+  color: var(--black);
+}
+
+.clarity-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.clarity-card {
+  padding: 48px 36px;
+  border-radius: 16px;
+  background: var(--pure-white);
+  border: 1px solid var(--gray-200);
+  border-bottom: 3px solid transparent;
+  transition: transform 0.4s, border-bottom-color 0.4s, box-shadow 0.4s;
+}
+
+.clarity-card:hover {
+  transform: translateY(-6px);
+  border-bottom-color: var(--purple);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+}
+
+.clarity-card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: var(--purple-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  font-size: 24px;
+  color: var(--purple);
+}
+
+.clarity-card-title {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 12px;
+}
+
+.clarity-card-text {
+  font-size: 15px;
+  color: var(--gray-600);
+  line-height: 1.7;
+}
+
+/* ===== SECTION: CTA ===== */
+.cta-section {
+  padding: 200px 0;
+  background: var(--black);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.cta-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--purple-glow) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.2;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.cta-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--purple);
+  margin-bottom: 24px;
+}
+
+.cta-title {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: clamp(40px, 5vw, 72px);
+  font-weight: 800;
+  color: var(--pure-white);
+  line-height: 1.1;
+  margin-bottom: 24px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-subtitle {
+  font-size: 18px;
+  color: var(--mid-gray);
+  margin-bottom: 48px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--purple);
+  color: var(--pure-white);
+  padding: 20px 48px;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+}
+.cta-btn:hover {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 12px 50px var(--purple-glow);
+}
+
+.cta-btn .arrow {
+  transition: transform 0.3s;
+}
+.cta-btn:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  padding: 60px 48px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--black);
+}
+
+.footer-logo {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--pure-white);
+}
+.footer-logo span { color: var(--purple); }
+
+.footer-text {
+  font-size: 13px;
+  color: var(--mid-gray);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .container, .container--wide { padding: 0 24px; }
+  .nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  .intro-grid { grid-template-columns: 1fr; gap: 48px; }
+  .process-card { width: 320px; }
+  .testimonial-cards { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .clarity-grid { grid-template-columns: 1fr; }
+  .footer { flex-direction: column; gap: 16px; text-align: center; }
+  .cursor-dot, .cursor-ring { display: none; }
+}
+
+/* ===== SPLINE EMBED PLACEHOLDER ===== */
+.spline-placeholder {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 45%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.spline-visual {
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(90,92,249,0.15), transparent 70%);
+  border: 1px solid rgba(90,92,249,0.1);
+  position: relative;
+  animation: floatOrb 6s ease-in-out infinite;
+}
+
+.spline-visual::before {
+  content: '';
+  position: absolute;
+  inset: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, rgba(139,141,255,0.1), transparent 60%);
+  border: 1px solid rgba(90,92,249,0.08);
+  animation: floatOrb 4s ease-in-out infinite reverse;
+}
+
+.spline-visual::after {
+  content: 'Spline 3D Scene';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 13px;
+  color: var(--mid-gray);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@keyframes floatOrb {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(3deg); }
+}
+
+/* ===== LOADING SCREEN ===== */
+.loader {
+  position: fixed;
+  inset: 0;
+  background: var(--black);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loader-text {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--pure-white);
+}
+.loader-text span { color: var(--purple); }
+
+/* ===== HORIZONTAL SCROLL PROGRESS ===== */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--purple);
+  z-index: 101;
+  transform-origin: left;
+  transform: scaleX(0);
+}
+</style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div class="loader" id="loader">
+  <div class="loader-text">FP<span>.</span></div>
+</div>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Custom Cursor -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo">FP<span>.</span></a>
+  <div class="nav-links">
+    <a href="#">Brand Therapy</a>
+    <a href="#">Process</a>
+    <a href="#">Results</a>
+    <a href="#">Blog</a>
+    <a href="#" class="nav-cta">Book a Call</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero grain" id="hero">
+  <div class="hero-bg-glow"></div>
+
+  <!-- Spline 3D placeholder - replace with real Spline embed -->
+  <div class="spline-placeholder" id="splinePlaceholder">
+    <div class="spline-visual"></div>
+  </div>
+
+  <div class="hero-content container--wide">
+    <div class="hero-label" id="heroLabel">Brand Therapist</div>
+    <h1 class="hero-title" id="heroTitle">
+      <span class="line"><span class="line-inner">Clarity That</span></span>
+      <span class="line"><span class="line-inner">Makes You</span></span>
+      <span class="line"><span class="line-inner"><em>Impossible</em></span></span>
+      <span class="line"><span class="line-inner">to Ignore.</span></span>
+    </h1>
+    <p class="hero-subtitle" id="heroSub">I help founders and personal brands cut through the noise, find their strategic clarity, and build an identity that becomes their biggest competitive asset.</p>
+    <div class="hero-cta-group" id="heroCta">
+      <a href="#" class="btn-primary">Book Your Free Intro Call <span class="arrow">&rarr;</span></a>
+      <a href="#" class="btn-ghost">See the Process</a>
+    </div>
+  </div>
+
+  <div class="scroll-indicator" id="scrollIndicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- TRUST BAR / MARQUEE -->
+<section class="trust-bar">
+  <div class="trust-label">Featured In</div>
+  <div style="overflow:hidden;">
+    <div class="marquee" id="marquee">
+      <span class="marquee-item">Branding Mag</span>
+      <span class="marquee-item">The Brand Identity</span>
+      <span class="marquee-item">ABAIE Conference</span>
+      <span class="marquee-item">Brand Touchpoints</span>
+      <span class="marquee-item">Chapman University</span>
+      <span class="marquee-item">Podcast Guest</span>
+      <span class="marquee-item">Branding Mag</span>
+      <span class="marquee-item">The Brand Identity</span>
+      <span class="marquee-item">ABAIE Conference</span>
+      <span class="marquee-item">Brand Touchpoints</span>
+      <span class="marquee-item">Chapman University</span>
+      <span class="marquee-item">Podcast Guest</span>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO SECTION -->
+<section class="intro-section" id="introSection">
+  <div class="container--wide">
+    <div class="intro-grid">
+      <div class="intro-image-wrap" id="introImage">
+        <!-- Replace src with actual photo path -->
+        <div style="width:100%;height:100%;background:linear-gradient(135deg, var(--gray-200), var(--gray-100));display:flex;align-items:center;justify-content:center;color:var(--mid-gray);font-size:14px;letter-spacing:0.1em;text-transform:uppercase;">florian-consulting-session</div>
+        <div class="intro-image-accent"></div>
+      </div>
+      <div class="intro-copy">
+        <div class="intro-eyebrow" id="introEyebrow">What is Brand Therapy</div>
+        <h2 class="intro-title" id="introTitle">Your brand isn't what you say it is. It's what they feel.</h2>
+        <p class="intro-text" id="introText">Brand Therapy is a strategic process that strips away the noise and uncovers the clarity hiding inside your business. It's not a logo redesign. It's not a marketing campaign. It's the deep work that makes everything else finally click.</p>
+        <a href="#" class="btn-primary">Learn More <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATEMENT SECTION (word-by-word reveal on scroll) -->
+<section class="statement-section grain" id="statementSection">
+  <div class="container--wide">
+    <p class="statement-text" id="statementText">
+      In <em>a world drowning in noise,</em> your identity becomes your biggest competitive asset. The brands that win aren't louder. They're <em>clearer.</em>
+    </p>
+  </div>
+</section>
+
+<!-- PROCESS (HORIZONTAL SCROLL) -->
+<section class="process-section" id="processSection">
+  <div class="process-pin grain">
+    <div class="process-header">
+      <div class="process-eyebrow">The Process</div>
+      <h2 class="process-title">Four steps to clarity</h2>
+    </div>
+    <div class="process-track" id="processTrack">
+      <div class="process-card">
+        <div class="process-number">01</div>
+        <h3 class="process-card-title">Discovery Call</h3>
+        <p class="process-card-text">We start with a conversation. Not a sales pitch. I need to understand your world, your frustrations, and the gap between where you are and where you know you should be.</p>
+      </div>
+      <div class="process-card">
+        <div class="process-number">02</div>
+        <h3 class="process-card-title">Brand Blueprint</h3>
+        <p class="process-card-text">Deep strategic work. We uncover your positioning, your differentiation, your voice. This becomes the foundation everything else is built on. No fluff. Just clarity.</p>
+      </div>
+      <div class="process-card">
+        <div class="process-number">03</div>
+        <h3 class="process-card-title">Authority Takeover</h3>
+        <p class="process-card-text">Your brand identity comes to life across every touchpoint. Website, content, social presence. Every piece aligned with your strategic foundation.</p>
+      </div>
+      <div class="process-card">
+        <div class="process-number">04</div>
+        <h3 class="process-card-title">Show Up</h3>
+        <p class="process-card-text">You launch with confidence. Not because we made you louder, but because we made you clearer. And clarity compounds. Every touchpoint reinforces the last.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section" id="testimonialsSection">
+  <div class="container--wide">
+    <div class="testimonial-featured" id="testimonialFeatured">
+      <div class="testimonial-quote-mark">"</div>
+      <p class="testimonial-text">He's a <em>fucking unicorn.</em> There is no one else on the planet doing what Florian does at the level he does it.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar"></div>
+        <div class="testimonial-info">
+          <div class="testimonial-name">Fabian Geyrhalter</div>
+          <div class="testimonial-role">Author, Brand Strategist</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-cards" id="testimonialCards">
+      <div class="testimonial-card">
+        <p class="testimonial-card-text">"Working with Florian completely transformed how we think about our brand. The clarity we gained in just a few sessions was worth more than years of guessing."</p>
+        <div class="testimonial-card-author">Sarah Chen</div>
+        <div class="testimonial-card-role">Founder, TechStart</div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-card-text">"Florian doesn't just give you a strategy deck and walk away. He rewires how you think about your business. That's rare."</p>
+        <div class="testimonial-card-author">Marcus Rivera</div>
+        <div class="testimonial-card-role">CEO, Rivera Ventures</div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-card-text">"The Brand Therapy process gave us the language to finally articulate what made us different. Our conversion rate doubled within 3 months."</p>
+        <div class="testimonial-card-author">Alex Thompson</div>
+        <div class="testimonial-card-role">CMO, Elevate Health</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section grain" id="statsSection">
+  <div class="container--wide">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-number" data-target="250" data-suffix="%">0%</div>
+        <div class="stat-label">Average revenue increase</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-target="500" data-suffix="%">0%</div>
+        <div class="stat-label">Content engagement growth</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-target="1" data-suffix="M+" data-decimal="true">0</div>
+        <div class="stat-label">Audience reached</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-target="1.2" data-suffix="M+" data-decimal="true">0</div>
+        <div class="stat-label">Impressions generated</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT CLARITY DOES -->
+<section class="clarity-section" id="claritySection">
+  <div class="container--wide">
+    <div class="clarity-header">
+      <div class="clarity-eyebrow">What Strategic Clarity Does</div>
+      <h2 class="clarity-title">The compound effect of knowing who you are</h2>
+    </div>
+    <div class="clarity-grid" id="clarityGrid">
+      <div class="clarity-card">
+        <div class="clarity-card-icon">&#9670;</div>
+        <h3 class="clarity-card-title">Premium Positioning</h3>
+        <p class="clarity-card-text">Stop competing on price. When your brand communicates real value, you attract clients who pay for expertise, not deliverables.</p>
+      </div>
+      <div class="clarity-card">
+        <div class="clarity-card-icon">&#9733;</div>
+        <h3 class="clarity-card-title">Content That Converts</h3>
+        <p class="clarity-card-text">No more staring at a blank screen. When you know your voice and your angle, content flows naturally and actually drives results.</p>
+      </div>
+      <div class="clarity-card">
+        <div class="clarity-card-icon">&#10004;</div>
+        <h3 class="clarity-card-title">Decisions Made Faster</h3>
+        <p class="clarity-card-text">Brand clarity is a decision filter. Every opportunity, partnership, and pivot becomes obvious when you know exactly what you stand for.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section grain" id="ctaSection">
+  <div class="cta-glow"></div>
+  <div class="container" style="position:relative;z-index:2;">
+    <div class="cta-eyebrow">Ready?</div>
+    <h2 class="cta-title" id="ctaTitle">Your next real brand conversation is free.</h2>
+    <p class="cta-subtitle">No pitch. No pressure. Just a conversation about where you are, where you want to be, and whether Brand Therapy is the bridge.</p>
+    <a href="#" class="cta-btn">Book Your Free Intro Call <span class="arrow">&rarr;</span></a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">FP<span>.</span></div>
+  <div class="footer-text">&copy; 2026 Florian Philippe. All rights reserved.</div>
+</footer>
+
+<script>
+// ===== REGISTER GSAP PLUGINS =====
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+// ===== LOADING SCREEN =====
+const loader = document.getElementById('loader');
+window.addEventListener('load', () => {
+  gsap.to(loader, {
+    opacity: 0,
+    duration: 0.6,
+    delay: 0.5,
+    ease: 'power2.inOut',
+    onComplete: () => {
+      loader.style.display = 'none';
+      animateHero();
+    }
+  });
+});
+
+// ===== CUSTOM CURSOR =====
+const cursorDot = document.getElementById('cursorDot');
+const cursorRing = document.getElementById('cursorRing');
+let mouseX = 0, mouseY = 0;
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+gsap.ticker.add(() => {
+  gsap.set(cursorDot, { x: mouseX - 4, y: mouseY - 4 });
+  gsap.to(cursorRing, { x: mouseX - 20, y: mouseY - 20, duration: 0.15, ease: 'power2.out' });
+});
+
+// Hover effect on links/buttons
+document.querySelectorAll('a, button, .btn-primary, .btn-ghost, .cta-btn').forEach(el => {
+  el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
+  el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
+});
+
+// ===== PROGRESS BAR =====
+gsap.to('#progressBar', {
+  scaleX: 1,
+  ease: 'none',
+  scrollTrigger: {
+    trigger: 'body',
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: 0.3
+  }
+});
+
+// ===== NAV REVEAL ON SCROLL =====
+ScrollTrigger.create({
+  trigger: '#hero',
+  start: 'bottom 80%',
+  onEnter: () => gsap.to('#nav', { y: 0, duration: 0.6, ease: 'power3.out' }),
+  onLeaveBack: () => gsap.to('#nav', { y: '-100%', duration: 0.4, ease: 'power3.in' })
+});
+
+// ===== HERO ANIMATION =====
+function animateHero() {
+  const tl = gsap.timeline({ defaults: { ease: 'power4.out' }});
+
+  tl.to('.hero-title .line-inner', {
+    y: 0,
+    duration: 1.2,
+    stagger: 0.12,
+  })
+  .to('#heroLabel', {
+    opacity: 1,
+    y: 0,
+    duration: 0.8,
+  }, '-=0.8')
+  .to('#heroSub', {
+    opacity: 1,
+    y: 0,
+    duration: 0.8,
+  }, '-=0.5')
+  .to('#heroCta', {
+    opacity: 1,
+    y: 0,
+    duration: 0.8,
+  }, '-=0.4')
+  .to('#scrollIndicator', {
+    opacity: 1,
+    duration: 0.6,
+  }, '-=0.2');
+}
+
+// ===== HERO PARALLAX =====
+gsap.to('.hero-bg-glow', {
+  y: -100,
+  scrollTrigger: {
+    trigger: '#hero',
+    start: 'top top',
+    end: 'bottom top',
+    scrub: 1
+  }
+});
+
+gsap.to('#splinePlaceholder', {
+  y: -80,
+  opacity: 0,
+  scrollTrigger: {
+    trigger: '#hero',
+    start: 'center center',
+    end: 'bottom top',
+    scrub: 1
+  }
+});
+
+// ===== INTRO SECTION ANIMATIONS =====
+gsap.from('#introImage', {
+  x: -80,
+  opacity: 0,
+  duration: 1,
+  ease: 'power3.out',
+  scrollTrigger: {
+    trigger: '#introSection',
+    start: 'top 70%',
+    toggleActions: 'play none none reverse'
+  }
+});
+
+// Parallax on the image inside
+gsap.to('#introImage img, #introImage div', {
+  scale: 1,
+  scrollTrigger: {
+    trigger: '#introSection',
+    start: 'top bottom',
+    end: 'bottom top',
+    scrub: 1
+  }
+});
+
+gsap.from('#introEyebrow, #introTitle, #introText', {
+  y: 40,
+  opacity: 0,
+  duration: 0.8,
+  stagger: 0.15,
+  ease: 'power3.out',
+  scrollTrigger: {
+    trigger: '#introSection',
+    start: 'top 60%',
+    toggleActions: 'play none none reverse'
+  }
+});
+
+// ===== STATEMENT: WORD-BY-WORD REVEAL =====
+const statementEl = document.getElementById('statementText');
+const statementHTML = statementEl.innerHTML;
+// Wrap each word in a span
+const wrappedHTML = statementHTML.replace(/(<em>.*?<\/em>|\S+)/g, (match) => {
+  if (match.startsWith('<em>')) {
+    // Handle em-wrapped text: wrap each word inside em
+    return match.replace(/<em>(.*?)<\/em>/, (m, inner) => {
+      return '<em>' + inner.split(/\s+/).map(w => `<span class="word">${w}</span>`).join(' ') + '</em>';
+    });
+  }
+  return `<span class="word">${match}</span>`;
+});
+statementEl.innerHTML = wrappedHTML;
+
+const words = statementEl.querySelectorAll('.word');
+ScrollTrigger.create({
+  trigger: '#statementSection',
+  start: 'top center',
+  end: 'bottom center',
+  scrub: true,
+  onUpdate: (self) => {
+    const progress = self.progress;
+    words.forEach((word, i) => {
+      const wordProgress = i / words.length;
+      if (wordProgress < progress) {
+        word.classList.add('active');
+      } else {
+        word.classList.remove('active');
+      }
+    });
+  }
+});
+
+// ===== PROCESS: HORIZONTAL SCROLL =====
+const processTrack = document.getElementById('processTrack');
+const processCards = processTrack.querySelectorAll('.process-card');
+const totalScrollWidth = processTrack.scrollWidth - window.innerWidth + 100;
+
+gsap.to(processTrack, {
+  x: () => -totalScrollWidth,
+  ease: 'none',
+  scrollTrigger: {
+    trigger: '#processSection',
+    start: 'top top',
+    end: () => `+=${totalScrollWidth}`,
+    scrub: 1,
+    pin: true,
+    anticipatePin: 1,
+    invalidateOnRefresh: true
+  }
+});
+
+// Staggered card entrance
+processCards.forEach((card, i) => {
+  gsap.from(card, {
+    opacity: 0,
+    y: 60,
+    rotation: 3,
+    duration: 0.8,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: card,
+      containerAnimation: gsap.to(processTrack, { x: -totalScrollWidth }),
+      start: 'left 80%',
+      toggleActions: 'play none none reverse'
+    }
+  });
+});
+
+// ===== TESTIMONIALS =====
+gsap.from('#testimonialFeatured', {
+  y: 60,
+  opacity: 0,
+  duration: 1,
+  ease: 'power3.out',
+  scrollTrigger: {
+    trigger: '#testimonialsSection',
+    start: 'top 60%',
+    toggleActions: 'play none none reverse'
+  }
+});
+
+gsap.from('.testimonial-card', {
+  y: 40,
+  opacity: 0,
+  duration: 0.8,
+  stagger: 0.15,
+  ease: 'power3.out',
+  scrollTrigger: {
+    trigger: '#testimonialCards',
+    start: 'top 75%',
+    toggleActions: 'play none none reverse'
+  }
+});
+
+// ===== STATS: COUNT-UP ANIMATION =====
+const statNumbers = document.querySelectorAll('.stat-number');
+statNumbers.forEach(num => {
+  const target = parseFloat(num.dataset.target);
+  const suffix = num.dataset.suffix || '';
+  const isDecimal = num.dataset.decimal === 'true';
+
+  ScrollTrigger.create({
+    trigger: num,
+    start: 'top 80%',
+    once: true,
+    onEnter: () => {
+      gsap.to({ val: 0 }, {
+        val: target,
+        duration: 2,
+        ease: 'power2.out',
+        onUpdate: function() {
+          const current = this.targets()[0].val;
+          if (isDecimal) {
+            num.textContent = current.toFixed(1) + suffix;
+          } else {
+            num.textContent = Math.round(current) + suffix;
+          }
+        }
+      });
+    }
+  });
+});
+
+// ===== CLARITY CARDS =====
+gsap.from('.clarity-card', {
+  y: 60,
+  opacity: 0,
+  duration: 0.8,
+  stagger: 0.2,
+  ease: 'power3.out',
+  scrollTrigger: {
+    trigger: '#clarityGrid',
+    start: 'top 70%',
+    toggleActions: 'play none none reverse'
+  }
+});
+
+// ===== CTA SECTION =====
+gsap.from('#ctaTitle', {
+  y: 40,
+  opacity: 0,
+  duration: 1,
+  ease: 'power3.out',
+  scrollTrigger: {
+    trigger: '#ctaSection',
+    start: 'top 60%',
+    toggleActions: 'play none none reverse'
+  }
+});
+
+// Pulsing glow on CTA section
+gsap.to('.cta-glow', {
+  scale: 1.2,
+  opacity: 0.3,
+  duration: 3,
+  repeat: -1,
+  yoyo: true,
+  ease: 'sine.inOut'
+});
+
+// ===== SMOOTH SECTION TRANSITIONS =====
+// Subtle parallax on section backgrounds
+document.querySelectorAll('.grain::after').forEach(el => {
+  gsap.to(el, {
+    backgroundPosition: '0 100px',
+    scrollTrigger: {
+      trigger: el.parentElement,
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 1
+    }
+  });
+});
+
+// ===== REFRESH ON RESIZE =====
+window.addEventListener('resize', () => {
+  ScrollTrigger.refresh();
+});
+</script>
+
+</body>
+</html>

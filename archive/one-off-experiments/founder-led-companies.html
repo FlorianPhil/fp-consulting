@@ -1,0 +1,2394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brand Strategy for Founder-Led Companies | Florian Philippe</title>
+  <meta name="description" content="Your company brand and your personal brand are not separate problems. Florian Philippe helps founder-led companies find clarity through Brand Therapy.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple: #5A5CF9;
+      --black: #000000;
+      --white: #FFFFFF;
+      --light: #EBEBEB;
+      --border: #E8E8E8;
+      --gray: #6B6B6B;
+      --gray-light: #9A9A9A;
+      --font: 'Bricolage Grotesque', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--white);
+      color: var(--black);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ---- ANNOUNCEMENT BAR ---- */
+    .announcement-bar {
+      background: var(--purple);
+      color: var(--white);
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 10px 24px;
+      position: relative;
+      z-index: 200;
+    }
+
+    .announcement-bar a {
+      color: var(--white);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-left: 8px;
+      font-weight: 700;
+    }
+
+    /* ---- NAV ---- */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--black);
+      text-decoration: none;
+    }
+    .logo span { color: var(--purple); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--black); }
+
+    .nav-cta {
+      background: var(--black) !important;
+      color: var(--white) !important;
+      padding: 9px 18px !important;
+      border-radius: 4px !important;
+      font-weight: 700 !important;
+      font-size: 11px !important;
+      letter-spacing: 0.1em !important;
+      text-transform: uppercase !important;
+      transition: opacity 0.2s !important;
+    }
+    .nav-cta:hover { opacity: 0.8 !important; }
+
+    /* ---- SHARED ---- */
+    section { padding: 120px 48px; }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .section-eyebrow-light {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    h1 {
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      line-height: 1.05;
+      font-size: clamp(40px, 5.5vw, 76px);
+    }
+
+    h2 {
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      font-size: clamp(30px, 3.8vw, 52px);
+    }
+
+    h3 {
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    p {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--gray);
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 28px;
+      background: var(--purple);
+      color: var(--white);
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .btn-secondary {
+      display: inline-block;
+      padding: 13px 26px;
+      background: transparent;
+      color: var(--black);
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, background 0.2s;
+      cursor: pointer;
+    }
+    .btn-secondary:hover { border-color: var(--black); background: rgba(0,0,0,0.03); }
+
+    .btn-white {
+      display: inline-block;
+      padding: 14px 28px;
+      background: var(--white);
+      color: var(--black);
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .btn-white:hover { opacity: 0.88; }
+
+    .btn-white-outline {
+      display: inline-block;
+      padding: 13px 26px;
+      background: transparent;
+      color: var(--white);
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-white-outline:hover { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.05); }
+
+    /* ---- HERO ---- */
+    .hero {
+      background: var(--white);
+      padding-top: 100px;
+      padding-bottom: 100px;
+    }
+
+    .hero .container {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--purple);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      line-height: 1.65;
+      color: var(--gray);
+      margin-top: 24px;
+      margin-bottom: 40px;
+      max-width: 480px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .hero-note {
+      font-size: 13px;
+      color: var(--gray-light);
+      margin-top: 18px;
+    }
+
+    /* Hero portrait frame */
+    .hero-visual {
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+      min-height: 540px;
+      background: #111;
+    }
+
+    .hero-portrait-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+
+    .hero-portrait-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .ph-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(90,92,249,0.15);
+      border: 2px dashed rgba(90,92,249,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--purple);
+    }
+
+    .ph-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      font-weight: 600;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .ph-label span {
+      font-size: 10px;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .hero-portrait-caption {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      right: 24px;
+    }
+
+    .caption-badge {
+      display: inline-block;
+      background: rgba(90,92,249,0.2);
+      border: 1px solid rgba(90,92,249,0.4);
+      color: rgba(255,255,255,0.9);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 7px 14px;
+      border-radius: 4px;
+    }
+
+    /* ---- PROOF STRIP ---- */
+    .proof-strip {
+      background: var(--white);
+      padding: 24px 48px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .proof-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .proof-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray-light);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .proof-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .proof-logos {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .proof-logo-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.55;
+      transition: opacity 0.2s;
+    }
+    .proof-logo-item:hover { opacity: 0.9; }
+
+    .proof-logo-img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+
+    .proof-logo-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--black);
+    }
+
+    /* ---- PROBLEM SECTION ---- */
+    .problem-section {
+      background: var(--light);
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-top: 60px;
+    }
+
+    .problem-left h2 { margin-bottom: 24px; }
+    .problem-left p { margin-bottom: 18px; }
+
+    .problem-right {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .problem-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 28px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .problem-card:hover {
+      border-color: rgba(90,92,249,0.25);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+    }
+
+    .problem-card-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--purple);
+      margin-bottom: 14px;
+    }
+
+    .problem-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--black);
+    }
+
+    .problem-card p {
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    /* ---- SPECTRUM SECTION ---- */
+    .spectrum-section {
+      background: var(--white);
+      overflow: hidden;
+      padding-bottom: 100px;
+    }
+
+    .spectrum-intro {
+      max-width: 680px;
+      margin-bottom: 80px;
+    }
+
+    .spectrum-intro h2 { margin-bottom: 20px; }
+    .spectrum-intro p { margin-bottom: 14px; }
+
+    .spectrum-wrapper {
+      position: relative;
+    }
+
+    .spectrum-bar-container {
+      position: relative;
+      margin-bottom: 0;
+    }
+
+    .spectrum-track {
+      display: flex;
+      height: 6px;
+      border-radius: 99px;
+      background: linear-gradient(90deg,
+        rgba(0,0,0,0.06) 0%,
+        rgba(90,92,249,0.35) 50%,
+        var(--purple) 100%
+      );
+      margin-bottom: 0;
+    }
+
+    .spectrum-positions {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 0;
+    }
+
+    .spectrum-position {
+      cursor: pointer;
+      position: relative;
+    }
+
+    .spectrum-dot-row {
+      display: flex;
+      justify-content: center;
+      padding: 14px 0 18px;
+    }
+
+    .spectrum-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 2px solid var(--border);
+      transition: all 0.25s;
+    }
+
+    .spectrum-position:hover .spectrum-dot,
+    .spectrum-position.active .spectrum-dot {
+      border-color: var(--purple);
+      background: var(--purple);
+      transform: scale(1.3);
+      box-shadow: 0 0 14px rgba(90,92,249,0.45);
+    }
+
+    .spectrum-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px;
+      transition: all 0.25s;
+      height: 100%;
+    }
+
+    .spectrum-position:hover .spectrum-card,
+    .spectrum-position.active .spectrum-card {
+      border-color: var(--purple);
+      background: rgba(90,92,249,0.04);
+      box-shadow: 0 4px 20px rgba(90,92,249,0.1);
+    }
+
+    /* Spectrum visual illustrations */
+    .spec-visual {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 10px;
+      height: 68px;
+      margin-bottom: 16px;
+    }
+
+    .sv-brand { display: flex; align-items: flex-end; }
+
+    .sv-logo {
+      border-radius: 7px;
+      background: var(--black);
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+      transition: all 0.3s;
+    }
+
+    .sv-logo::after {
+      content: '';
+      position: absolute;
+      top: 26%;
+      left: 18%;
+      width: 64%;
+      height: 2px;
+      background: rgba(255,255,255,0.45);
+      box-shadow: 0 5px 0 rgba(255,255,255,0.28), 0 10px 0 rgba(255,255,255,0.14);
+    }
+
+    .sv-founder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .sv-head {
+      border-radius: 50%;
+      background: var(--gray);
+      flex-shrink: 0;
+      margin-bottom: 3px;
+    }
+
+    .sv-shoulders {
+      border-radius: 50px 50px 0 0;
+      background: var(--gray);
+      flex-shrink: 0;
+    }
+
+    .spectrum-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--black);
+      margin-bottom: 8px;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+    }
+
+    .spectrum-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--gray);
+      margin-bottom: 14px;
+    }
+
+    .spectrum-examples {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .example-pill {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 99px;
+      background: var(--light);
+      border: 1px solid var(--border);
+      color: var(--gray);
+      white-space: nowrap;
+    }
+
+    .zone-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(90,92,249,0.06);
+      border: 1px solid rgba(90,92,249,0.2);
+      border-radius: 4px;
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray);
+      margin-top: 36px;
+    }
+
+    .zone-badge .dot {
+      width: 8px;
+      height: 8px;
+      background: var(--purple);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .spectrum-callout {
+      margin-top: 80px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .callout-card {
+      background: var(--white);
+      padding: 36px;
+    }
+
+    .callout-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--purple);
+      margin-bottom: 16px;
+    }
+
+    .callout-card h3 {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: var(--black);
+      letter-spacing: -0.02em;
+    }
+
+    .callout-card p {
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    /* ---- TRUTH SECTION (full purple) ---- */
+    .truth-section {
+      background: var(--purple);
+      padding: 120px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .truth-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 60%;
+      height: 200%;
+      background: rgba(255,255,255,0.03);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .truth-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .truth-left h2 {
+      color: var(--white);
+      font-size: clamp(32px, 4vw, 56px);
+      margin-bottom: 24px;
+    }
+
+    .truth-left h2 em {
+      font-style: italic;
+      opacity: 0.7;
+    }
+
+    .truth-left p {
+      color: rgba(255,255,255,0.75);
+      font-size: 18px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .truth-photo {
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .truth-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .truth-photo-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: rgba(255,255,255,0.3);
+      font-weight: 600;
+    }
+
+    /* ---- ABOUT SECTION (full black) ---- */
+    .about-section {
+      background: var(--black);
+      padding: 120px 48px;
+    }
+
+    .about-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-portrait-frame {
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      background: #1a1a1a;
+    }
+
+    .portrait-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .about-ph {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .about-ph-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(90,92,249,0.15);
+      border: 2px dashed rgba(90,92,249,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--purple);
+    }
+
+    .about-ph-text {
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .about-name-tag {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 32px 24px 24px;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+    }
+
+    .about-name-tag strong {
+      display: block;
+      color: var(--white);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .about-name-tag span {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      font-weight: 500;
+    }
+
+    .about-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 20px;
+    }
+
+    .about-h2 {
+      color: var(--white);
+      font-size: clamp(26px, 3vw, 40px);
+      margin-bottom: 28px;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .about-body p {
+      color: rgba(255,255,255,0.6);
+      font-size: 16px;
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .about-body strong {
+      color: rgba(255,255,255,0.85);
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 36px;
+    }
+
+    .about-stat {
+      background: var(--black);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .about-stat-num {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .about-stat-num em {
+      font-style: normal;
+      color: var(--purple);
+    }
+
+    .about-stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.08em;
+    }
+
+    /* ---- WORK SECTION (full black) ---- */
+    .work-section {
+      background: #0a0a0a;
+      padding: 120px 48px;
+    }
+
+    .work-header {
+      max-width: 1120px;
+      margin: 0 auto 64px;
+    }
+
+    .work-header h2 {
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .work-header p {
+      color: rgba(255,255,255,0.5);
+      font-size: 18px;
+      max-width: 560px;
+    }
+
+    .work-grid {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .work-card {
+      background: #111;
+      padding: 36px;
+      position: relative;
+      transition: background 0.2s;
+    }
+    .work-card:hover { background: #161616; }
+
+    .work-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--purple);
+      margin-bottom: 20px;
+    }
+
+    .work-card h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .work-card p {
+      font-size: 14px;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.45);
+    }
+
+    /* Photo proof strip inside work */
+    .work-photo-strip {
+      max-width: 1120px;
+      margin: 32px auto 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .work-photo {
+      position: relative;
+      aspect-ratio: 16/7;
+      background: #111;
+      overflow: hidden;
+    }
+
+    .work-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0.75;
+      transition: opacity 0.3s;
+    }
+    .work-photo:hover img { opacity: 0.9; }
+
+    .work-photo-caption {
+      position: absolute;
+      bottom: 16px;
+      left: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .work-photo-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* ---- APPROACH SECTION (white) ---- */
+    .approach-section {
+      background: var(--white);
+      padding: 120px 48px;
+    }
+
+    .approach-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .approach-left h2 {
+      margin-bottom: 24px;
+    }
+
+    .approach-left p {
+      margin-bottom: 16px;
+    }
+
+    .approach-left .approach-photo {
+      margin-top: 36px;
+      border-radius: 4px;
+      overflow: hidden;
+      aspect-ratio: 16/9;
+      background: var(--light);
+    }
+
+    .approach-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .approach-photo-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: var(--gray-light);
+    }
+
+    /* Credentials */
+    .credentials-panel {
+      background: var(--light);
+      border-radius: 4px;
+      padding: 40px;
+    }
+
+    .creds-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray-light);
+      margin-bottom: 24px;
+    }
+
+    .cred-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .cred-item:last-of-type { border-bottom: none; padding-bottom: 0; }
+    .cred-item:first-of-type { padding-top: 0; }
+
+    .cred-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 4px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .cred-logo img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+    }
+
+    .cred-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+
+    .cred-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--gray);
+    }
+
+    .pull-quote-box {
+      margin-top: 32px;
+      background: var(--black);
+      border-radius: 4px;
+      padding: 32px;
+    }
+
+    .pull-quote-text {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.55;
+      color: var(--white);
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+
+    .pull-quote-author {
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.05em;
+    }
+
+    /* ---- WHO SECTION (light gray) ---- */
+    .who-section {
+      background: var(--light);
+      padding: 120px 48px;
+    }
+
+    .who-header {
+      max-width: 1120px;
+      margin: 0 auto 60px;
+    }
+
+    .who-header h2 {
+      margin-bottom: 16px;
+      max-width: 680px;
+    }
+
+    .who-header p {
+      max-width: 520px;
+    }
+
+    .fit-grid {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .fit-card {
+      border-radius: 4px;
+      padding: 36px;
+    }
+
+    .fit-card.yes {
+      background: var(--white);
+      border: 1px solid var(--border);
+    }
+
+    .fit-card.no {
+      background: var(--white);
+      border: 1px solid var(--border);
+    }
+
+    .fit-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .fit-badge {
+      font-size: 10px;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .fit-badge-yes {
+      background: rgba(90,92,249,0.1);
+      color: var(--purple);
+    }
+
+    .fit-badge-no {
+      background: var(--light);
+      color: var(--gray);
+    }
+
+    .fit-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .fit-list li {
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--gray);
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .fit-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+    }
+
+    .fit-card.yes .fit-list li::before { background: var(--purple); }
+    .fit-card.no .fit-list li::before { background: rgba(0,0,0,0.2); }
+
+    /* ---- PACKAGES (black) ---- */
+    .packages-section {
+      background: var(--black);
+      padding: 120px 48px;
+    }
+
+    .packages-header {
+      max-width: 1120px;
+      margin: 0 auto 64px;
+    }
+
+    .packages-header h2 {
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .packages-header p {
+      font-size: 18px;
+      color: rgba(255,255,255,0.5);
+      max-width: 520px;
+    }
+
+    .packages-grid {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .package-card {
+      background: #111;
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: background 0.2s;
+    }
+    .package-card:hover { background: #161616; }
+
+    .package-card.featured {
+      background: #1a1a2e;
+      border: 1px solid rgba(90,92,249,0.3);
+    }
+
+    .featured-badge {
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--purple);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 0 0 4px 4px;
+      white-space: nowrap;
+    }
+
+    .package-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 12px;
+    }
+
+    .package-card h3 {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 20px;
+      letter-spacing: -0.03em;
+    }
+
+    .package-price {
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .package-note {
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 28px;
+    }
+
+    .package-desc {
+      font-size: 14px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 32px;
+      flex: 1;
+    }
+
+    /* ---- CTA (black) ---- */
+    .cta-section {
+      background: var(--black);
+      padding: 120px 48px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .cta-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .cta-inner h2 {
+      color: var(--white);
+      font-size: clamp(32px, 4vw, 52px);
+      margin-bottom: 20px;
+    }
+
+    .cta-inner p {
+      color: rgba(255,255,255,0.55);
+      font-size: 18px;
+      margin-bottom: 40px;
+    }
+
+    .cta-note {
+      font-size: 13px;
+      color: rgba(255,255,255,0.3);
+      margin-top: 18px;
+    }
+
+    /* ---- FOOTER ---- */
+    footer {
+      background: var(--black);
+      padding: 36px 48px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .footer-logo span { color: var(--purple); }
+
+    footer p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    footer a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    footer a:hover { color: rgba(255,255,255,0.7); }
+
+    /* ---- SPECTRUM DETAIL PANEL ---- */
+    .spectrum-detail {
+      margin-top: 48px;
+      border-top: 2px solid var(--black);
+      padding-top: 40px;
+      background: transparent;
+      transition: opacity 0.2s;
+    }
+
+    .spectrum-detail-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .spectrum-detail-level {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gray-light);
+      white-space: nowrap;
+    }
+
+    .spectrum-detail-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--black);
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .spectrum-detail-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .pro-con-col {
+      padding-right: 48px;
+    }
+
+    .col-cons {
+      padding-left: 48px;
+      padding-right: 0;
+      border-left: 1px solid var(--border);
+    }
+
+    .pro-con-col h4 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .col-pros h4 { color: var(--purple); }
+    .col-cons h4 { color: var(--gray-light); }
+
+    .pro-con-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+
+    .pro-con-list li {
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--gray);
+      padding-left: 24px;
+      position: relative;
+    }
+
+    .pro-con-list li::before {
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-weight: 700;
+      line-height: 1.55;
+    }
+
+    .col-pros .pro-con-list li::before {
+      content: '+';
+      color: var(--purple);
+      font-size: 16px;
+    }
+
+    .col-cons .pro-con-list li::before {
+      content: '—';
+      color: var(--gray-light);
+      font-size: 13px;
+    }
+
+    @media (max-width: 700px) {
+      .spectrum-detail-cols { grid-template-columns: 1fr; gap: 0; }
+      .col-cons { border-left: none; padding-left: 0; border-top: 1px solid var(--border); padding-top: 28px; margin-top: 28px; }
+      .pro-con-col { padding-right: 0; }
+    }
+
+    /* ====== SCROLL ANIMATIONS ====== */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(38px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: 0.07s; }
+    .d2 { transition-delay: 0.14s; }
+    .d3 { transition-delay: 0.21s; }
+    .d4 { transition-delay: 0.28s; }
+    .d5 { transition-delay: 0.35s; }
+
+    /* ====== HERO PAGE-LOAD ENTRANCE ====== */
+    .hero-left { animation: heroIn 1s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .hero-visual { animation: heroIn 1s 0.15s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    @keyframes heroIn {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ====== AUTO-SCROLLING PROOF STRIP ====== */
+    .proof-strip {
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: stretch;
+      overflow: hidden;
+      padding: 0;
+    }
+    .proof-label-fixed {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray-light);
+      border-right: 1px solid var(--border);
+      white-space: nowrap;
+      background: var(--white);
+      z-index: 2;
+    }
+    .proof-scroll-wrap {
+      overflow: hidden;
+      flex: 1;
+      mask-image: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%);
+    }
+    .proof-track {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      width: max-content;
+      animation: scrollProof 28s linear infinite;
+    }
+    .proof-strip:hover .proof-track { animation-play-state: paused; }
+    @keyframes scrollProof {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .proof-track .proof-logo-item {
+      padding: 20px 32px;
+      border-right: 1px solid var(--border);
+    }
+
+    /* ====== OVERSIZED BG TEXT ====== */
+    .bg-word {
+      position: absolute;
+      font-weight: 900;
+      letter-spacing: -0.06em;
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      line-height: 0.9;
+      z-index: 0;
+    }
+
+    /* ====== PACKAGE CARD HOVER ====== */
+    .package-card {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.35s ease;
+    }
+    .package-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.18);
+    }
+
+    /* ====== CALLOUT CARD HOVER ====== */
+    .callout-card {
+      transition: background 0.2s;
+    }
+    .callout-card:hover { background: rgba(90,92,249,0.03); }
+
+    /* ====== SPECTRUM CARD HOVER UPGRADE ====== */
+    .spectrum-position:hover .spec-visual .sv-logo,
+    .spectrum-position.active .spec-visual .sv-logo {
+      filter: brightness(1.2);
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      section { padding: 80px 24px; }
+      .truth-section, .about-section, .work-section, .approach-section, .packages-section, .cta-section { padding: 80px 24px; }
+      footer { padding: 28px 24px; flex-direction: column; gap: 14px; text-align: center; }
+
+      .hero .container { grid-template-columns: 1fr; gap: 48px; }
+      .hero-visual { min-height: 360px; }
+      .problem-grid { grid-template-columns: 1fr; gap: 48px; }
+      .spectrum-positions { grid-template-columns: repeat(5, 1fr); gap: 5px; }
+      .spectrum-card { padding: 12px; }
+      .spectrum-title { font-size: 12px; }
+      .spectrum-desc { display: none; }
+      .spectrum-callout { grid-template-columns: 1fr; }
+      .truth-inner { grid-template-columns: 1fr; gap: 48px; }
+      .about-inner { grid-template-columns: 1fr; gap: 48px; }
+      .about-stats { grid-template-columns: repeat(3, 1fr); }
+      .work-grid { grid-template-columns: 1fr; }
+      .work-photo-strip { grid-template-columns: 1fr; }
+      .approach-inner { grid-template-columns: 1fr; gap: 48px; }
+      .fit-grid { grid-template-columns: 1fr; }
+      .packages-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .proof-inner { flex-direction: column; gap: 20px; align-items: flex-start; }
+      .proof-divider { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .about-stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ANNOUNCEMENT BAR -->
+  <div class="announcement-bar">
+    Now accepting Q2 engagements — limited capacity.
+    <a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro">Book your intro call →</a>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="https://florianp.com" class="logo">florian<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="https://florianp.com">Home</a></li>
+      <li><a href="#spectrum">The Spectrum</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#packages">Work Together</a></li>
+      <li><a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="nav-cta">Book a Call</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-left">
+        <span class="section-eyebrow fade-up visible">For Founder-Led Companies</span>
+        <h1 class="fade-up visible d1">Your company brand and your personal brand are <em>not separate problems.</em></h1>
+        <p class="hero-sub fade-up visible d2">They're the same problem. And confusing one for the other is where most founders waste their brand budget.</p>
+        <div class="hero-actions fade-up visible d3">
+          <a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="btn-primary">Book a Strategy Call</a>
+          <a href="#spectrum" class="btn-secondary">See the Spectrum</a>
+        </div>
+        <p class="hero-note fade-up visible d4">30-minute strategy conversation. No pitch. Just clarity.</p>
+      </div>
+
+      <div class="hero-visual">
+        <!-- Replace src with ./images/florian-hero-portrait.jpg -->
+        <img
+          src="./images/florian-hero-portrait.jpg"
+          alt="Florian Philippe — Brand Therapist"
+          class="hero-portrait-img"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+        >
+        <div class="hero-portrait-placeholder" style="display:none;">
+          <div class="ph-icon">FP</div>
+          <div class="ph-label">Florian Philippe<span>florian-hero-portrait.jpg</span></div>
+        </div>
+        <div class="hero-portrait-caption">
+          <span class="caption-badge">Available for Q2 Engagements</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF STRIP -->
+  <div class="proof-strip">
+    <span class="proof-label-fixed">Past Work</span>
+    <div class="proof-scroll-wrap">
+      <div class="proof-track">
+        <!-- Set 1 -->
+        <div class="proof-logo-item"><img src="https://static.wixstatic.com/media/9348c2_db2a66d076b649e58e0c1984e859d6ae~mv2.gif" alt="Verdant Strategies" class="proof-logo-img"><span class="proof-logo-name">Verdant Strategies</span></div>
+        <div class="proof-logo-item"><img src="https://static.wixstatic.com/media/9348c2_b1a0374e0e7346d8841f78b08b9116be~mv2.gif" alt="Cachet Advisory" class="proof-logo-img"><span class="proof-logo-name">Cachet Advisory</span></div>
+        <div class="proof-logo-item"><img src="https://logo.clearbit.com/renogy.com" alt="Renogy X" class="proof-logo-img"><span class="proof-logo-name">Renogy X</span></div>
+        <div class="proof-logo-item"><img src="https://logo.clearbit.com/acer.com" alt="Acer" class="proof-logo-img"><span class="proof-logo-name">Acer</span></div>
+        <div class="proof-logo-item"><span class="proof-logo-name" style="font-style:italic;color:var(--gray-light);">Taiwan World Trade Center</span></div>
+        <div class="proof-logo-item"><span class="proof-logo-name" style="font-style:italic;color:var(--gray-light);">3Angles Consulting</span></div>
+        <!-- Set 2 (duplicate for seamless loop) -->
+        <div class="proof-logo-item"><img src="https://static.wixstatic.com/media/9348c2_db2a66d076b649e58e0c1984e859d6ae~mv2.gif" alt="Verdant Strategies" class="proof-logo-img"><span class="proof-logo-name">Verdant Strategies</span></div>
+        <div class="proof-logo-item"><img src="https://static.wixstatic.com/media/9348c2_b1a0374e0e7346d8841f78b08b9116be~mv2.gif" alt="Cachet Advisory" class="proof-logo-img"><span class="proof-logo-name">Cachet Advisory</span></div>
+        <div class="proof-logo-item"><img src="https://logo.clearbit.com/renogy.com" alt="Renogy X" class="proof-logo-img"><span class="proof-logo-name">Renogy X</span></div>
+        <div class="proof-logo-item"><img src="https://logo.clearbit.com/acer.com" alt="Acer" class="proof-logo-img"><span class="proof-logo-name">Acer</span></div>
+        <div class="proof-logo-item"><span class="proof-logo-name" style="font-style:italic;color:var(--gray-light);">Taiwan World Trade Center</span></div>
+        <div class="proof-logo-item"><span class="proof-logo-name" style="font-style:italic;color:var(--gray-light);">3Angles Consulting</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROBLEM SECTION -->
+  <section class="problem-section">
+    <div class="container">
+      <span class="section-eyebrow fade-up">The Real Problem</span>
+      <div class="problem-grid">
+        <div class="problem-left">
+          <h2>Most growing companies don't have a brand problem. They have a clarity problem.</h2>
+          <p>You've got a product that works. Clients who trust you. A team that believes in what you're building.</p>
+          <p>But your brand — your positioning, your messaging, the story the market tells about you — hasn't kept up.</p>
+          <p>The result: you're selling harder than you should. Your best clients came through referrals, not because your brand pulled them in. Your competitors look more established than they are. And nobody inside the company can agree on what you actually stand for.</p>
+          <p>That's not a design problem. It's a strategy problem. And it has a process.</p>
+        </div>
+        <div class="problem-right">
+          <div class="problem-card fade-up">
+            <div class="problem-card-num">01</div>
+            <h3>It costs you deals.</h3>
+            <p>When your market can't quickly understand what you do, why you're different, and why it matters — they default to whoever sounds most familiar. Which is usually not you.</p>
+          </div>
+          <div class="problem-card fade-up d1">
+            <div class="problem-card-num">02</div>
+            <h3>It costs you talent.</h3>
+            <p>Senior people research companies before they apply. If your brand doesn't communicate the caliber of the work — you're invisible to the people you most want to hire.</p>
+          </div>
+          <div class="problem-card fade-up d2">
+            <div class="problem-card-num">03</div>
+            <h3>It costs you time.</h3>
+            <p>Every pitch, every intro, every sales call where you're explaining yourself from scratch is a positioning tax. The right brand does that work for you.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECTRUM SECTION -->
+  <section class="spectrum-section" id="spectrum">
+    <div class="container">
+      <span class="section-eyebrow fade-up">The Brand Spectrum</span>
+      <div class="spectrum-intro fade-up">
+        <h2>Where does your company sit on the spectrum?</h2>
+        <p>In founder-led businesses, the relationship between the founder's brand and the company's brand is the most underdiagnosed growth lever there is.</p>
+        <p>There's no wrong answer. But there is an expensive one. Investing in a company rebrand when you're already the face of the business is wasted. Hiding when you are the brand is a missed opportunity. The strategic move is knowing where you are, where you need to be, and what it costs to ignore the gap.</p>
+      </div>
+
+      <div class="spectrum-wrapper fade-up">
+        <div class="spectrum-bar-container">
+          <div class="spectrum-track"></div>
+          <div class="spectrum-positions" id="spectrumPositions">
+
+            <div class="spectrum-position" data-level="1">
+              <div class="spectrum-dot-row">
+                <div class="spectrum-dot"></div>
+              </div>
+              <div class="spectrum-card">
+                <div class="spec-visual">
+                  <div class="sv-brand">
+                    <div class="sv-logo" style="width:44px;height:44px;opacity:1;"></div>
+                  </div>
+                  <div class="sv-founder" style="opacity:0.18;">
+                    <div class="sv-head" style="width:14px;height:14px;"></div>
+                    <div class="sv-shoulders" style="width:22px;height:11px;"></div>
+                  </div>
+                </div>
+                <div class="spectrum-title">Company Only</div>
+                <div class="spectrum-desc">The founder is invisible. The brand carries everything. Product, scale, and distribution do the work.</div>
+                <div class="spectrum-examples">
+                  <span class="example-pill">Shein</span>
+                  <span class="example-pill">IKEA</span>
+                  <span class="example-pill">Zara</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="spectrum-position" data-level="2">
+              <div class="spectrum-dot-row">
+                <div class="spectrum-dot"></div>
+              </div>
+              <div class="spectrum-card">
+                <div class="spec-visual">
+                  <div class="sv-brand">
+                    <div class="sv-logo" style="width:36px;height:36px;opacity:0.85;"></div>
+                  </div>
+                  <div class="sv-founder" style="opacity:0.45;">
+                    <div class="sv-head" style="width:18px;height:18px;"></div>
+                    <div class="sv-shoulders" style="width:27px;height:13px;"></div>
+                  </div>
+                </div>
+                <div class="spectrum-title">Corporate Spokesperson</div>
+                <div class="spectrum-desc">A human face exists. The CEO is visible but the brand doesn't depend on them. Corporate soul, approachable surface.</div>
+                <div class="spectrum-examples">
+                  <span class="example-pill">Satya / Microsoft</span>
+                  <span class="example-pill">Bank of America</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="spectrum-position active" data-level="3">
+              <div class="spectrum-dot-row">
+                <div class="spectrum-dot"></div>
+              </div>
+              <div class="spectrum-card">
+                <div class="spec-visual">
+                  <div class="sv-brand">
+                    <div class="sv-logo" style="width:28px;height:28px;opacity:0.75;"></div>
+                  </div>
+                  <div class="sv-founder" style="opacity:0.75;">
+                    <div class="sv-head" style="width:24px;height:24px;"></div>
+                    <div class="sv-shoulders" style="width:34px;height:16px;"></div>
+                  </div>
+                </div>
+                <div class="spectrum-title">Paired Brands</div>
+                <div class="spectrum-desc">Both the founder and the company have distinct identities. Either can stand alone. Both reinforce each other.</div>
+                <div class="spectrum-examples">
+                  <span class="example-pill">Meta / Zuckerberg</span>
+                  <span class="example-pill">Spanx / Sara Blakely</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="spectrum-position" data-level="4">
+              <div class="spectrum-dot-row">
+                <div class="spectrum-dot"></div>
+              </div>
+              <div class="spectrum-card">
+                <div class="spec-visual">
+                  <div class="sv-brand">
+                    <div class="sv-logo" style="width:20px;height:20px;opacity:0.3;"></div>
+                  </div>
+                  <div class="sv-founder" style="opacity:0.9;">
+                    <div class="sv-head" style="width:28px;height:28px;"></div>
+                    <div class="sv-shoulders" style="width:38px;height:18px;"></div>
+                  </div>
+                </div>
+                <div class="spectrum-title">Founder-Led</div>
+                <div class="spectrum-desc">Inseparable. For better and worse. The company grows when the founder is visible. The founder can't step back without the company feeling it.</div>
+                <div class="spectrum-examples">
+                  <span class="example-pill">Tesla / Musk</span>
+                  <span class="example-pill">Virgin / Branson</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="spectrum-position" data-level="5">
+              <div class="spectrum-dot-row">
+                <div class="spectrum-dot"></div>
+              </div>
+              <div class="spectrum-card">
+                <div class="spec-visual">
+                  <div class="sv-brand">
+                    <div class="sv-logo" style="width:12px;height:12px;opacity:0.12;"></div>
+                  </div>
+                  <div class="sv-founder" style="opacity:1;">
+                    <div class="sv-head" style="width:34px;height:34px;"></div>
+                    <div class="sv-shoulders" style="width:46px;height:20px;"></div>
+                  </div>
+                </div>
+                <div class="spectrum-title">Founder IS the Brand</div>
+                <div class="spectrum-desc">Everything else is under the person. The company, the products, the community — all orbit one identity.</div>
+                <div class="spectrum-examples">
+                  <span class="example-pill">Gary Vaynerchuk</span>
+                  <span class="example-pill">Oprah</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- DETAIL PANEL: pros & cons per position -->
+          <div class="spectrum-detail" id="spectrumDetail">
+            <div class="spectrum-detail-header">
+              <span class="spectrum-detail-level" id="detailLevel">Balanced</span>
+              <span class="spectrum-detail-title" id="detailTitle">Paired Brands</span>
+            </div>
+            <div class="spectrum-detail-cols">
+              <div class="pro-con-col col-pros">
+                <h4>Advantages</h4>
+                <ul class="pro-con-list" id="detailPros"></ul>
+              </div>
+              <div class="pro-con-col col-cons">
+                <h4>Watch Out For</h4>
+                <ul class="pro-con-list" id="detailCons"></ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="spectrum-callout">
+        <div class="callout-card fade-up">
+          <div class="callout-num">01</div>
+          <h3>The founder's brand needs to lead</h3>
+          <p>Service business, thought leadership play, early-stage company. The personal brand is the growth engine. Investing in the company brand first is backwards.</p>
+        </div>
+        <div class="callout-card fade-up d1">
+          <div class="callout-num">02</div>
+          <h3>The company brand needs to catch up</h3>
+          <p>Preparing for exit, scaling past founder-dependence, or the founder's presence is a liability. The company needs to stand alone. Brand Therapy for the business.</p>
+        </div>
+        <div class="callout-card fade-up d2">
+          <div class="callout-num">03</div>
+          <h3>Both need to work together</h3>
+          <p>The most common case. Paired brands. Neither carrying the other. Both need a clear identity and a clear relationship. Most of this work starts here.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TRUTH SECTION -->
+  <section class="truth-section">
+    <div class="bg-word" style="font-size:clamp(90px,14vw,200px);color:rgba(255,255,255,0.045);bottom:-10px;right:-20px;letter-spacing:-0.06em;">CLARITY</div>
+    <div class="truth-inner">
+      <div class="truth-left">
+        <span class="section-eyebrow-light fade-up">The Reality</span>
+        <h2 class="fade-up d1">In the age of AI, <em>anonymous brands are becoming commodities.</em></h2>
+        <p>Company brands without a visible, trusted human voice are getting commoditized. The founder's brand is often the only thing keeping the company distinct... and most founders don't realize it.</p>
+        <p style="color:rgba(255,255,255,0.75); font-size:18px; line-height:1.7; margin-bottom:36px;">The question isn't whether to build a personal brand. It's whether you're going to do it strategically — or let the market decide for you.</p>
+        <a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="btn-white">Start with a Conversation</a>
+      </div>
+      <div class="truth-photo">
+        <!-- Replace src with ./images/florian-editorial-purple.jpg -->
+        <img
+          src="./images/florian-editorial-purple.jpg"
+          alt="Florian Philippe"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+        >
+        <div class="truth-photo-placeholder" style="display:none;">florian-editorial-purple.jpg</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section class="about-section" id="about">
+    <div class="about-inner">
+      <div>
+        <div class="about-portrait-frame">
+          <!-- Replace src with ./images/florian-about-seated.jpg -->
+          <img
+            class="portrait-photo"
+            src="./images/florian-about-seated.jpg"
+            alt="Florian Philippe"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+          >
+          <div class="about-ph" style="display:none;">
+            <div class="about-ph-circle">FP</div>
+            <div class="about-ph-text">Portrait<br>florian-about-seated.jpg</div>
+          </div>
+          <div class="about-name-tag">
+            <strong>Florian Philippe</strong>
+            <span>Brand Therapist · San Francisco, CA</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="about-eyebrow fade-up">The Strategist</div>
+        <h2 class="about-h2 fade-up d1">A decade building brands for other people. Now he does it for founders.</h2>
+        <div class="about-body">
+          <p>Florian has worked across 6 countries and inside organizations as different as a global tech manufacturer, a fast-growing clean energy company, and a government trade bureau. Every time, the same question: <strong>who are we, and why does it matter?</strong></p>
+          <p>For two of those roles, he walked in on day one and there was no brand. <strong>He named them, positioned them, built the identity, the website, and every asset from scratch.</strong> That's not consulting from the outside. That's founding CMO work.</p>
+          <p>Brand Therapy came from watching the same pattern repeat itself: smart founders, real products, muddy brands. The process exists to fix that.</p>
+        </div>
+        <div class="about-stats">
+          <div class="about-stat">
+            <div class="about-stat-num">10<em>+</em></div>
+            <div class="about-stat-label">Years in Brand</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat-num">6</div>
+            <div class="about-stat-label">Countries</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat-num">2<em>×</em></div>
+            <div class="about-stat-label">Founding CMO</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK SECTION -->
+  <section class="work-section">
+    <div class="work-header">
+      <span class="section-eyebrow-light fade-up">The Work</span>
+      <h2 class="fade-up d1" style="color:var(--white);">This is not a logo project.</h2>
+      <p class="fade-up d2">Here's what the engagement actually looks like — and why it's different from a rebrand.</p>
+    </div>
+
+    <div class="work-grid">
+      <div class="work-card fade-up">
+        <div class="work-num">01</div>
+        <h3>Brand Positioning & Differentiation</h3>
+        <p>Finding the specific angle that makes comparison unfair. What you do, who you do it for, and why you're the obvious choice — stated in language your market actually uses.</p>
+      </div>
+      <div class="work-card fade-up d1">
+        <div class="work-num">02</div>
+        <h3>Brand Architecture</h3>
+        <p>How your founder brand and company brand work together — or against each other. Where to invest visibility. How to build one without undermining the other.</p>
+      </div>
+      <div class="work-card fade-up d2">
+        <div class="work-num">03</div>
+        <h3>Messaging & Narrative</h3>
+        <p>The company story, the pitch, the website hierarchy, the sales deck narrative. Everything downstream of positioning, built from the same strategic foundation.</p>
+      </div>
+      <div class="work-card fade-up d3">
+        <div class="work-num">04</div>
+        <h3>Go-to-Market Clarity</h3>
+        <p>Whether you're launching a product, entering a new market, or repositioning after growth — brand strategy built for where you're going, not where you've been.</p>
+      </div>
+      <div class="work-card fade-up d4">
+        <div class="work-num">05</div>
+        <h3>Full Brand Build</h3>
+        <p>Naming, visual identity, brand guidelines, messaging architecture, website direction. For companies building from scratch or doing a complete repositioning.</p>
+      </div>
+      <div class="work-card fade-up d5">
+        <div class="work-num">06</div>
+        <h3>Brand Audits</h3>
+        <p>A diagnostic engagement for companies that already have a brand and need to know whether it's working, where the gaps are, and what to fix first. Fast, actionable, built to be used immediately.</p>
+      </div>
+    </div>
+
+    <!-- Photo proof strip -->
+    <div class="work-photo-strip">
+      <div class="work-photo">
+        <img
+          src="./images/florian-speaking-stage.jpg"
+          alt="Florian Philippe speaking at Brand Touchpoints"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+        >
+        <div class="work-photo-placeholder" style="display:none;">florian-speaking-stage.jpg</div>
+        <div class="work-photo-caption">Speaking · Brand Touchpoints</div>
+      </div>
+      <div class="work-photo">
+        <img
+          src="./images/florian-workshop-chapman.jpg"
+          alt="Florian Philippe workshop at Entrepreneurs at Chapman"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+        >
+        <div class="work-photo-placeholder" style="display:none;">florian-workshop-chapman.jpg</div>
+        <div class="work-photo-caption">Workshop · Entrepreneurs@Chapman</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPROACH SECTION -->
+  <section class="approach-section">
+    <div class="approach-inner">
+      <div class="approach-left">
+        <span class="section-eyebrow fade-up">The Approach</span>
+        <h2 class="fade-up d1">Strategy first. Design second. In that order.</h2>
+        <p>Most brand projects start with the logo. Or the website. Or a visual rebrand that costs $50K and changes nothing.</p>
+        <p>The diagnostic-first approach starts with the thinking. Who are you actually positioned against? What do your best clients hire you for? Where does your founder's credibility end and the company's credibility begin?</p>
+        <p>That's the work that makes everything downstream — the design, the copy, the content, the sales materials — actually perform.</p>
+        <div class="approach-photo">
+          <!-- Replace src with ./images/florian-consulting-session.jpg -->
+          <img
+            src="./images/florian-consulting-session.jpg"
+            alt="Florian Philippe in a brand strategy session"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+          >
+          <div class="approach-photo-placeholder" style="display:none;">florian-consulting-session.jpg</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="credentials-panel">
+          <div class="creds-eyebrow">Selected Past Work</div>
+
+          <div class="cred-item">
+            <div class="cred-logo">
+              <img src="https://static.wixstatic.com/media/9348c2_db2a66d076b649e58e0c1984e859d6ae~mv2.gif" alt="Verdant Strategies">
+            </div>
+            <div>
+              <div class="cred-name">Verdant Strategies</div>
+              <div class="cred-desc">Named, positioned &amp; built the brand for a nationally recognized cannabis accounting firm. Founding CMO. From no brand to $75M+ in tax savings served, 3,500+ cases.</div>
+            </div>
+          </div>
+
+          <div class="cred-item">
+            <div class="cred-logo">
+              <img src="https://static.wixstatic.com/media/9348c2_b1a0374e0e7346d8841f78b08b9116be~mv2.gif" alt="Cachet Advisory">
+            </div>
+            <div>
+              <div class="cred-name">Cachet Advisory</div>
+              <div class="cred-desc">Naming, positioning &amp; full brand build for a boutique CPA firm in LA. From zero to premium. Founding CMO from day one.</div>
+            </div>
+          </div>
+
+          <div class="cred-item">
+            <div class="cred-logo" style="padding:4px;">
+              <img src="https://logo.clearbit.com/renogy.com" alt="Renogy" style="width:36px;height:36px;object-fit:contain;">
+            </div>
+            <div>
+              <div class="cred-name">Renogy</div>
+              <div class="cred-desc">Founded Renogy X — the home division of the largest residential solar brand in the US. Named it, positioned it, built it from zero across North America, Europe, and APAC.</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="pull-quote-box">
+          <div class="pull-quote-text">"In the age of AI, company brands without a visible, trusted human voice are becoming commodities. The founder's brand is often carrying the company. Most founders don't realize it."</div>
+          <div class="pull-quote-author">Florian Philippe — Brand Therapist &amp; Strategic Advisor</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO SECTION -->
+  <section class="who-section">
+    <div class="who-header">
+      <span class="section-eyebrow fade-up">Who This Is For</span>
+      <h2 class="fade-up d1">Right-fit. Wrong-fit. Let's be clear about both.</h2>
+      <p class="fade-up d2">Brand strategy at this level works when both sides are honest about what the engagement is actually for. Here's the filter.</p>
+    </div>
+
+    <div class="fit-grid">
+      <div class="fit-card yes fade-up">
+        <div class="fit-card-header">
+          <span class="fit-badge fit-badge-yes">Right Fit</span>
+        </div>
+        <ul class="fit-list">
+          <li>Startups preparing for a raise, a launch, or a new market</li>
+          <li>B2B service companies doing $500K–$5M revenue whose brand hasn't kept up with the business</li>
+          <li>Leadership teams in transition: new CEO, new direction, new market</li>
+          <li>Founders who are the primary reason deals close — and know the company brand needs to catch up</li>
+          <li>Companies that lost deals to competitors who were louder, not better</li>
+        </ul>
+      </div>
+      <div class="fit-card no fade-up d1">
+        <div class="fit-card-header">
+          <span class="fit-badge fit-badge-no">Not a Fit</span>
+        </div>
+        <ul class="fit-list">
+          <li>Companies that want a logo without the strategy conversation</li>
+          <li>Businesses looking for a content agency or ongoing management</li>
+          <li>Teams that aren't ready to challenge their current positioning</li>
+          <li>Founders who want their brand to look good without doing the identity work first</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PACKAGES -->
+  <section class="packages-section" id="packages">
+    <div class="packages-header">
+      <span class="section-eyebrow-light fade-up">How We Work Together</span>
+      <h2 class="fade-up d1" style="color:var(--white);">Three ways in. One strategic framework.</h2>
+      <p class="fade-up d2">Not sure which fits? The discovery call is where we figure that out together.</p>
+    </div>
+
+    <div class="packages-grid">
+      <div class="package-card fade-up">
+        <div class="package-eyebrow">Brand Strategy Session</div>
+        <h3>Positioning &amp; Clarity</h3>
+        <div class="package-price">Custom</div>
+        <div class="package-note">Scoped per engagement</div>
+        <p class="package-desc">For companies that need clarity on positioning, differentiation, and messaging direction before investing in execution. One focused engagement, strategic output, immediate utility.</p>
+        <a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="btn-white-outline">Book a Call</a>
+      </div>
+
+      <div class="package-card featured fade-up d1">
+        <div class="featured-badge">Most Common</div>
+        <div class="package-eyebrow">Full Brand Build</div>
+        <h3>Strategy + Identity</h3>
+        <div class="package-price">From $5,000</div>
+        <div class="package-note">Strategy, identity, guidelines, website direction</div>
+        <p class="package-desc">Strategy, naming, visual identity, brand guidelines, messaging architecture, and website direction. For companies building from scratch or doing a full repositioning.</p>
+        <a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="btn-primary">Book a Call</a>
+      </div>
+
+      <div class="package-card fade-up d2">
+        <div class="package-eyebrow">Brand Audit</div>
+        <h3>Diagnostic Review</h3>
+        <div class="package-price">Custom</div>
+        <div class="package-note">Strategic report + prioritized recommendations</div>
+        <p class="package-desc">A diagnostic review of your current brand: what's working, what isn't, and what to fix first. Delivered as a strategic report with prioritized recommendations.</p>
+        <a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="btn-white-outline">Book a Call</a>
+      </div>
+    </div>
+
+    <p style="text-align:center; margin-top:32px; font-size:14px; color:rgba(255,255,255,0.3);">Not sure which fits? Start with the free call. We'll tell you honestly.</p>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-inner">
+      <span class="section-eyebrow-light fade-up">Start Here</span>
+      <h2 class="fade-up d1">Your brand is a business asset. Let's build it like one.</h2>
+      <p class="fade-up d2">Start with a free 30-minute strategy conversation. No pitch. Just an honest look at where your brand is and where it needs to go.</p>
+      <a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="btn-primary">Book a Strategy Call</a>
+      <p class="cta-note">30 minutes. Free. No obligation.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="https://florianp.com" class="footer-logo">florian<span>.</span></a>
+    <p>© 2026 Florian Philippe. Brand Therapy is a service methodology.</p>
+    <a href="https://florianp.com">florianp.com</a>
+  </footer>
+
+  <script>
+    // ---- SPECTRUM DATA: pros & cons per level ----
+    const spectrumData = {
+      1: {
+        position: 'Company-First',
+        title: 'Company Only',
+        pros: [
+          'Privacy — the founder stays entirely out of the spotlight',
+          'Brand survives leadership changes and founder exits cleanly',
+          'Cleaner exit or acquisition story — the brand stands on its own',
+          'Works at massive scale when distribution and product do the heavy lifting'
+        ],
+        cons: [
+          'Requires significant budget — no human shortcut to building trust',
+          'Company pages get almost zero organic reach on LinkedIn',
+          'Harder to differentiate in crowded markets without a recognizable face',
+          'Slow to build trust — people trust people, not logos, especially at early stages'
+        ]
+      },
+      2: {
+        position: 'Brand-Led',
+        title: 'Corporate Spokesperson',
+        pros: [
+          'A human face builds some trust without overexposing the CEO',
+          'Leadership can stay mostly operational and behind the scenes',
+          'More stable than a purely anonymous brand at mid-size — a face helps in a crisis'
+        ],
+        cons: [
+          'Neither personal nor corporate — hard to fully leverage either',
+          'Thought leadership tends to feel forced, half-hearted, and underperforms',
+          'Leadership changes still create brand instability',
+          'Consistently under-leverages the founder\'s real credibility and network'
+        ]
+      },
+      3: {
+        position: 'Balanced',
+        title: 'Paired Brands',
+        pros: [
+          'Best of both — the company stands alone, founder amplifies it',
+          'Founder can step back without the company suffering',
+          'LinkedIn content from both accounts reinforces each other',
+          'Exit-friendly — company doesn\'t collapse if the founder leaves'
+        ],
+        cons: [
+          'Requires maintaining two distinct identities simultaneously',
+          'Messaging alignment between personal and company brand is ongoing work',
+          'Easy to let one fall behind the other and create mixed signals',
+          'Needs clear architecture or the two start to compete and contradict'
+        ]
+      },
+      4: {
+        position: 'Founder-Amplified',
+        title: 'Founder-Led',
+        pros: [
+          'Every founder post is essentially free advertising for the company',
+          'Shorter sales cycles — people buy because they already trust you',
+          'Extremely powerful at the B2B scale where most of this audience operates',
+          'Massive trust transfer: your credibility becomes the company\'s credibility'
+        ],
+        cons: [
+          'Company momentum suffers every time the founder goes quiet',
+          'Exit or acquisition is complicated — you\'re baked into the brand equity',
+          'One PR moment damages both brands at the same time',
+          'You are publicly accountable for everything the company does or doesn\'t do'
+        ]
+      },
+      5: {
+        position: 'Founder-First',
+        title: 'Founder IS the Brand',
+        pros: [
+          'Maximum trust and reach with minimum budget — especially on LinkedIn',
+          'People follow you first, company second — built-in audience for everything you launch',
+          'Personal content gets organic reach that company pages will never match',
+          'Very fast to build credibility at early stage — you ARE the product'
+        ],
+        cons: [
+          'You have to become a content creator. That is a real, consistent, demanding job.',
+          'Zero separation between personal life and professional brand',
+          'Company is nearly impossible to exit — the brand IS you, not the business',
+          'Entirely fragile — one reputation hit affects every revenue stream simultaneously'
+        ]
+      }
+    };
+
+    // ---- Update detail panel ----
+    function updateDetail(level) {
+      const data = spectrumData[level];
+      const detail = document.getElementById('spectrumDetail');
+      detail.style.opacity = '0';
+
+      setTimeout(() => {
+        document.getElementById('detailLevel').textContent = data.position;
+        document.getElementById('detailTitle').textContent = data.title;
+        document.getElementById('detailPros').innerHTML =
+          data.pros.map(p => `<li>${p}</li>`).join('');
+        document.getElementById('detailCons').innerHTML =
+          data.cons.map(c => `<li>${c}</li>`).join('');
+        detail.style.opacity = '1';
+      }, 120);
+    }
+
+    // ---- Interactive spectrum (hover + click) ----
+    const positions = document.querySelectorAll('.spectrum-position');
+    positions.forEach(pos => {
+      pos.addEventListener('mouseenter', () => {
+        positions.forEach(p => p.classList.remove('active'));
+        pos.classList.add('active');
+        updateDetail(parseInt(pos.getAttribute('data-level')));
+      });
+    });
+
+    // Initialize with level 3 (default active)
+    updateDetail(3);
+
+    // ---- Smooth scroll ----
+    ['spectrum', 'about', 'packages'].forEach(id => {
+      document.querySelectorAll(`a[href="#${id}"]`).forEach(a => {
+        a.addEventListener('click', e => {
+          e.preventDefault();
+          const target = document.getElementById(id);
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+    });
+
+    // ---- SCROLL ANIMATIONS: IntersectionObserver ----
+    (function() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target); // fire once
+          }
+        });
+      }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      document.querySelectorAll('.fade-up').forEach(el => {
+        // Elements already marked visible (above-fold hero) — skip
+        if (!el.classList.contains('visible')) {
+          observer.observe(el);
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>

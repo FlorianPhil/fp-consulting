@@ -1,0 +1,2149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Florian P. | Brand Therapist</title>
+<meta name="description" content="Brand strategy for founders and the companies they lead. Clarity that makes you impossible to ignore.">
+
+<!-- Fonts: Bricolage Grotesque + Inter — LOCKED -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- GSAP + Plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+
+<!-- Lenis smooth scroll -->
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+<style>
+/* ============================================
+   FP. DESIGN TOKENS
+   ============================================ */
+:root {
+  --accent: #5A5CF9;
+  --accent-glow: rgba(90, 92, 249, 0.35);
+  --accent-soft: rgba(90, 92, 249, 0.08);
+  --dark: #1D1D1D;
+  --light: #F6F6F6;
+  --white: #FFFFFF;
+  --black: #000000;
+  --gray: #949494;
+  --gray-light: #E0E0E0;
+
+  --ff-primary: 'Bricolage Grotesque', sans-serif;
+  --ff-body: 'Inter', sans-serif;
+
+  --section-pad: clamp(100px, 12vw, 180px);
+  --container: 1240px;
+  --gutter: clamp(24px, 5vw, 64px);
+
+  --purple-edge: 3px;
+  --grain-opacity: 0.035;
+}
+
+/* ============================================
+   RESET
+   ============================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+body {
+  font-family: var(--ff-body);
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--black);
+  background: var(--light);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+@media (max-width: 768px) {
+  body { cursor: auto; }
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+button { border: none; background: none; font-family: inherit; cursor: none; }
+
+@media (max-width: 768px) {
+  button { cursor: pointer; }
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--ff-primary);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ============================================
+   LOADING SCREEN
+   ============================================ */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.loader-logo {
+  font-family: var(--ff-primary);
+  font-weight: 800;
+  font-size: clamp(3rem, 8vw, 6rem);
+  color: var(--white);
+  letter-spacing: -0.03em;
+  opacity: 0;
+}
+
+.loader-logo .dot {
+  color: var(--accent);
+}
+
+.loader-line {
+  width: 60px;
+  height: 2px;
+  background: var(--accent);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+.loader-tagline {
+  font-family: var(--ff-body);
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray);
+  opacity: 0;
+}
+
+/* ============================================
+   CUSTOM CURSOR
+   ============================================ */
+.cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+              height 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+              border-color 0.3s ease,
+              background 0.3s ease;
+  mix-blend-mode: difference;
+}
+
+.cursor.hovering {
+  width: 50px;
+  height: 50px;
+  background: rgba(90, 92, 249, 0.15);
+  border-color: var(--white);
+}
+
+.cursor-dot {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 768px) {
+  .cursor, .cursor-dot { display: none; }
+}
+
+/* ============================================
+   PROGRESS BAR
+   ============================================ */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--accent);
+  z-index: 9000;
+  transform-origin: left;
+  transform: scaleX(0);
+  width: 100%;
+}
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 24px 0;
+  transition: padding 0.4s ease, background 0.4s ease;
+}
+
+.nav.scrolled {
+  padding: 16px 0;
+  background: rgba(246, 246, 246, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.nav .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-family: var(--ff-primary);
+  font-weight: 800;
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
+}
+
+.nav-logo .dot { color: var(--accent); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: var(--ff-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--accent);
+  transition: width 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.nav-links a:hover::after { width: 100%; }
+
+.nav-cta {
+  font-family: var(--ff-primary);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 12px 28px;
+  background: var(--black);
+  color: var(--white);
+  border-radius: 0;
+  transition: background 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+}
+
+.nav-cta:hover {
+  background: var(--accent);
+}
+
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+}
+
+.nav-mobile-toggle span {
+  width: 24px;
+  height: 2px;
+  background: var(--black);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav-mobile-toggle { display: flex; }
+
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    padding: 32px var(--gutter);
+    gap: 24px;
+    border-bottom: 1px solid var(--gray-light);
+  }
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: 100px;
+  background: var(--light);
+}
+
+.hero .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-label {
+  font-family: var(--ff-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-label::before {
+  content: '';
+  width: 40px;
+  height: 1.5px;
+  background: var(--accent);
+  display: inline-block;
+}
+
+.hero h1 {
+  font-size: clamp(3rem, 6.5vw, 5.5rem);
+  margin-bottom: 28px;
+  color: var(--black);
+}
+
+.hero h1 .word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 4px;
+}
+
+.hero h1 .word-inner {
+  display: inline-block;
+  transform: translateY(110%);
+}
+
+.hero h1 .accent {
+  color: var(--accent);
+}
+
+.hero-sub {
+  font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+  color: var(--gray);
+  line-height: 1.75;
+  max-width: 520px;
+  margin-bottom: 40px;
+  opacity: 0;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  opacity: 0;
+}
+
+.btn-primary {
+  font-family: var(--ff-primary);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 18px 36px;
+  background: var(--accent);
+  color: var(--white);
+  border-radius: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--black);
+  transform: translateX(-101%);
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.btn-primary:hover::before { transform: translateX(0); }
+.btn-primary span { position: relative; z-index: 1; }
+
+.btn-ghost {
+  font-family: var(--ff-body);
+  font-weight: 500;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--black);
+  transition: gap 0.3s ease, color 0.3s ease;
+}
+
+.btn-ghost:hover { gap: 14px; color: var(--accent); }
+
+.btn-ghost .arrow {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.btn-ghost:hover .arrow { transform: translateX(4px); }
+
+.hero-image-wrap {
+  position: relative;
+  height: clamp(500px, 70vh, 750px);
+  overflow: hidden;
+}
+
+.hero-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  will-change: transform;
+}
+
+.hero-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 70%, var(--light));
+  pointer-events: none;
+}
+
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 5;
+  opacity: 0;
+}
+
+.hero-scroll-indicator span {
+  font-family: var(--ff-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: var(--gray-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-line::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0% { top: -100%; }
+  50% { top: 100%; }
+  100% { top: 100%; }
+}
+
+@media (max-width: 900px) {
+  .hero .container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .hero-content { order: 2; }
+  .hero-image-wrap { order: 1; height: 50vh; }
+  .hero-sub { margin-left: auto; margin-right: auto; }
+  .hero-ctas { justify-content: center; flex-wrap: wrap; }
+  .hero-label { justify-content: center; }
+  .hero-scroll-indicator { display: none; }
+}
+
+/* ============================================
+   MARQUEE
+   ============================================ */
+.marquee-section {
+  padding: 32px 0;
+  border-top: 1px solid var(--gray-light);
+  border-bottom: 1px solid var(--gray-light);
+  overflow: hidden;
+  background: var(--white);
+}
+
+.marquee-track {
+  display: flex;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.marquee-item {
+  font-family: var(--ff-primary);
+  font-weight: 300;
+  font-size: clamp(1.2rem, 2vw, 1.8rem);
+  letter-spacing: 0.02em;
+  color: var(--gray);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex-shrink: 0;
+}
+
+.marquee-item .sep {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   BRAND THERAPY INTRO
+   ============================================ */
+.intro {
+  padding: var(--section-pad) 0;
+  background: var(--white);
+}
+
+.intro .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(48px, 8vw, 100px);
+  align-items: center;
+}
+
+.intro-text .eyebrow {
+  font-family: var(--ff-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.intro-text h2 {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  margin-bottom: 28px;
+}
+
+.intro-text h2 .highlight {
+  position: relative;
+  display: inline;
+}
+
+.intro-text h2 .highlight::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: var(--accent-soft);
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.intro-text h2 .highlight.revealed::after {
+  transform: scaleX(1);
+}
+
+.intro-text p {
+  color: #555;
+  margin-bottom: 16px;
+  font-size: clamp(1rem, 1.1vw, 1.1rem);
+}
+
+.intro-text p:last-of-type {
+  margin-bottom: 36px;
+}
+
+.intro-image {
+  position: relative;
+  overflow: hidden;
+  height: clamp(400px, 50vw, 600px);
+}
+
+.intro-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.intro-image::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .intro .container {
+    grid-template-columns: 1fr;
+  }
+  .intro-image { height: 50vh; order: -1; }
+}
+
+/* ============================================
+   TESTIMONIALS (Horizontal Scroll)
+   ============================================ */
+.testimonials {
+  padding: var(--section-pad) 0 60px;
+  background: var(--light);
+  overflow: hidden;
+}
+
+.testimonials-header {
+  text-align: center;
+  margin-bottom: clamp(48px, 6vw, 80px);
+}
+
+.testimonials-header .eyebrow {
+  font-family: var(--ff-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.testimonials-header h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.testimonials-scroll-wrap {
+  position: relative;
+}
+
+.testimonials-track {
+  display: flex;
+  gap: 32px;
+  padding: 0 var(--gutter);
+  will-change: transform;
+}
+
+.testimonial-card {
+  flex: 0 0 clamp(340px, 40vw, 500px);
+  background: var(--white);
+  padding: clamp(32px, 4vw, 48px);
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.06);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+}
+
+.testimonial-quote {
+  font-family: var(--ff-primary);
+  font-weight: 600;
+  font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  line-height: 1.4;
+  margin-bottom: 24px;
+  color: var(--black);
+}
+
+.testimonial-body {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: #666;
+  margin-bottom: 28px;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid var(--gray-light);
+}
+
+.testimonial-author-line {
+  width: 24px;
+  height: 2px;
+  background: var(--accent);
+}
+
+.testimonial-author-info strong {
+  font-family: var(--ff-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: block;
+}
+
+.testimonial-author-info span {
+  font-size: 0.8rem;
+  color: var(--gray);
+}
+
+.testimonial-number {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  font-family: var(--ff-primary);
+  font-weight: 800;
+  font-size: 4rem;
+  color: rgba(90, 92, 249, 0.06);
+  line-height: 1;
+}
+
+/* ============================================
+   VALUE PROPOSITION
+   ============================================ */
+.value {
+  padding: var(--section-pad) 0;
+  background: var(--white);
+}
+
+.value-header {
+  margin-bottom: clamp(48px, 6vw, 72px);
+  max-width: 600px;
+}
+
+.value-header .eyebrow {
+  font-family: var(--ff-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.value-header h2 {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+}
+
+.value-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.value-card {
+  padding: clamp(32px, 3vw, 48px);
+  border: 1px solid rgba(0,0,0,0.07);
+  position: relative;
+  transition: transform 0.4s ease, border-color 0.4s ease;
+  overflow: hidden;
+}
+
+.value-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.value-card:hover::before { width: 100%; }
+
+.value-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(90, 92, 249, 0.15);
+}
+
+.value-card-number {
+  font-family: var(--ff-primary);
+  font-weight: 800;
+  font-size: 3.5rem;
+  color: rgba(90, 92, 249, 0.08);
+  line-height: 1;
+  margin-bottom: 24px;
+}
+
+.value-card h3 {
+  font-size: clamp(1.3rem, 1.8vw, 1.6rem);
+  margin-bottom: 16px;
+}
+
+.value-card p {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+  .value-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================
+   PROVEN RESULTS (Dark Section)
+   ============================================ */
+.results {
+  padding: var(--section-pad) 0;
+  background: var(--dark);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Grain texture */
+.results::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Purple edge */
+.results::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--purple-edge);
+  background: var(--accent);
+  z-index: 2;
+}
+
+.results .container {
+  position: relative;
+  z-index: 3;
+}
+
+.results-header {
+  text-align: center;
+  margin-bottom: clamp(48px, 6vw, 80px);
+}
+
+.results-header .eyebrow {
+  font-family: var(--ff-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.results-header h2 {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  color: var(--white);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 32px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.stat-number {
+  font-family: var(--ff-primary);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.stat-number .suffix {
+  color: var(--accent);
+}
+
+.stat-label {
+  font-family: var(--ff-body);
+  font-size: 0.85rem;
+  color: var(--gray);
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 768px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================
+   PROCESS (Dark Section)
+   ============================================ */
+.process {
+  padding: var(--section-pad) 0;
+  background: var(--dark);
+  position: relative;
+  overflow: hidden;
+}
+
+.process::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.process::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--purple-edge);
+  background: var(--accent);
+  z-index: 2;
+}
+
+.process .container {
+  position: relative;
+  z-index: 3;
+}
+
+.process-header {
+  text-align: center;
+  margin-bottom: clamp(60px, 8vw, 100px);
+}
+
+.process-header .eyebrow {
+  font-family: var(--ff-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.process-header h2 {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  color: var(--white);
+  margin-bottom: 16px;
+}
+
+.process-header p {
+  color: var(--gray);
+  max-width: 560px;
+  margin: 0 auto;
+  font-size: 1.05rem;
+}
+
+.process-timeline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  position: relative;
+}
+
+.process-timeline::before {
+  content: '';
+  position: absolute;
+  top: 32px;
+  left: 12.5%;
+  right: 12.5%;
+  height: 1px;
+  background: rgba(255,255,255,0.1);
+}
+
+.process-step {
+  text-align: center;
+  padding: 0 clamp(12px, 2vw, 24px);
+  position: relative;
+}
+
+.step-number {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 28px;
+  font-family: var(--ff-primary);
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--white);
+  background: rgba(90, 92, 249, 0.15);
+  border: 1px solid rgba(90, 92, 249, 0.3);
+  position: relative;
+  z-index: 2;
+  transition: background 0.4s ease, transform 0.4s ease;
+}
+
+.process-step:hover .step-number {
+  background: var(--accent);
+  transform: scale(1.1);
+}
+
+.process-step h3 {
+  font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+  color: var(--white);
+  margin-bottom: 12px;
+}
+
+.process-step p {
+  font-size: 0.9rem;
+  color: var(--gray);
+  line-height: 1.65;
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .process-timeline {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .process-timeline::before { display: none; }
+  .process-step { text-align: left; display: flex; gap: 20px; align-items: flex-start; padding: 0; }
+  .step-number { margin: 0; flex-shrink: 0; }
+}
+
+/* ============================================
+   PHOTO BREAK
+   ============================================ */
+.photo-break {
+  height: 60vh;
+  min-height: 400px;
+  position: relative;
+  overflow: hidden;
+}
+
+.photo-break img {
+  width: 100%;
+  height: 120%;
+  object-fit: cover;
+  position: absolute;
+  top: -10%;
+  left: 0;
+  will-change: transform;
+}
+
+.photo-break-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(29,29,29,0.3), rgba(29,29,29,0.6));
+  z-index: 1;
+}
+
+.photo-break-text {
+  position: absolute;
+  bottom: clamp(40px, 6vw, 80px);
+  left: var(--gutter);
+  z-index: 2;
+  max-width: 700px;
+}
+
+.photo-break-text blockquote {
+  font-family: var(--ff-primary);
+  font-weight: 600;
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
+  color: var(--white);
+  line-height: 1.3;
+}
+
+.photo-break-text cite {
+  font-family: var(--ff-body);
+  font-style: normal;
+  font-size: 0.85rem;
+  color: var(--gray);
+  display: block;
+  margin-top: 16px;
+  letter-spacing: 0.05em;
+}
+
+/* ============================================
+   FAQ
+   ============================================ */
+.faq {
+  padding: var(--section-pad) 0;
+  background: var(--light);
+}
+
+.faq .container {
+  max-width: 800px;
+}
+
+.faq-header {
+  text-align: center;
+  margin-bottom: clamp(48px, 6vw, 72px);
+}
+
+.faq-header .eyebrow {
+  font-family: var(--ff-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.faq-header h2 {
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.faq-question {
+  width: 100%;
+  padding: 24px 0;
+  text-align: left;
+  font-family: var(--ff-primary);
+  font-weight: 600;
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  color: var(--black);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  transition: color 0.3s ease;
+}
+
+.faq-question:hover { color: var(--accent); }
+
+.faq-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.faq-icon::before,
+.faq-icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: currentColor;
+  transition: transform 0.3s ease;
+}
+
+.faq-icon::before {
+  width: 14px;
+  height: 1.5px;
+  transform: translate(-50%, -50%);
+}
+
+.faq-icon::after {
+  width: 1.5px;
+  height: 14px;
+  transform: translate(-50%, -50%);
+}
+
+.faq-item.active .faq-icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.23, 1, 0.32, 1), padding 0.4s ease;
+}
+
+.faq-answer-inner {
+  padding-bottom: 24px;
+}
+
+.faq-answer p {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: #555;
+  max-width: 100%;
+}
+
+/* ============================================
+   CTA SECTION
+   ============================================ */
+.cta-section {
+  padding: var(--section-pad) 0;
+  background: var(--white);
+  text-align: center;
+}
+
+.cta-section .eyebrow {
+  font-family: var(--ff-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+
+.cta-section h2 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  max-width: 800px;
+  margin: 0 auto 20px;
+}
+
+.cta-section p {
+  color: var(--gray);
+  max-width: 500px;
+  margin: 0 auto 40px;
+  font-size: 1.05rem;
+}
+
+.cta-section .btn-primary {
+  font-size: 0.9rem;
+  padding: 20px 44px;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+  padding: 64px 0 40px;
+  background: var(--dark);
+  color: var(--white);
+  position: relative;
+}
+
+.footer::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--purple-edge);
+  background: var(--accent);
+}
+
+.footer .container {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 40px;
+  align-items: start;
+}
+
+.footer-brand .nav-logo {
+  margin-bottom: 16px;
+  font-size: 1.8rem;
+}
+
+.footer-info {
+  font-size: 0.85rem;
+  color: var(--gray);
+  line-height: 1.8;
+}
+
+.footer-info a {
+  transition: color 0.3s ease;
+}
+
+.footer-info a:hover { color: var(--accent); }
+
+.footer-right {
+  text-align: right;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  gap: 32px;
+  margin-bottom: 20px;
+}
+
+.footer-links a {
+  font-size: 0.85rem;
+  color: var(--gray);
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover { color: var(--white); }
+
+.footer-bottom {
+  font-size: 0.75rem;
+  color: var(--gray);
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .footer .container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .footer-right { text-align: center; }
+  .footer-links { justify-content: center; }
+}
+
+/* ============================================
+   UTILITY
+   ============================================ */
+.reveal-line {
+  overflow: hidden;
+}
+
+.reveal-line-inner {
+  transform: translateY(110%);
+  display: block;
+}
+
+/* Magnetic button wrapper */
+.magnetic {
+  display: inline-block;
+  will-change: transform;
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-logo">FP<span class="dot">.</span></div>
+  <div class="loader-line"></div>
+  <div class="loader-tagline">Brand Therapist</div>
+</div>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- NAVIGATION -->
+<nav class="nav" id="nav">
+  <div class="container">
+    <a href="#" class="nav-logo">FP<span class="dot">.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#intro">Brand Therapy</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="nav-cta magnetic" target="_blank" rel="noopener">Book a Call</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-label">Brand Therapist</div>
+      <h1>
+        <span class="word"><span class="word-inner">Clarity</span></span>
+        <span class="word"><span class="word-inner">That</span></span>
+        <span class="word"><span class="word-inner">Makes</span></span>
+        <span class="word"><span class="word-inner">You</span></span><br>
+        <span class="word"><span class="word-inner accent">Impossible</span></span>
+        <span class="word"><span class="word-inner">to</span></span>
+        <span class="word"><span class="word-inner">Ignore.</span></span>
+      </h1>
+      <p class="hero-sub">Brand strategy, positioning, and differentiation for founders who are done being the best-kept secret in the room.</p>
+      <div class="hero-ctas">
+        <a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="btn-primary magnetic" target="_blank" rel="noopener"><span>Book Your Free Intro Call</span></a>
+        <a href="#intro" class="btn-ghost">Learn more <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
+    <div class="hero-image-wrap" id="heroImage">
+      <img src="images/florian/florian-editorial-lens-bw.png" alt="Florian Philippe holding a glass lens, revealing clarity through brand strategy" loading="eager">
+      <div class="hero-image-overlay"></div>
+    </div>
+  </div>
+  <div class="hero-scroll-indicator" id="scrollIndicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track" id="marquee">
+    <div class="marquee-item">Brand Strategy <span class="sep"></span></div>
+    <div class="marquee-item">Positioning <span class="sep"></span></div>
+    <div class="marquee-item">Differentiation <span class="sep"></span></div>
+    <div class="marquee-item">Brand Therapy <span class="sep"></span></div>
+    <div class="marquee-item">Focus Star Framework <span class="sep"></span></div>
+    <div class="marquee-item">Clarity <span class="sep"></span></div>
+    <div class="marquee-item">Brand Strategy <span class="sep"></span></div>
+    <div class="marquee-item">Positioning <span class="sep"></span></div>
+    <div class="marquee-item">Differentiation <span class="sep"></span></div>
+    <div class="marquee-item">Brand Therapy <span class="sep"></span></div>
+    <div class="marquee-item">Focus Star Framework <span class="sep"></span></div>
+    <div class="marquee-item">Clarity <span class="sep"></span></div>
+  </div>
+</div>
+
+<!-- BRAND THERAPY INTRO -->
+<section class="intro" id="intro">
+  <div class="container">
+    <div class="intro-text">
+      <div class="eyebrow">The approach</div>
+      <h2>Most brand projects start with deliverables. Brand Therapy starts with the <span class="highlight">truth</span>.</h2>
+      <p>It's a diagnostic-first approach to brand strategy... for founders, executives, and leadership teams who want clarity that drives decisions, not just a better-looking website.</p>
+      <p>The conversation isn't a formality. It's where the strategy begins.</p>
+      <a href="#process" class="btn-ghost">See the process <span class="arrow">&rarr;</span></a>
+    </div>
+    <div class="intro-image">
+      <img src="images/florian/web/florian-consulting-session-mountain.jpg" alt="Florian Philippe consulting session" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="testimonials-header container">
+    <div class="eyebrow">What clients say</div>
+    <h2>The proof is in the clarity.</h2>
+  </div>
+  <div class="testimonials-scroll-wrap">
+    <div class="testimonials-track" id="testimonialsTrack">
+      <div class="testimonial-card">
+        <div class="testimonial-number">01</div>
+        <div class="testimonial-quote">"He's a fucking unicorn"</div>
+        <p class="testimonial-body">I've been working at the executive level for over a decade and Florian is far and away the most skilled Marketing and Branding executive I have come across. He's super smart, he's imaginative, he's incredibly creative, and yet he brings the technical expertise and the project management expertise in equal measure.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-author-line"></div>
+          <div class="testimonial-author-info">
+            <strong>Jon Tull</strong>
+            <span>Managing Partner, Cachet</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-number">02</div>
+        <div class="testimonial-quote">"Every detail he touches is intentional"</div>
+        <p class="testimonial-body">Florian brings a rare combination of vision and execution. He sees the big picture with a high-level, strategic perspective, yet he's equally skilled at rolling up his sleeves to deliver results on the ground. Every detail he touches is intentional, crafted to serve a larger objective.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-author-line"></div>
+          <div class="testimonial-author-info">
+            <strong>Kevin Meredith</strong>
+            <span>Founder, 4th Sector Innovations</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-number">03</div>
+        <div class="testimonial-quote">"His guidance has been genuinely invaluable"</div>
+        <p class="testimonial-body">His feedback goes far beyond surface-level reactions. He consistently brings thoughtful, structured insight that pushes the work toward clarity, coherence, and stronger decision-making. Florian has a rare ability to balance encouragement with restraint.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-author-line"></div>
+          <div class="testimonial-author-info">
+            <strong>Sam Goldman</strong>
+            <span>Tech Founder</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUE PROPOSITION -->
+<section class="value" id="value">
+  <div class="container">
+    <div class="value-header">
+      <div class="eyebrow">What you get</div>
+      <h2>What strategic clarity actually does.</h2>
+    </div>
+    <div class="value-grid">
+      <div class="value-card">
+        <div class="value-card-number">01</div>
+        <h3>A market position that wins</h3>
+        <p>Not just a tagline. A defensible place in your market. Positioning built around what makes you genuinely different... so you attract the clients worth having.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-card-number">02</div>
+        <h3>A brand system that scales</h3>
+        <p>Visual identity, messaging architecture, and strategic guidelines your whole team can execute from. One source of truth for every touchpoint.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-card-number">03</div>
+        <h3>Clarity that closes deals</h3>
+        <p>The right clients recognize you before the conversation starts. Your brand says exactly what you do, who you do it for, and why you're the obvious choice.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO BREAK -->
+<div class="photo-break" id="photoBreak">
+  <img src="images/florian/web/florian-editorial-atrium-blue.jpg" alt="Florian Philippe in atrium" loading="lazy" id="photoBreakImg">
+  <div class="photo-break-overlay"></div>
+  <div class="photo-break-text container">
+    <blockquote>"Most people don't have a branding problem. They have a clarity problem."</blockquote>
+    <cite>Florian Philippe</cite>
+  </div>
+</div>
+
+<!-- PROVEN RESULTS -->
+<section class="results" id="results">
+  <div class="container">
+    <div class="results-header">
+      <div class="eyebrow">Proven results</div>
+      <h2>Numbers that speak for themselves.</h2>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-number"><span class="counter" data-target="250">0</span><span class="suffix">%</span></div>
+        <div class="stat-label">Avg. revenue increase</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number"><span class="counter" data-target="500">0</span><span class="suffix">%</span></div>
+        <div class="stat-label">Avg. campaign ROI</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number"><span class="counter" data-target="1" data-suffix="M+">0</span><span class="suffix">M+</span></div>
+        <div class="stat-label">Leads generated</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number"><span class="counter" data-target="1.2" data-decimals="1">0</span><span class="suffix">M+</span></div>
+        <div class="stat-label">Social followers gained</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="container">
+    <div class="process-header">
+      <div class="eyebrow">The process</div>
+      <h2>How Brand Therapy works.</h2>
+      <p>Four steps from confusion to clarity. Each one builds on the last.</p>
+    </div>
+    <div class="process-timeline">
+      <div class="process-step">
+        <div class="step-number">01</div>
+        <div>
+          <h3>Discovery Call</h3>
+          <p>In 20 minutes, we find out if there's a fit, what success looks like for you, and whether now is the right time to move.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-number">02</div>
+        <div>
+          <h3>Brand Therapy Blueprint</h3>
+          <p>A focused strategy session using the Focus Star to uncover your real positioning, your differentiators, and what makes you the obvious choice.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-number">03</div>
+        <div>
+          <h3>Authority Takeover</h3>
+          <p>Strategy becomes substance. Messaging, visual identity, professional positioning, and the copy that makes the right people reach out.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-number">04</div>
+        <div>
+          <h3>Show Up Like You Mean It</h3>
+          <p>Your brand is ready. Now it goes to work. Content direction, messaging clarity, and a clear lane for showing up with consistency.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="faq-header">
+      <div class="eyebrow">Questions</div>
+      <h2>Frequently asked.</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question">
+          What is Brand Therapy?
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>Brand Therapy is a guided clarity process that turns what you do into a sharp position, a voice, and a story people actually feel. It's part strategy, part identity work, part decision making.</p>
+          </div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          Who is Brand Therapy for?
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>Founders, entrepreneurs, and service providers who want to be known for something specific and need crisp positioning, messaging, and a voice that sounds like a real human.</p>
+          </div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          I work for a company. Is this still relevant?
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>Yes. Company brands don't replace personal credibility anymore. Your career, your opportunities, and your influence travel with you. Brand Therapy helps you communicate your value clearly while still serving the company you work for.</p>
+          </div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          Is this actual therapy?
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>Not in the clinical sense. But it can feel therapeutic because alignment changes how you see yourself, how you speak, and what you believe you're allowed to do. It's a brand strategy process with a human, reflective approach.</p>
+          </div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          What's the Focus Star framework?
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>The Focus Star is the diagnostic at the heart of Brand Therapy. Five edges: Audience, Purpose, Personality, DNA, and Offering. Each gets explored through guided discovery. The final star becomes your strategic blueprint.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="container">
+    <div class="eyebrow">Ready?</div>
+    <h2>Your next real brand conversation is free.</h2>
+    <p>No pitch deck. No pressure. Just 20 minutes to find out if there's a fit.</p>
+    <a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="btn-primary magnetic" target="_blank" rel="noopener"><span>Book Your Intro Call</span></a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-brand">
+      <div class="nav-logo">FP<span class="dot">.</span></div>
+      <div class="footer-info">
+        <p>9461 Charleville Blvd #1290<br>Beverly Hills, CA 90212</p>
+        <p><a href="mailto:connect@florianp.com">connect@florianp.com</a></p>
+      </div>
+    </div>
+    <div class="footer-right">
+      <ul class="footer-links">
+        <li><a href="#intro">Brand Therapy</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <div class="footer-bottom">&copy; 2026 Florian P. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================
+     JAVASCRIPT
+     ============================================ -->
+<script>
+(function() {
+  'use strict';
+
+  // =============================================
+  // SMOOTH SCROLL (Lenis)
+  // =============================================
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    orientation: 'vertical',
+    smoothWheel: true,
+  });
+
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+
+  // Sync Lenis with GSAP ScrollTrigger
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+
+  // =============================================
+  // LOADING SCREEN
+  // =============================================
+  const loader = document.getElementById('loader');
+  const loaderTl = gsap.timeline();
+
+  loaderTl
+    .to('.loader-logo', { opacity: 1, duration: 0.6, ease: 'power2.out' })
+    .to('.loader-line', { scaleX: 1, duration: 0.8, ease: 'power2.inOut' }, '-=0.2')
+    .to('.loader-tagline', { opacity: 1, duration: 0.5, ease: 'power2.out' }, '-=0.3')
+    .to('.loader-tagline', { opacity: 0, duration: 0.3, delay: 0.4 })
+    .to('.loader-logo', { opacity: 0, y: -20, duration: 0.4 }, '-=0.2')
+    .to('.loader-line', { opacity: 0, duration: 0.3 }, '-=0.3')
+    .to(loader, {
+      yPercent: -100,
+      duration: 0.8,
+      ease: 'power3.inOut',
+      onComplete: () => {
+        loader.style.display = 'none';
+        animateHero();
+      }
+    });
+
+  // Failsafe: hide loader after 4s no matter what
+  setTimeout(() => {
+    if (loader && loader.style.display !== 'none') {
+      loader.style.display = 'none';
+      animateHero();
+    }
+  }, 4000);
+
+  // =============================================
+  // CUSTOM CURSOR
+  // =============================================
+  const cursor = document.getElementById('cursor');
+  const cursorDot = document.getElementById('cursorDot');
+  let mouseX = 0, mouseY = 0;
+  let cursorX = 0, cursorY = 0;
+  let dotX = 0, dotY = 0;
+
+  if (window.innerWidth > 768) {
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    gsap.ticker.add(() => {
+      cursorX += (mouseX - cursorX) * 0.15;
+      cursorY += (mouseY - cursorY) * 0.15;
+      dotX += (mouseX - dotX) * 0.6;
+      dotY += (mouseY - dotY) * 0.6;
+
+      cursor.style.left = cursorX + 'px';
+      cursor.style.top = cursorY + 'px';
+      cursorDot.style.left = dotX + 'px';
+      cursorDot.style.top = dotY + 'px';
+    });
+
+    // Hover states
+    const hoverables = document.querySelectorAll('a, button, .magnetic, .faq-question, .testimonial-card, .value-card');
+    hoverables.forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+    });
+  }
+
+  // =============================================
+  // MAGNETIC BUTTONS
+  // =============================================
+  document.querySelectorAll('.magnetic').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: 'power2.out' });
+    });
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.5)' });
+    });
+  });
+
+  // =============================================
+  // PROGRESS BAR
+  // =============================================
+  gsap.to('#progressBar', {
+    scaleX: 1,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: document.body,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.3,
+    }
+  });
+
+  // =============================================
+  // NAV SCROLL STATE
+  // =============================================
+  const nav = document.getElementById('nav');
+  ScrollTrigger.create({
+    start: 80,
+    onUpdate: (self) => {
+      nav.classList.toggle('scrolled', self.progress > 0);
+    }
+  });
+
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+
+  // =============================================
+  // HERO ANIMATION
+  // =============================================
+  function animateHero() {
+    const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+    heroTl
+      .to('.hero-label', { opacity: 1, y: 0, duration: 0.6 })
+      .to('.hero h1 .word-inner', {
+        y: 0,
+        duration: 0.9,
+        stagger: 0.08,
+        ease: 'power3.out',
+      }, '-=0.3')
+      .to('.hero-sub', { opacity: 1, y: 0, duration: 0.6 }, '-=0.4')
+      .to('.hero-ctas', { opacity: 1, y: 0, duration: 0.6 }, '-=0.3')
+      .to('#scrollIndicator', { opacity: 1, duration: 0.6 }, '-=0.2');
+
+    // Hero image parallax
+    gsap.to('#heroImage img', {
+      y: -80,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.5,
+      }
+    });
+  }
+
+  // =============================================
+  // MARQUEE ANIMATION
+  // =============================================
+  const marquee = document.getElementById('marquee');
+  const marqueeItems = marquee.querySelectorAll('.marquee-item');
+  const marqueeWidth = Array.from(marqueeItems).slice(0, 6).reduce((w, el) => w + el.offsetWidth, 0);
+
+  gsap.to(marquee, {
+    x: -marqueeWidth,
+    duration: 30,
+    ease: 'none',
+    repeat: -1,
+    modifiers: {
+      x: gsap.utils.unitize(x => parseFloat(x) % marqueeWidth)
+    }
+  });
+
+  // =============================================
+  // INTRO SECTION ANIMATIONS
+  // =============================================
+  gsap.from('.intro-text .eyebrow', {
+    scrollTrigger: { trigger: '.intro', start: 'top 75%' },
+    opacity: 0, y: 20, duration: 0.6,
+  });
+
+  gsap.from('.intro-text h2', {
+    scrollTrigger: { trigger: '.intro', start: 'top 70%' },
+    opacity: 0, y: 40, duration: 0.8,
+    onComplete: () => document.querySelector('.highlight').classList.add('revealed'),
+  });
+
+  gsap.from('.intro-text p', {
+    scrollTrigger: { trigger: '.intro', start: 'top 65%' },
+    opacity: 0, y: 30, duration: 0.6, stagger: 0.15,
+  });
+
+  gsap.from('.intro-text .btn-ghost', {
+    scrollTrigger: { trigger: '.intro', start: 'top 60%' },
+    opacity: 0, y: 20, duration: 0.5,
+  });
+
+  gsap.from('.intro-image', {
+    scrollTrigger: { trigger: '.intro', start: 'top 70%' },
+    opacity: 0, x: 60, duration: 1, ease: 'power3.out',
+  });
+
+  // =============================================
+  // TESTIMONIALS DRAG SCROLL
+  // =============================================
+  const track = document.getElementById('testimonialsTrack');
+  let isDragging = false, startX, scrollLeft;
+
+  track.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    startX = e.pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+    track.style.cursor = 'grabbing';
+  });
+
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+    track.style.cursor = '';
+  });
+
+  track.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - track.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    track.style.transform = `translateX(${walk}px)`;
+  });
+
+  // Testimonial cards entrance
+  gsap.from('.testimonial-card', {
+    scrollTrigger: { trigger: '.testimonials', start: 'top 70%' },
+    opacity: 0,
+    y: 60,
+    duration: 0.8,
+    stagger: 0.2,
+    ease: 'power3.out',
+  });
+
+  // =============================================
+  // VALUE CARDS
+  // =============================================
+  gsap.from('.value-header', {
+    scrollTrigger: { trigger: '.value', start: 'top 75%' },
+    opacity: 0, y: 40, duration: 0.7,
+  });
+
+  gsap.from('.value-card', {
+    scrollTrigger: { trigger: '.value-grid', start: 'top 75%' },
+    opacity: 0,
+    y: 60,
+    duration: 0.8,
+    stagger: 0.15,
+    ease: 'power3.out',
+  });
+
+  // =============================================
+  // PHOTO BREAK PARALLAX
+  // =============================================
+  gsap.to('#photoBreakImg', {
+    y: -60,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.photo-break',
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 0.5,
+    }
+  });
+
+  gsap.from('.photo-break-text', {
+    scrollTrigger: { trigger: '.photo-break', start: 'top 60%' },
+    opacity: 0, y: 40, duration: 0.8,
+  });
+
+  // =============================================
+  // STATS COUNTER
+  // =============================================
+  const counters = document.querySelectorAll('.counter');
+  counters.forEach(counter => {
+    const target = parseFloat(counter.dataset.target);
+    const decimals = parseInt(counter.dataset.decimals) || 0;
+
+    ScrollTrigger.create({
+      trigger: counter,
+      start: 'top 80%',
+      once: true,
+      onEnter: () => {
+        gsap.to({ val: 0 }, {
+          val: target,
+          duration: 2,
+          ease: 'power2.out',
+          onUpdate: function() {
+            counter.textContent = this.targets()[0].val.toFixed(decimals);
+          }
+        });
+      }
+    });
+  });
+
+  gsap.from('.stat-item', {
+    scrollTrigger: { trigger: '.stats-grid', start: 'top 80%' },
+    opacity: 0,
+    y: 40,
+    duration: 0.7,
+    stagger: 0.12,
+    ease: 'power3.out',
+  });
+
+  // =============================================
+  // PROCESS STEPS
+  // =============================================
+  gsap.from('.process-header', {
+    scrollTrigger: { trigger: '.process', start: 'top 75%' },
+    opacity: 0, y: 40, duration: 0.7,
+  });
+
+  gsap.from('.process-step', {
+    scrollTrigger: { trigger: '.process-timeline', start: 'top 75%' },
+    opacity: 0,
+    y: 50,
+    duration: 0.8,
+    stagger: 0.2,
+    ease: 'power3.out',
+  });
+
+  // Timeline line animation
+  gsap.from('.process-timeline::before', {
+    scrollTrigger: { trigger: '.process-timeline', start: 'top 75%' },
+    scaleX: 0,
+    duration: 1.5,
+    ease: 'power2.inOut',
+  });
+
+  // =============================================
+  // FAQ ACCORDION
+  // =============================================
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const answer = item.querySelector('.faq-answer');
+      const isActive = item.classList.contains('active');
+
+      // Close all
+      document.querySelectorAll('.faq-item.active').forEach(activeItem => {
+        activeItem.classList.remove('active');
+        activeItem.querySelector('.faq-answer').style.maxHeight = '0';
+      });
+
+      if (!isActive) {
+        item.classList.add('active');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      }
+    });
+  });
+
+  gsap.from('.faq-item', {
+    scrollTrigger: { trigger: '.faq-list', start: 'top 75%' },
+    opacity: 0,
+    y: 30,
+    duration: 0.6,
+    stagger: 0.1,
+    ease: 'power3.out',
+  });
+
+  // =============================================
+  // CTA SECTION
+  // =============================================
+  gsap.from('.cta-section .eyebrow', {
+    scrollTrigger: { trigger: '.cta-section', start: 'top 75%' },
+    opacity: 0, y: 20, duration: 0.5,
+  });
+
+  gsap.from('.cta-section h2', {
+    scrollTrigger: { trigger: '.cta-section', start: 'top 70%' },
+    opacity: 0, y: 40, duration: 0.8,
+  });
+
+  gsap.from('.cta-section p', {
+    scrollTrigger: { trigger: '.cta-section', start: 'top 65%' },
+    opacity: 0, y: 20, duration: 0.6,
+  });
+
+  gsap.from('.cta-section .btn-primary', {
+    scrollTrigger: { trigger: '.cta-section', start: 'top 60%' },
+    opacity: 0, y: 20, duration: 0.6,
+  });
+
+  // =============================================
+  // SMOOTH SCROLL LINKS
+  // =============================================
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        lenis.scrollTo(target, { offset: -80 });
+        navLinks.classList.remove('open');
+      }
+    });
+  });
+
+})();
+</script>
+</body>
+</html>

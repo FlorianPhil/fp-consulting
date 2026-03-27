@@ -1,0 +1,44 @@
+# Incubator Presentation Transcript (Part 1)
+Recorded: March 26, 2026 | Context: Presentation for startup incubator in 2 days
+
+---
+
+Okay, this is a fake presentation, well not fake, this is my real presentation but I'm just doing it for you AI. So I'm just gonna go through the slides, I'm gonna try to set the name of the slide so you can see where I am right now. The goal of this is for you to kind of keep a transcript of my presentation, help me tweak some details, summarize it, we put it into an ocean document somewhere to keep track and we'll also optimize the design and everything. Sounds good. Alright, I might have to do this in few parts so this is part one.
+
+Right now the title of slide one and also for more context, I'm doing this presentation in two days for an incubator, start of incubator so that's why the title got a choose right now, should I care about branding yet. This presentation is quite old and I might need to adapt it on what I've been doing with brand therapy so I just wanted to give you a lot of context and you help me figure it out.
+
+Alright, brand strategy for start-up, slide one.
+
+**Slide two**, the quote from Seth Godin, in very interaction in any form is branding.
+
+**Slide three**, what I do here is first ask them, can you guys get a pen and paper ready? I'm gonna have a quick exercise for you, 30 seconds very easy. And while they do that, I will introduce myself, my name is Florian Philippe. I recently rebranded myself after almost 10 years of B2B brand strategy around the globe. I am from France obviously as you can hear from the accent. I lived in China, Vietnam, Taiwan and moved to the US about 7 years ago. I had an agency in Taiwan focused on connecting design and business. So a design agency with a twist I guess really trying to solve business issues and problems. A lot of it comes on to positioning. And recently rebranded myself as a brand therapist because I really care about the emotional aspect of branding, not only through understanding how to communicate your product in an emotional way and because this is the way you connect with your users but also because building a brand is emotionally violent and we all need someone that can support this endeavor.
+
+So please I'm gonna put a timer on the screen. You guys have 30 seconds to draw on your paper as many logos from memory as you can. Do not use logos with any letters, just pictograms or images of logos you have memorized. Please don't share and look around. This is just a fun exercise.
+
+Alright, so I give them the 30 second timer. Then I guess thank you, it's done. Can you please share your drawings with the rest of the group? Let's see what we have. Okay, I see Mercedes, I see Nike, I see Adidas, Windows, Apple. That's good.
+
+**Slide 8** (approx), a bunch of logos. And I tell them, okay chances are the logo you draw on this page and plot twist, those are not brands. The reason I asked you to draw logos for memory is first because a good logo should be able to be drawn by anyone very quickly. So you know that's a good logo. Because it's memorable, easy to recognize, scale logo. You can put it very small or very big, you still recognize it.
+
+But the main reason I'm telling you to do that is because there's a big misconception in the world of branding and marketing that those little things that you draw are brands and they are not. They are just signatures, they are logos, they are a connection that you make between this piece of drawing and the actual company. Those are part of what is called the brand identity. The brand identity is actually very tangible. It's all the tangible assets that the company has to communicate its identity. It's all the colors, the font, the shapes, the signatures. Those are very powerful. You can create recognition and a feeling and really attract the right user just by using a powerful brand identity. And again, those are just pieces of drawing.
+
+For example, if I put two circles next to each other. So now on slide nine or ten, sorry, I have two circles coming together as an animation and then the color appears and it looks like the Mastercard logo. The idea here is just to show them like, hey, this is just two circles with two different colors. But everybody here knows what company this is. So this is how powerful design can be.
+
+And then I go on with slide ten, Amazon, slide eleven, Shell and so on.
+
+**Slide 15**: What is a brand? So if a brand is not a collection of brand identity and tangible assets, I like to consider that a brand is intangible.
+
+**Slide 16**: A few words that appear next over each other one by one. The brand is intangible. It's intangible because a brand is a feeling. It's your reputation. It's not something you can grasp that easily because it's what people say, it's what people feel. It's what people say when you're not in the room.
+
+I came up with an analogy that I like using is the analogy of a bubble.
+
+**Slide 17**: A bubble and in the middle of it appears the product or service. What does that mean? Anyone, any of your clients, partners or anyone around you that you want them to discover anything about your product or even buy your product eventually. If you want anyone to be exposed to your product or service and potentially buy from you, they need to poke inside the bubble. There is no way to see the product without seeing the brand. It's your job as an entrepreneur to find a way to attract people inside the bubble. And if your bubble from the outside is not attractive, and when I use the word attractive, I don't mean just visually. I mean the positioning, the offer, the price, all of that is part of marketing and branding. It's not the product directly. We're still talking about strategy and positioning here. If from the outside there is no attraction, and the attraction starts very much so at the first impression. If no one is interested in poking inside, you will never sell your product as good as it can be. You cannot lead with just quality product.
+
+Then I talk about all the ways that this bubble shows up in the world. It's your email marketing. It's your business card. It's the music you play at the restaurant or the logo. It's the way you dress because you represent your brand. It's the way you shake your hand. All of those little things, interactions are creating your bubble from the outside. And the first impression is extremely important to set the tone.
+
+**Slide 19**: We talked about how attraction is important to attract people inside your bubble. But attraction is very subjective too. And the thing about subjective things is that some people like it and some people don't. The problem with a lot of people in branding and marketing is because they really want to attract everyone. It is impossible. You will never be able to attract everyone. Nobody, like there's no brand that everybody likes, even Apple, which is one of the most successful brand in the world. Some people hate it. But that's okay because if no one hates it, no one really loves it. So it's okay to actually try to not attract some people and actually recommend one of the exercises that I do in my workshop is to help you find who are the entire person who are not going to own your product even if you pay them. You need to define those people to help you sometimes define who is the right target.
+
+So now we're going to talk a little bit about biology and science because even though emotions are intangible, they still start in the brain. And our brain is a man of neurons. Different parts of the brain control different things. Like language and rational thinking.
+
+The reason it's so important to use emotion in branding is because 90% of the brain power is used by the emotions and the unconscious. We often hear, well, we only use 10% of the brain. Well, that's not really true. That's the prefrontal cortex, which is the rational thinking. The unconscious, that's a pilot's seat of your brain that makes decisions on the go right now. That's what you feel conscious of. But a lot of things happen in the background. It would be impossible for us to always, like if we had to relearn how to talk every time if we had to... If we had to relearn how to talk, how to walk every single time, that would be impossible for our brain to process. Even all the information we see all the time, our brain filters it and there is a huge background processing that is used for that, which is the limbic brain. The prefrontal cortex is rational, 5% to 15%, 10% on average and 90% is emotional, subconscious. We're not really aware of what's happening, but in the buying decision process, you need to really talk to that part of the brain. If you're going to bet only 10% when making your marketing, you're bound to fail. That's not a good bet.
+
+I'm going to stop there.

@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Florian P. | Brand Therapist — Clarity That Makes You Impossible to Ignore</title>
+<meta name="description" content="Brand strategy for founders and the companies they lead. Florian Philippe helps you turn who you actually are into a sharp identity, clean position, and a voice people trust.">
+
+<!-- Fonts: Bricolage Grotesque (primary) + Inter (secondary) — LOCKED, never change -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- GSAP + ScrollTrigger + SplitText alternative via CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<style>
+/* ============================================
+   FP. DESIGN TOKENS
+   Source of truth: Visual System Notion page
+   ============================================ */
+:root {
+  --brand-accent: #5A5CF9;
+  --brand-accent-glow: rgba(90, 92, 249, 0.35);
+  --brand-accent-soft: rgba(90, 92, 249, 0.07);
+  --dark-base: #1D1D1D;
+  --light-base: #F6F6F6;
+  --pure-white: #FFFFFF;
+  --pure-black: #000000;
+  --mid-gray: #949494;
+
+  --font-primary: 'Bricolage Grotesque', sans-serif;
+  --font-secondary: 'Inter', sans-serif;
+
+  --section-padding: clamp(80px, 10vw, 160px);
+  --container-max: 1200px;
+  --container-padding: clamp(20px, 5vw, 60px);
+
+  --purple-edge: 3px;
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  scroll-behavior: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-secondary);
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--pure-black);
+  background-color: var(--light-base);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+@media (max-width: 768px) {
+  body { cursor: auto; }
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: clamp(2.8rem, 6vw, 5.5rem); }
+h2 { font-size: clamp(2rem, 4vw, 3.5rem); }
+h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
+
+p {
+  font-family: var(--font-secondary);
+  font-size: clamp(1rem, 1.1vw, 1.15rem);
+  line-height: 1.75;
+  max-width: 680px;
+}
+
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+section {
+  padding: var(--section-padding) 0;
+}
+
+/* ============================================
+   LOADING SCREEN
+   ============================================ */
+.loader {
+  position: fixed;
+  inset: 0;
+  background: var(--light-base);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.loader-logo {
+  font-family: var(--font-primary);
+  font-size: clamp(48px, 8vw, 72px);
+  font-weight: 800;
+  color: var(--pure-black);
+  opacity: 0;
+  transform: translateY(10px);
+  letter-spacing: -0.03em;
+}
+
+.loader-logo .dot { color: var(--brand-accent); }
+
+.loader-line {
+  width: 60px;
+  height: 2px;
+  background: var(--brand-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+/* ============================================
+   PROGRESS BAR
+   ============================================ */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--brand-accent);
+  z-index: 200;
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+/* ============================================
+   CUSTOM CURSOR
+   ============================================ */
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--brand-accent);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  opacity: 0;
+}
+
+.cursor-ring {
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid rgba(90, 92, 249, 0.4);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, opacity 0.3s;
+  opacity: 0;
+}
+
+.cursor-ring.hover {
+  width: 64px;
+  height: 64px;
+  border-color: var(--brand-accent);
+  border-width: 2px;
+}
+
+.cursor-ring.magnetic {
+  width: 80px;
+  height: 80px;
+  border-color: var(--brand-accent);
+  opacity: 0.6;
+}
+
+/* ============================================
+   NAVIGATION — Mode B glassmorphic
+   ============================================ */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 18px 0;
+  background: rgba(246, 246, 246, 0.8);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transform: translateY(-100%);
+}
+
+nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-family: var(--font-primary);
+  font-weight: 800;
+  font-size: 1.6rem;
+  letter-spacing: -0.03em;
+}
+
+.logo .dot { color: var(--brand-accent); }
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  align-items: center;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: var(--font-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--mid-gray);
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.nav-links a:not(.btn)::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--brand-accent);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-links a:not(.btn):hover { color: var(--pure-black); }
+.nav-links a:not(.btn):hover::after { width: 100%; }
+
+/* Mobile menu toggle */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--pure-black);
+  transition: all 0.3s ease;
+}
+
+/* ============================================
+   BUTTONS — SHARP CORNERS. No pills.
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 16px 32px;
+  border: none;
+  cursor: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  border-radius: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .btn { cursor: pointer; }
+}
+
+.btn-primary {
+  background: var(--pure-black);
+  color: var(--pure-white);
+}
+
+.btn-primary:hover {
+  background: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.btn-purple {
+  background: var(--brand-accent);
+  color: var(--pure-white);
+}
+
+.btn-purple::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.btn-purple:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px var(--brand-accent-glow);
+}
+
+.btn-purple:hover::before { opacity: 1; }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--pure-black);
+  padding: 16px 0;
+}
+
+.btn-ghost .arrow {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-block;
+}
+
+.btn-ghost:hover .arrow { transform: translateX(6px); }
+
+.btn-ghost-light {
+  background: transparent;
+  color: var(--pure-white);
+  padding: 16px 0;
+}
+
+.btn-ghost-light .arrow {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-block;
+}
+
+.btn-ghost-light:hover .arrow { transform: translateX(6px); }
+
+.btn:focus-visible, a:focus-visible {
+  outline: 3px solid var(--brand-accent);
+  outline-offset: 3px;
+}
+
+/* ============================================
+   SECTION 1: HERO
+   Mode B. Signature image. Character-level animation.
+   ============================================ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 40px;
+  background: var(--light-base);
+  overflow: hidden;
+  position: relative;
+}
+
+.hero .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+}
+
+.hero-content {
+  max-width: 580px;
+}
+
+.hero-label {
+  font-family: var(--font-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--brand-accent);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.hero-label-inner {
+  display: inline-block;
+  transform: translateY(110%);
+}
+
+.hero h1 {
+  margin-bottom: 28px;
+}
+
+.hero h1 .line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 4px;
+}
+
+.hero h1 .char {
+  display: inline-block;
+  transform: translateY(120%);
+}
+
+.hero h1 .accent { color: var(--brand-accent); }
+
+.hero-body {
+  color: #555;
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.hero-cta-group {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+/* Hero image with reveal mask */
+.hero-image-wrapper {
+  position: relative;
+  opacity: 0;
+}
+
+.hero-image-reveal {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-image-reveal::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--light-base);
+  z-index: 2;
+  transform-origin: right;
+}
+
+.hero-image-reveal img {
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  object-position: center top;
+  filter: grayscale(100%) contrast(1.05);
+  transform: scale(1.08);
+  transition: transform 10s cubic-bezier(0.16, 1, 0.3, 1), filter 1.5s ease;
+  will-change: transform;
+}
+
+.hero-image-reveal.revealed img {
+  transform: scale(1);
+}
+
+/* Decorative accent line on image */
+.hero-image-accent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--brand-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  z-index: 3;
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+}
+
+.scroll-indicator span {
+  font-family: var(--font-secondary);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mid-gray);
+}
+
+.scroll-line {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(to bottom, var(--brand-accent), transparent);
+  animation: scrollPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.2; transform: scaleY(0.4); transform-origin: top; }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* ============================================
+   MARQUEE
+   ============================================ */
+.marquee-section {
+  padding: 28px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  background: var(--light-base);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 0;
+  animation: marqueeScroll 30s linear infinite;
+  white-space: nowrap;
+}
+
+.marquee-track span {
+  flex-shrink: 0;
+  font-family: var(--font-primary);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 2.8vw, 2.6rem);
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.07);
+  padding: 0 20px;
+  letter-spacing: 0.02em;
+}
+
+.marquee-track .marquee-dot {
+  color: var(--brand-accent);
+  opacity: 0.3;
+}
+
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ============================================
+   SECTION 2: THE TENSION
+   DARK. Grain + purple edge. Word-by-word reveal.
+   ============================================ */
+.tension {
+  background: var(--dark-base);
+  color: var(--pure-white);
+  position: relative;
+  overflow: hidden;
+  padding: clamp(100px, 14vw, 220px) 0;
+}
+
+.grain-texture::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 150px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.purple-edge::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--purple-edge);
+  background: var(--brand-accent);
+  z-index: 2;
+}
+
+.tension .container {
+  position: relative;
+  z-index: 3;
+  max-width: 900px;
+}
+
+.tension-headline {
+  font-family: var(--font-primary);
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--pure-white);
+  margin-bottom: 48px;
+}
+
+.tension-headline .accent { color: var(--brand-accent); }
+
+.word-reveal .word {
+  display: inline-block;
+  opacity: 0.12;
+  transition: opacity 0.2s ease;
+}
+
+.word-reveal .word.active { opacity: 1; }
+
+.tension-body {
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 28px;
+  max-width: 640px;
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.tension-kicker {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+  color: var(--pure-white);
+  line-height: 1.45;
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  max-width: 640px;
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.tension-kicker .accent { color: var(--brand-accent); }
+
+/* ============================================
+   SECTION 3: BRAND THERAPY — THE METHOD
+   Mode B (light). Focus Star. Photography large.
+   ============================================ */
+.method {
+  background: var(--pure-white);
+  position: relative;
+  overflow: hidden;
+}
+
+.method .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+}
+
+.method-content h2 {
+  margin-bottom: 24px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.method-content p {
+  color: #555;
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.method-edges {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.edge-item {
+  padding: 22px;
+  background: var(--light-base);
+  border-left: 3px solid var(--brand-accent);
+  opacity: 0;
+  transform: translateY(24px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+}
+
+.edge-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.05);
+}
+
+.edge-label {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--pure-black);
+  margin-bottom: 6px;
+}
+
+.edge-desc {
+  font-family: var(--font-secondary);
+  font-size: 0.85rem;
+  color: var(--mid-gray);
+  line-height: 1.5;
+}
+
+.method-image {
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(50px);
+}
+
+.method-image-inner {
+  overflow: hidden;
+}
+
+.method-image img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  transform: scale(1.15);
+  transition: transform 12s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.method-image.revealed img {
+  transform: scale(1);
+}
+
+/* ============================================
+   SECTION 4: TESTIMONIALS
+   Mode B (light). Tilt hover cards.
+   ============================================ */
+.testimonials {
+  background: var(--light-base);
+  position: relative;
+}
+
+.testimonials h2 {
+  margin-bottom: 64px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.testimonial-card {
+  background: var(--pure-white);
+  padding: 44px 32px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 3px solid transparent;
+  transition: border-bottom-color 0.4s, box-shadow 0.4s;
+  opacity: 0;
+  transform: translateY(50px);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.testimonial-card:hover {
+  border-bottom-color: var(--brand-accent);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.07);
+}
+
+.testimonial-quote {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  color: var(--pure-black);
+  margin-bottom: 18px;
+}
+
+.testimonial-body {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: #666;
+  margin-bottom: 28px;
+}
+
+.testimonial-author {
+  font-family: var(--font-secondary);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #6B6B6B;
+}
+
+/* ============================================
+   SECTION 5: TWO PATHS
+   Mode B (pure white). Route visitors.
+   ============================================ */
+.paths {
+  background: var(--pure-white);
+  position: relative;
+}
+
+.paths-intro {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.paths-intro h2 {
+  margin-bottom: 16px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.paths-intro p {
+  margin: 0 auto;
+  color: #555;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.paths-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.path-card {
+  padding: 52px 44px;
+  background: var(--light-base);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-bottom: 3px solid transparent;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  display: block;
+  opacity: 0;
+  transform: translateY(50px);
+  position: relative;
+  overflow: hidden;
+}
+
+.path-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--brand-accent-soft), transparent);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.path-card:hover {
+  transform: translateY(-8px);
+  border-bottom-color: var(--brand-accent);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.07);
+}
+
+.path-card:hover::before { opacity: 1; }
+
+.path-label {
+  font-family: var(--font-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--brand-accent);
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.path-card h3 {
+  margin-bottom: 14px;
+  color: var(--pure-black);
+  position: relative;
+}
+
+.path-tagline {
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--pure-black);
+  margin-bottom: 18px;
+  position: relative;
+}
+
+.path-desc {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.75;
+  margin-bottom: 28px;
+  position: relative;
+}
+
+.path-card .btn { position: relative; }
+
+.path-intersection {
+  text-align: center;
+  padding: 48px 0 0;
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.path-intersection p {
+  font-family: var(--font-primary);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--mid-gray);
+  margin: 0 auto;
+}
+
+/* ============================================
+   SECTION 6: CTA
+   DARK. Grain + purple edge. Glow pulse.
+   ============================================ */
+.cta-section {
+  background: var(--dark-base);
+  color: var(--pure-white);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.cta-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--brand-accent-glow) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.12;
+  filter: blur(100px);
+  pointer-events: none;
+}
+
+.cta-section .container {
+  position: relative;
+  z-index: 3;
+  max-width: 700px;
+}
+
+.cta-section h2 {
+  margin-bottom: 24px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.cta-section p {
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 auto 44px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.cta-section .btn-purple {
+  font-size: 1.05rem;
+  padding: 22px 48px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+footer {
+  background: var(--dark-base);
+  color: rgba(255, 255, 255, 0.45);
+  padding: 44px 0;
+  font-family: var(--font-secondary);
+  font-size: 0.8rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+footer .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+footer .logo { color: var(--pure-white); font-size: 1.2rem; }
+footer a { color: rgba(255, 255, 255, 0.45); transition: color 0.3s ease; }
+footer a:hover { color: var(--pure-white); }
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1024px) {
+  .hero .container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .hero-content { max-width: 100%; }
+  .hero-cta-group { justify-content: center; }
+  .hero-image-wrapper {
+    order: -1;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+  .method .container { grid-template-columns: 1fr; }
+  .method-image {
+    order: -1;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .testimonial-grid {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .paths-grid {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-toggle { display: flex; }
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(246, 246, 246, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    z-index: 99;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a { font-size: 1.4rem; color: var(--pure-black); }
+  .nav-links a::after { display: none; }
+}
+
+@media (max-width: 640px) {
+  h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.6rem; }
+  .method-edges { grid-template-columns: 1fr; }
+  .path-card { padding: 36px 28px; }
+  .testimonial-card { padding: 32px 24px; }
+  .cursor-dot, .cursor-ring { display: none !important; }
+  footer .container { flex-direction: column; text-align: center; }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--brand-accent);
+  color: var(--pure-white);
+  padding: 8px 16px;
+  z-index: 300;
+  font-family: var(--font-secondary);
+  font-size: 0.9rem;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus { top: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+  .scroll-line { animation: none; }
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .testimonial-card { border-width: 2px; border-color: var(--pure-black); }
+  .path-card { border-width: 2px; border-color: var(--pure-black); }
+  .edge-item { border-width: 2px; }
+}
+
+/* ============================================
+   SMOOTH SECTION DIVIDER
+   ============================================ */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.06) 20%, rgba(0,0,0,0.06) 80%, transparent);
+  margin: 0;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Skip to content: WCAG 2.4.1 -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- Loading Screen -->
+<div class="loader" id="loader">
+  <div class="loader-logo" id="loaderLogo">FP<span class="dot">.</span></div>
+  <div class="loader-line" id="loaderLine"></div>
+</div>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Custom Cursor (desktop) -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Navigation: Mode B glassmorphic -->
+<nav role="navigation" aria-label="Main navigation" id="nav">
+  <div class="container">
+    <a href="/" class="logo" aria-label="Florian P. homepage">FP<span class="dot">.</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/the-story">The Story</a></li>
+      <li><a href="/for-founders-and-ceos">For Founders</a></li>
+      <li><a href="/founder-led-companies">For Companies</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="btn btn-primary" style="padding: 10px 24px; font-size: 0.85rem;">Book a Call</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============================================
+     SECTION 1: HERO
+     Mode B. Signature lens image. Character-level reveal.
+     ============================================ -->
+<main id="main-content">
+<section class="hero" aria-label="Introduction" id="hero">
+  <div class="container">
+    <div class="hero-content">
+      <p class="hero-label"><span class="hero-label-inner" id="heroLabel">Brand Therapist</span></p>
+      <h1 id="heroTitle">
+        <span class="line" data-text="Clarity That">Clarity That</span>
+        <span class="line" data-text="Makes You">Makes You</span>
+        <span class="line accent-line" data-text="Impossible">Impossible</span>
+        <span class="line" data-text="to Ignore.">to Ignore.</span>
+      </h1>
+      <p class="hero-body" id="heroBody">Brand strategy for the person behind the business... and the business they're building. For founders and executives who know their value and are ready to make the market see it.</p>
+      <div class="hero-cta-group" id="heroCta">
+        <a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="btn btn-purple" data-magnetic>Book Your Free Intro Call</a>
+        <a href="#paths" class="btn btn-ghost" data-magnetic>See how it works <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
+    <div class="hero-image-wrapper" id="heroImageWrapper">
+      <div class="hero-image-reveal" id="heroImage">
+        <img src="images/florian/web/florian-editorial-lens-bw.jpg"
+             alt="Florian Philippe holding a glass square over one eye, revealing clarity through the lens"
+             width="560" height="700"
+             loading="eager">
+        <div class="hero-image-accent" id="heroImageAccent"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator" id="scrollIndicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee-section" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack">
+    <span>Clarity That Makes You Impossible to Ignore <span class="marquee-dot">&middot;</span></span>
+    <span>Brand Therapy <span class="marquee-dot">&middot;</span></span>
+    <span>Positioning <span class="marquee-dot">&middot;</span></span>
+    <span>Identity <span class="marquee-dot">&middot;</span></span>
+    <span>Strategy <span class="marquee-dot">&middot;</span></span>
+    <span>Clarity That Makes You Impossible to Ignore <span class="marquee-dot">&middot;</span></span>
+    <span>Brand Therapy <span class="marquee-dot">&middot;</span></span>
+    <span>Positioning <span class="marquee-dot">&middot;</span></span>
+    <span>Identity <span class="marquee-dot">&middot;</span></span>
+    <span>Strategy <span class="marquee-dot">&middot;</span></span>
+  </div>
+</div>
+
+<!-- ============================================
+     SECTION 2: THE TENSION
+     DARK. Word-by-word scroll-driven reveal.
+     ============================================ -->
+<section class="tension grain-texture purple-edge" aria-label="The real problem" id="tensionSection">
+  <div class="container">
+    <h2 class="tension-headline word-reveal" id="tensionHeadline">You know your work is <span class="accent">good</span>. So why does putting that into words feel so hard?</h2>
+
+    <p class="tension-body" id="tensionBody1">It's not a marketing problem. It's a permission problem.</p>
+
+    <p class="tension-body" id="tensionBody2">You keep tweaking instead of showing up. Perfecting the deck instead of making the call. Watching people with half your depth get twice your attention... and wondering what they know that you don't.</p>
+
+    <p class="tension-body" id="tensionBody3">Here's what they know: it's not about being louder. It's about being clearer.</p>
+
+    <p class="tension-body" id="tensionBody4">And clarity doesn't come from templates, AI tools, or another brand agency. It comes from someone asking you the questions you've been avoiding.</p>
+
+    <div class="tension-kicker" id="tensionKicker">
+      Strategy is the what. Mindset is the why it's hard.<br>
+      <span class="accent">Brand Therapy addresses both.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     SECTION 3: BRAND THERAPY — THE METHOD
+     Mode B (light). Focus Star.
+     ============================================ -->
+<section class="method" aria-label="Brand Therapy methodology" id="methodSection">
+  <div class="container">
+    <div class="method-content">
+      <h2>Brand Therapy</h2>
+      <p>A diagnostic-first clarity process. Not a rebrand. Not a content plan. A structured conversation that gets to the root of what makes you... you.</p>
+      <p>Built around the Focus Star framework, it maps five dimensions to find the position that's already yours. You just haven't said it out loud yet.</p>
+
+      <div class="method-edges" id="methodEdges">
+        <div class="edge-item">
+          <div class="edge-label">Audience</div>
+          <div class="edge-desc">Not everyone. The specific people who need what only you offer.</div>
+        </div>
+        <div class="edge-item">
+          <div class="edge-label">Purpose</div>
+          <div class="edge-desc">Why you do this work. What drives you beneath the title.</div>
+        </div>
+        <div class="edge-item">
+          <div class="edge-label">DNA</div>
+          <div class="edge-desc">Your non-negotiables. How you operate and what you refuse to compromise.</div>
+        </div>
+        <div class="edge-item">
+          <div class="edge-label">Personality</div>
+          <div class="edge-desc">How you sound and show up. Your archetype and communication style.</div>
+        </div>
+        <div class="edge-item" style="grid-column: span 2;">
+          <div class="edge-label">Offering</div>
+          <div class="edge-desc">The category you own, the problem you solve, the transformation you deliver.</div>
+        </div>
+      </div>
+    </div>
+    <div class="method-image" id="methodImage">
+      <div class="method-image-inner">
+        <img src="images/florian/web/florian-consulting-session-mountain.jpg"
+             alt="Florian Philippe in a consulting session, seated near a window with mountain view"
+             width="560" height="740"
+             loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================
+     SECTION 4: TESTIMONIALS
+     Mode B. Tilt-hover cards.
+     ============================================ -->
+<section class="testimonials" aria-label="Client testimonials" id="testimonialsSection">
+  <div class="container">
+    <h2>What people say</h2>
+    <div class="testimonial-grid" id="testimonialGrid">
+
+      <article class="testimonial-card" data-tilt>
+        <p class="testimonial-quote">"He's a fucking unicorn"</p>
+        <p class="testimonial-body">Florian is far and away the most skilled Marketing and Branding executive I have come across. He's super smart, imaginative, incredibly creative, and yet he brings the technical expertise and the project management expertise in equal measure.</p>
+        <p class="testimonial-author">Jon Tull, Managing Partner, Cachet</p>
+      </article>
+
+      <article class="testimonial-card" data-tilt>
+        <p class="testimonial-quote">"Every detail he touches is intentional"</p>
+        <p class="testimonial-body">Florian brings a rare combination of vision and execution. He sees the big picture with a high-level, strategic perspective, yet he's equally skilled at rolling up his sleeves to deliver results on the ground.</p>
+        <p class="testimonial-author">Kevin Meredith, Founder, 4th Sector Innovations</p>
+      </article>
+
+      <article class="testimonial-card" data-tilt>
+        <p class="testimonial-quote">"His guidance has been genuinely invaluable"</p>
+        <p class="testimonial-body">His feedback goes far beyond surface-level reactions. He consistently brings thoughtful, structured insight that pushes the work toward clarity, coherence, and stronger decision-making.</p>
+        <p class="testimonial-author">Sam Goldman, Tech Founder</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     SECTION 5: TWO PATHS
+     Mode B. Route visitors.
+     ============================================ -->
+<section class="paths" id="paths" aria-label="Services">
+  <div class="container">
+    <div class="paths-intro">
+      <h2>Two ways to work together</h2>
+      <p>Most people do one or the other. The real leverage is understanding how personal brand and company brand reinforce each other.</p>
+    </div>
+
+    <div class="paths-grid" id="pathsGrid">
+      <a href="/for-founders-and-ceos" class="path-card" aria-label="Brand Therapy for Founders and CEOs">
+        <p class="path-label">Personal Brand Strategy</p>
+        <h3>For Founders &amp; CEOs</h3>
+        <p class="path-tagline">Your brand. Your voice. Your visibility.</p>
+        <p class="path-desc">A guided clarity process that turns who you actually are into a sharp identity, a clean position, and a voice the right people recognize. Built around the Focus Star framework. Delivered in 2 weeks.</p>
+        <span class="btn btn-ghost">Learn more <span class="arrow">&rarr;</span></span>
+      </a>
+
+      <a href="/founder-led-companies" class="path-card" aria-label="Brand Strategy for Founder-Led Companies">
+        <p class="path-label">Company Brand Strategy</p>
+        <h3>For Founder-Led Companies</h3>
+        <p class="path-tagline">Your company's brand. Built to scale.</p>
+        <p class="path-desc">Full brand strategy, positioning, and identity for companies where the founder's vision is the competitive advantage. From diagnostic to deliverable. Strategy that your team can execute from.</p>
+        <span class="btn btn-ghost">Learn more <span class="arrow">&rarr;</span></span>
+      </a>
+    </div>
+
+    <div class="path-intersection" id="pathIntersection">
+      <p>Most people do one or the other. The real leverage is in both.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     SECTION 6: CTA
+     DARK. Grain + purple edge + pulsing glow.
+     ============================================ -->
+<section class="cta-section grain-texture purple-edge" aria-label="Book a call" id="ctaSection">
+  <div class="cta-glow" id="ctaGlow"></div>
+  <div class="container">
+    <h2>Your next real brand conversation is free.</h2>
+    <p>No deck. No pitch. Just 20 minutes to find out if the problem you're sitting on has a sharper answer than you think.</p>
+    <a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="btn btn-purple" data-magnetic>Book Your Intro Call</a>
+  </div>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer role="contentinfo">
+  <div class="container">
+    <div>
+      <a href="/" class="logo">FP<span class="dot">.</span></a>
+      <p style="margin-top: 8px;">Brand Therapist</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="mailto:connect@florianp.com">connect@florianp.com</a></li>
+      <li><a href="/the-story">The Story</a></li>
+      <li><a href="/blog">Blog</a></li>
+    </ul>
+    <p>Beverly Hills, CA</p>
+  </div>
+</footer>
+
+<!-- ============================================
+     GSAP ANIMATION ENGINE — V3
+     Character-level splits, magnetic buttons,
+     tilt cards, parallax layers, smooth reveals.
+     ============================================ -->
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isMobile = window.innerWidth <= 768;
+
+// ===== MOBILE MENU =====
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+
+menuToggle.addEventListener('click', () => {
+  const isOpen = navLinks.classList.toggle('open');
+  menuToggle.setAttribute('aria-expanded', isOpen);
+});
+
+// ===== LOADING SCREEN =====
+const loader = document.getElementById('loader');
+const loaderLogo = document.getElementById('loaderLogo');
+const loaderLine = document.getElementById('loaderLine');
+
+function runLoadingSequence() {
+  if (prefersReducedMotion) {
+    loader.style.display = 'none';
+    showAllContent();
+    return;
+  }
+  const tl = gsap.timeline();
+  tl.to(loaderLogo, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' })
+    .to(loaderLine, { scaleX: 1, duration: 0.8, ease: 'power2.inOut' }, '-=0.2')
+    .to([loaderLogo, loaderLine], { opacity: 0, duration: 0.4, ease: 'power2.in' }, '+=0.2')
+    .to(loader, { yPercent: -100, duration: 0.8, ease: 'power4.inOut',
+      onComplete: () => {
+        loader.style.display = 'none';
+        animateHero();
+      }
+    }, '-=0.2');
+}
+
+if (document.readyState === 'complete') {
+  runLoadingSequence();
+} else {
+  window.addEventListener('load', runLoadingSequence);
+}
+
+// Safety: dismiss loader if animation stalls (e.g. headless/preview environments)
+setTimeout(() => {
+  if (loader && loader.style.display !== 'none') {
+    loader.style.display = 'none';
+    animateHero();
+  }
+}, 4000);
+
+// ===== SHOW ALL (reduced motion) =====
+function showAllContent() {
+  document.querySelectorAll('.hero h1 .char').forEach(c => { c.style.transform = 'none'; });
+  gsap.set('.hero-label-inner', { y: 0 });
+  gsap.set('#heroBody, #heroCta', { opacity: 1, y: 0 });
+  gsap.set('#heroImageWrapper', { opacity: 1 });
+  gsap.set('.hero-image-reveal::before', { scaleX: 0 });
+  gsap.set('#heroImageAccent', { scaleX: 1 });
+  gsap.set('#scrollIndicator', { opacity: 1 });
+  gsap.set('#nav', { y: 0 });
+  document.querySelectorAll('.tension-body, .tension-kicker').forEach(el => {
+    el.style.opacity = '1'; el.style.transform = 'none';
+  });
+  document.querySelectorAll('.method-content h2, .method-content p, .edge-item, .method-image').forEach(el => {
+    el.style.opacity = '1'; el.style.transform = 'none';
+  });
+  document.querySelectorAll('.testimonials h2, .testimonial-card').forEach(el => {
+    el.style.opacity = '1'; el.style.transform = 'none';
+  });
+  document.querySelectorAll('.paths-intro h2, .paths-intro p, .path-card, .path-intersection').forEach(el => {
+    el.style.opacity = '1'; el.style.transform = 'none';
+  });
+  document.querySelectorAll('.cta-section h2, .cta-section p, .cta-section .btn-purple').forEach(el => {
+    el.style.opacity = '1'; el.style.transform = 'none';
+  });
+  document.querySelectorAll('.word-reveal .word').forEach(w => w.classList.add('active'));
+}
+
+// ===== CHARACTER SPLIT FOR HERO =====
+function splitTextToChars() {
+  const lines = document.querySelectorAll('#heroTitle .line');
+  lines.forEach(line => {
+    const text = line.textContent;
+    const isAccent = line.classList.contains('accent-line');
+    line.innerHTML = '';
+    line.style.overflow = 'hidden';
+    line.style.display = 'block';
+    line.style.paddingBottom = '6px';
+
+    const wrapper = document.createElement('span');
+    wrapper.style.display = 'inline-block';
+
+    text.split('').forEach((char, i) => {
+      const span = document.createElement('span');
+      span.className = 'char';
+      span.textContent = char === ' ' ? '\u00A0' : char;
+      if (isAccent) span.classList.add('accent');
+      span.style.display = 'inline-block';
+      span.style.willChange = 'transform';
+      wrapper.appendChild(span);
+    });
+
+    line.appendChild(wrapper);
+  });
+}
+
+splitTextToChars();
+
+// ===== CUSTOM CURSOR =====
+if (!prefersReducedMotion && !isMobile) {
+  const cursorDot = document.getElementById('cursorDot');
+  const cursorRing = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0;
+  let cursorVisible = false;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    if (!cursorVisible) {
+      cursorVisible = true;
+      gsap.to([cursorDot, cursorRing], { opacity: 1, duration: 0.3 });
+    }
+  });
+
+  document.addEventListener('mouseleave', () => {
+    cursorVisible = false;
+    gsap.to([cursorDot, cursorRing], { opacity: 0, duration: 0.3 });
+  });
+
+  gsap.ticker.add(() => {
+    gsap.set(cursorDot, { x: mouseX - 4, y: mouseY - 4 });
+    gsap.to(cursorRing, { x: mouseX - 20, y: mouseY - 20, duration: 0.18, ease: 'power2.out' });
+  });
+
+  document.querySelectorAll('a, button, .btn, [data-tilt]').forEach(el => {
+    el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
+  });
+} else {
+  const cd = document.getElementById('cursorDot');
+  const cr = document.getElementById('cursorRing');
+  if (cd) cd.style.display = 'none';
+  if (cr) cr.style.display = 'none';
+}
+
+// ===== MAGNETIC BUTTONS =====
+if (!isMobile && !prefersReducedMotion) {
+  document.querySelectorAll('[data-magnetic]').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      gsap.to(btn, {
+        x: x * 0.25,
+        y: y * 0.25,
+        duration: 0.4,
+        ease: 'power2.out'
+      });
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
+    });
+  });
+}
+
+// ===== TILT EFFECT ON CARDS =====
+if (!isMobile && !prefersReducedMotion) {
+  document.querySelectorAll('[data-tilt]').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      gsap.to(card, {
+        rotateY: x * 8,
+        rotateX: -y * 8,
+        duration: 0.5,
+        ease: 'power2.out',
+        transformPerspective: 800
+      });
+    });
+
+    card.addEventListener('mouseleave', () => {
+      gsap.to(card, {
+        rotateY: 0,
+        rotateX: 0,
+        duration: 0.7,
+        ease: 'elastic.out(1, 0.5)'
+      });
+    });
+  });
+}
+
+// ===== PROGRESS BAR =====
+if (!prefersReducedMotion) {
+  gsap.to('#progressBar', {
+    scaleX: 1,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: 'body',
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.3
+    }
+  });
+}
+
+// ===== NAV REVEAL =====
+if (!prefersReducedMotion) {
+  ScrollTrigger.create({
+    trigger: '#hero',
+    start: 'bottom 80%',
+    onEnter: () => gsap.to('#nav', { y: 0, duration: 0.7, ease: 'power3.out' }),
+    onLeaveBack: () => gsap.to('#nav', { y: '-100%', duration: 0.4, ease: 'power3.in' })
+  });
+} else {
+  gsap.set('#nav', { y: 0 });
+}
+
+// ===== IMAGE OVERLAY SETUP (must run before animateHero) =====
+(function() {
+  const reveal = document.querySelector('.hero-image-reveal');
+  const overlay = document.createElement('div');
+  overlay.id = 'heroOverlay';
+  overlay.style.cssText = 'position:absolute;inset:0;background:var(--light-base);z-index:2;transform-origin:right;';
+  reveal.style.position = 'relative';
+  reveal.appendChild(overlay);
+
+  const style = document.createElement('style');
+  style.textContent = '.hero-image-reveal::before { display: none !important; }';
+  document.head.appendChild(style);
+})();
+
+// ===== HERO ANIMATION =====
+function animateHero() {
+  const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+
+  tl.to('.hero h1 .char', {
+    y: 0,
+    duration: 1.1,
+    stagger: { each: 0.02, from: 'start' },
+    ease: 'power4.out'
+  })
+  .to('.hero-label-inner', {
+    y: 0,
+    duration: 0.8,
+    ease: 'power3.out'
+  }, '-=0.7')
+  .to('#heroImageWrapper', {
+    opacity: 1,
+    duration: 0.01
+  }, '-=0.5')
+  .to('#heroOverlay', {
+    scaleX: 0,
+    duration: 1.4,
+    ease: 'power4.inOut'
+  }, '-=0.4')
+  .to('#heroBody', {
+    opacity: 1,
+    y: 0,
+    duration: 0.9,
+    ease: 'power3.out'
+  }, '-=0.7')
+  .to('#heroCta', {
+    opacity: 1,
+    y: 0,
+    duration: 0.9,
+    ease: 'power3.out'
+  }, '-=0.6')
+  .to('#heroImageAccent', {
+    scaleX: 1,
+    duration: 0.9,
+    ease: 'power3.inOut'
+  }, '-=0.5')
+  .to('#scrollIndicator', {
+    opacity: 1,
+    duration: 0.8,
+  }, '-=0.3');
+
+  setTimeout(() => {
+    document.querySelector('.hero-image-reveal').classList.add('revealed');
+  }, 1000);
+};
+
+// ===== HERO PARALLAX =====
+if (!prefersReducedMotion) {
+  gsap.to('.hero-image-reveal img', {
+    y: -80,
+    scrollTrigger: {
+      trigger: '#hero',
+      start: 'center center',
+      end: 'bottom top',
+      scrub: 1.5
+    }
+  });
+
+  gsap.to('.hero-content', {
+    y: -40,
+    opacity: 0.3,
+    scrollTrigger: {
+      trigger: '#hero',
+      start: '60% center',
+      end: 'bottom top',
+      scrub: 1
+    }
+  });
+
+  gsap.to('#scrollIndicator', {
+    opacity: 0,
+    scrollTrigger: {
+      trigger: '#hero',
+      start: '70% center',
+      end: '85% center',
+      scrub: true
+    }
+  });
+}
+
+// ===== TENSION: WORD-BY-WORD REVEAL =====
+if (!prefersReducedMotion) {
+  const tensionHeadline = document.getElementById('tensionHeadline');
+  const headlineHTML = tensionHeadline.innerHTML;
+
+  const wrappedHTML = headlineHTML.replace(/<span class="accent">(.*?)<\/span>/g, (match, inner) => {
+    return inner.split(/\s+/).map(w => `<span class="word accent">${w}</span>`).join(' ');
+  }).replace(/(?<=>|\s)([^<\s][^\s<]*)/g, (match) => {
+    if (match.includes('class=')) return match;
+    return `<span class="word">${match}</span>`;
+  });
+
+  tensionHeadline.innerHTML = wrappedHTML;
+
+  const words = tensionHeadline.querySelectorAll('.word');
+  ScrollTrigger.create({
+    trigger: '#tensionSection',
+    start: 'top 65%',
+    end: 'top 10%',
+    scrub: true,
+    onUpdate: (self) => {
+      const progress = self.progress;
+      words.forEach((word, i) => {
+        word.classList.toggle('active', (i / words.length) < progress);
+      });
+    }
+  });
+
+  // Stagger body paragraphs
+  ['#tensionBody1', '#tensionBody2', '#tensionBody3', '#tensionBody4'].forEach(id => {
+    gsap.to(id, {
+      opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+      scrollTrigger: { trigger: id, start: 'top 82%', toggleActions: 'play none none reverse' }
+    });
+  });
+
+  gsap.to('#tensionKicker', {
+    opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: '#tensionKicker', start: 'top 85%', toggleActions: 'play none none reverse' }
+  });
+}
+
+// ===== METHOD SECTION =====
+if (!prefersReducedMotion) {
+  gsap.to('.method-content h2', {
+    opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: '#methodSection', start: 'top 65%', toggleActions: 'play none none reverse' }
+  });
+
+  gsap.to('.method-content p', {
+    opacity: 1, y: 0, duration: 0.9, stagger: 0.15, ease: 'power3.out',
+    scrollTrigger: { trigger: '#methodSection', start: 'top 60%', toggleActions: 'play none none reverse' }
+  });
+
+  gsap.to('.edge-item', {
+    opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: 'power3.out',
+    scrollTrigger: { trigger: '#methodEdges', start: 'top 78%', toggleActions: 'play none none reverse' }
+  });
+
+  gsap.to('#methodImage', {
+    opacity: 1, x: 0, duration: 1.2, ease: 'power3.out',
+    scrollTrigger: {
+      trigger: '#methodSection', start: 'top 60%', toggleActions: 'play none none reverse',
+      onEnter: () => {
+        setTimeout(() => document.getElementById('methodImage').classList.add('revealed'), 400);
+      }
+    }
+  });
+
+  // Method image parallax
+  gsap.to('#methodImage img', {
+    y: -40,
+    scrollTrigger: {
+      trigger: '#methodSection',
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 1.5
+    }
+  });
+}
+
+// ===== TESTIMONIALS =====
+if (!prefersReducedMotion) {
+  gsap.to('.testimonials h2', {
+    opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: '#testimonialsSection', start: 'top 70%', toggleActions: 'play none none reverse' }
+  });
+
+  gsap.to('.testimonial-card', {
+    opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out',
+    scrollTrigger: { trigger: '#testimonialGrid', start: 'top 78%', toggleActions: 'play none none reverse' }
+  });
+}
+
+// ===== TWO PATHS =====
+if (!prefersReducedMotion) {
+  gsap.to('.paths-intro h2', {
+    opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: '#paths', start: 'top 70%', toggleActions: 'play none none reverse' }
+  });
+
+  gsap.to('.paths-intro p', {
+    opacity: 1, y: 0, duration: 0.9, delay: 0.1, ease: 'power3.out',
+    scrollTrigger: { trigger: '#paths', start: 'top 65%', toggleActions: 'play none none reverse' }
+  });
+
+  gsap.to('.path-card', {
+    opacity: 1, y: 0, duration: 0.9, stagger: 0.2, ease: 'power3.out',
+    scrollTrigger: { trigger: '#pathsGrid', start: 'top 78%', toggleActions: 'play none none reverse' }
+  });
+
+  gsap.to('#pathIntersection', {
+    opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: '#pathIntersection', start: 'top 88%', toggleActions: 'play none none reverse' }
+  });
+}
+
+// ===== CTA SECTION =====
+if (!prefersReducedMotion) {
+  gsap.to('.cta-section h2', {
+    opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: '#ctaSection', start: 'top 68%', toggleActions: 'play none none reverse' }
+  });
+
+  gsap.to('.cta-section p', {
+    opacity: 1, y: 0, duration: 0.9, delay: 0.1, ease: 'power3.out',
+    scrollTrigger: { trigger: '#ctaSection', start: 'top 63%', toggleActions: 'play none none reverse' }
+  });
+
+  gsap.to('.cta-section .btn-purple', {
+    opacity: 1, y: 0, duration: 0.9, delay: 0.2, ease: 'power3.out',
+    scrollTrigger: { trigger: '#ctaSection', start: 'top 58%', toggleActions: 'play none none reverse' }
+  });
+
+  // Pulsing glow with drift
+  gsap.to('#ctaGlow', {
+    scale: 1.4,
+    opacity: 0.2,
+    x: 30,
+    duration: 4,
+    repeat: -1,
+    yoyo: true,
+    ease: 'sine.inOut'
+  });
+}
+
+// ===== REFRESH ON RESIZE =====
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => ScrollTrigger.refresh(), 200);
+});
+</script>
+
+</body>
+</html>

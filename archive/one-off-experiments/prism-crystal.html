@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FP. Crystal Prism</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0a;
+    overflow: hidden;
+    font-family: 'Inter', -apple-system, sans-serif;
+    cursor: crosshair;
+  }
+  canvas { display: block; }
+
+  #info {
+    position: fixed;
+    bottom: 32px;
+    left: 32px;
+    color: rgba(255,255,255,0.3);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  #logo {
+    position: fixed;
+    top: 32px;
+    left: 32px;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    pointer-events: none;
+    z-index: 10;
+  }
+  #logo span { color: #5A5CF9; }
+
+  /* Grain overlay */
+  #grain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 150px;
+  }
+</style>
+</head>
+<body>
+
+<div id="logo">FP<span>.</span></div>
+<div id="info">Move mouse to rotate light source / Scroll to zoom</div>
+<div id="grain"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ============================================================
+// FP. CRYSTAL PRISM — Interactive Three.js Experience
+// ============================================================
+
+let scene, camera, renderer, clock;
+let crystal, lightBeam, refractedRays, floatingParticles;
+let mouseX = 0, mouseY = 0;
+let targetRotX = 0, targetRotY = 0;
+let scrollZoom = 0;
+
+const PURPLE = new THREE.Color(0x5A5CF9);
+const WHITE = new THREE.Color(0xFFFFFF);
+const DARK = new THREE.Color(0x1D1D1D);
+
+init();
+animate();
+
+function init() {
+  // Scene
+  scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x0a0a0a, 0.015);
+  clock = new THREE.Clock();
+
+  // Camera
+  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.set(0, 0.5, 6);
+  camera.lookAt(0, 0, 0);
+
+  // Renderer
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.2;
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  document.body.appendChild(renderer.domElement);
+
+  // ---- CRYSTAL PRISM ----
+  const crystalGroup = new THREE.Group();
+
+  // Main prism body (triangular prism)
+  const prismShape = new THREE.Shape();
+  const s = 0.8;
+  prismShape.moveTo(-s, -s * 0.866);
+  prismShape.lineTo(s, -s * 0.866);
+  prismShape.lineTo(0, s * 0.866);
+  prismShape.closePath();
+
+  const extrudeSettings = {
+    depth: 1.8,
+    bevelEnabled: true,
+    bevelThickness: 0.04,
+    bevelSize: 0.04,
+    bevelSegments: 3
+  };
+
+  const prismGeo = new THREE.ExtrudeGeometry(prismShape, extrudeSettings);
+  prismGeo.center();
+
+  // Glass material
+  const glassMat = new THREE.MeshPhysicalMaterial({
+    color: 0xffffff,
+    metalness: 0.0,
+    roughness: 0.02,
+    transmission: 0.95,
+    thickness: 2.0,
+    envMapIntensity: 1.5,
+    clearcoat: 1.0,
+    clearcoatRoughness: 0.02,
+    ior: 2.33,
+    transparent: true,
+    opacity: 0.6,
+    side: THREE.DoubleSide,
+  });
+
+  crystal = new THREE.Mesh(prismGeo, glassMat);
+  crystal.rotation.y = Math.PI / 4;
+  crystalGroup.add(crystal);
+
+  // Inner glow core
+  const innerGlowGeo = new THREE.ExtrudeGeometry(prismShape, { ...extrudeSettings, depth: 1.6 });
+  innerGlowGeo.center();
+  const innerGlowMat = new THREE.MeshBasicMaterial({
+    color: 0x5A5CF9,
+    transparent: true,
+    opacity: 0.04,
+    side: THREE.DoubleSide,
+  });
+  const innerGlow = new THREE.Mesh(innerGlowGeo, innerGlowMat);
+  innerGlow.rotation.y = Math.PI / 4;
+  crystalGroup.add(innerGlow);
+
+  // Edge wireframe
+  const edgesGeo = new THREE.EdgesGeometry(prismGeo, 15);
+  const edgesMat = new THREE.LineBasicMaterial({
+    color: 0xffffff,
+    transparent: true,
+    opacity: 0.15
+  });
+  const edges = new THREE.LineSegments(edgesGeo, edgesMat);
+  edges.rotation.y = Math.PI / 4;
+  crystalGroup.add(edges);
+
+  scene.add(crystalGroup);
+
+  // ---- LIGHT BEAM (entering) ----
+  const beamGroup = new THREE.Group();
+
+  // Main beam
+  const beamGeo = new THREE.CylinderGeometry(0.015, 0.015, 12, 8);
+  const beamMat = new THREE.MeshBasicMaterial({
+    color: 0xFFFFFF,
+    transparent: true,
+    opacity: 0.7,
+  });
+  lightBeam = new THREE.Mesh(beamGeo, beamMat);
+  lightBeam.rotation.z = Math.PI / 2;
+  lightBeam.position.set(-4, 0.3, 0);
+  beamGroup.add(lightBeam);
+
+  // Beam glow
+  const beamGlowGeo = new THREE.CylinderGeometry(0.06, 0.06, 12, 8);
+  const beamGlowMat = new THREE.MeshBasicMaterial({
+    color: 0xFFFFFF,
+    transparent: true,
+    opacity: 0.08,
+  });
+  const beamGlow = new THREE.Mesh(beamGlowGeo, beamGlowMat);
+  beamGlow.rotation.z = Math.PI / 2;
+  beamGlow.position.set(-4, 0.3, 0);
+  beamGroup.add(beamGlow);
+
+  scene.add(beamGroup);
+
+  // ---- REFRACTED RAYS (exiting) ----
+  refractedRays = new THREE.Group();
+
+  const rayColors = [
+    0xFF1744, // Red
+    0xFF9100, // Orange
+    0xFFEA00, // Yellow
+    0x76FF03, // Green
+    0x00E5FF, // Cyan
+    0x5A5CF9, // Brand purple
+    0xD500F9, // Violet
+  ];
+
+  const rayAngles = [-0.25, -0.17, -0.09, 0, 0.09, 0.17, 0.25];
+
+  rayColors.forEach((color, i) => {
+    const rayGeo = new THREE.CylinderGeometry(0.008, 0.008, 10, 6);
+    const rayMat = new THREE.MeshBasicMaterial({
+      color: color,
+      transparent: true,
+      opacity: 0.6,
+    });
+    const ray = new THREE.Mesh(rayGeo, rayMat);
+    ray.rotation.z = Math.PI / 2 + rayAngles[i];
+    ray.position.set(3.5, rayAngles[i] * 6, 0);
+    refractedRays.add(ray);
+
+    // Ray glow
+    const glowGeo = new THREE.CylinderGeometry(0.035, 0.035, 10, 6);
+    const glowMat = new THREE.MeshBasicMaterial({
+      color: color,
+      transparent: true,
+      opacity: 0.1,
+    });
+    const glow = new THREE.Mesh(glowGeo, glowMat);
+    glow.rotation.z = Math.PI / 2 + rayAngles[i];
+    glow.position.set(3.5, rayAngles[i] * 6, 0);
+    refractedRays.add(glow);
+  });
+
+  scene.add(refractedRays);
+
+  // ---- FLOATING PARTICLES ----
+  floatingParticles = createParticles(400);
+  scene.add(floatingParticles);
+
+  // ---- FLOOR ----
+  const floorGeo = new THREE.PlaneGeometry(40, 40);
+  const floorMat = new THREE.MeshStandardMaterial({
+    color: 0x0a0a0a,
+    roughness: 0.9,
+    metalness: 0.1,
+  });
+  const floor = new THREE.Mesh(floorGeo, floorMat);
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.y = -1.5;
+  scene.add(floor);
+
+  // ---- FLOOR LIGHT PATCHES (prismatic reflections) ----
+  const patchColors = [0xFF1744, 0xFF9100, 0xFFEA00, 0x76FF03, 0x00E5FF, 0x5A5CF9, 0xD500F9];
+  patchColors.forEach((color, i) => {
+    const patchGeo = new THREE.PlaneGeometry(0.3, 3);
+    const patchMat = new THREE.MeshBasicMaterial({
+      color: color,
+      transparent: true,
+      opacity: 0.12,
+      side: THREE.DoubleSide,
+    });
+    const patch = new THREE.Mesh(patchGeo, patchMat);
+    patch.rotation.x = -Math.PI / 2;
+    patch.position.set(3 + i * 0.4, -1.49, 0);
+    patch.rotation.z = 0.1 * (i - 3);
+    scene.add(patch);
+  });
+
+  // ---- LIGHTING ----
+  const ambientLight = new THREE.AmbientLight(0x111122, 0.3);
+  scene.add(ambientLight);
+
+  // Key light (purple tinted)
+  const keyLight = new THREE.PointLight(0x5A5CF9, 1.5, 20);
+  keyLight.position.set(-3, 3, 3);
+  scene.add(keyLight);
+
+  // Fill light
+  const fillLight = new THREE.PointLight(0xffffff, 0.5, 15);
+  fillLight.position.set(3, 1, -2);
+  scene.add(fillLight);
+
+  // Rim light
+  const rimLight = new THREE.PointLight(0x5A5CF9, 0.8, 12);
+  rimLight.position.set(0, -1, -4);
+  scene.add(rimLight);
+
+  // Beam source light (white spot)
+  const spotLight = new THREE.SpotLight(0xffffff, 2, 20, Math.PI * 0.02, 0.5);
+  spotLight.position.set(-8, 0.3, 0);
+  spotLight.target.position.set(0, 0, 0);
+  scene.add(spotLight);
+  scene.add(spotLight.target);
+
+  // ---- EVENTS ----
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('wheel', onScroll);
+  window.addEventListener('resize', onResize);
+
+  // Touch support
+  document.addEventListener('touchmove', (e) => {
+    const touch = e.touches[0];
+    mouseX = (touch.clientX / window.innerWidth) * 2 - 1;
+    mouseY = -(touch.clientY / window.innerHeight) * 2 + 1;
+  });
+}
+
+function createParticles(count) {
+  const geometry = new THREE.BufferGeometry();
+  const positions = new Float32Array(count * 3);
+  const sizes = new Float32Array(count);
+  const colors = new Float32Array(count * 3);
+
+  for (let i = 0; i < count; i++) {
+    positions[i * 3] = (Math.random() - 0.5) * 20;
+    positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 20;
+    sizes[i] = Math.random() * 2 + 0.5;
+
+    // Mix of white and purple particles
+    if (Math.random() > 0.7) {
+      colors[i * 3] = 0.35;
+      colors[i * 3 + 1] = 0.36;
+      colors[i * 3 + 2] = 0.98;
+    } else {
+      const brightness = Math.random() * 0.3 + 0.2;
+      colors[i * 3] = brightness;
+      colors[i * 3 + 1] = brightness;
+      colors[i * 3 + 2] = brightness;
+    }
+  }
+
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+  const material = new THREE.PointsMaterial({
+    size: 0.03,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.6,
+    sizeAttenuation: true,
+  });
+
+  return new THREE.Points(geometry, material);
+}
+
+function onMouseMove(e) {
+  mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+  mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+}
+
+function onScroll(e) {
+  scrollZoom += e.deltaY * 0.003;
+  scrollZoom = Math.max(-2, Math.min(3, scrollZoom));
+}
+
+function onResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  const time = clock.getElapsedTime();
+  const delta = clock.getDelta();
+
+  // Smooth mouse following for crystal rotation
+  targetRotY += (mouseX * 0.5 - targetRotY) * 0.03;
+  targetRotX += (mouseY * 0.3 - targetRotX) * 0.03;
+
+  // Crystal rotation - slow idle + mouse influence
+  if (crystal) {
+    crystal.parent.rotation.y = Math.PI / 4 + targetRotY + Math.sin(time * 0.2) * 0.1;
+    crystal.parent.rotation.x = targetRotX + Math.sin(time * 0.15) * 0.05;
+    crystal.parent.rotation.z = Math.sin(time * 0.1) * 0.03;
+  }
+
+  // Camera zoom from scroll
+  camera.position.z = 6 + scrollZoom;
+
+  // Light beam subtle animation
+  if (lightBeam) {
+    lightBeam.material.opacity = 0.5 + Math.sin(time * 2) * 0.2;
+    lightBeam.position.y = 0.3 + mouseY * 0.3;
+  }
+
+  // Refracted rays follow mouse Y and pulse
+  if (refractedRays) {
+    refractedRays.position.y = mouseY * 0.2;
+    refractedRays.children.forEach((child, i) => {
+      if (child.material) {
+        const baseOpacity = i % 2 === 0 ? 0.6 : 0.1;
+        child.material.opacity = baseOpacity + Math.sin(time * 1.5 + i * 0.3) * 0.15;
+      }
+    });
+  }
+
+  // Floating particles drift
+  if (floatingParticles) {
+    const positions = floatingParticles.geometry.attributes.position.array;
+    for (let i = 0; i < positions.length; i += 3) {
+      positions[i + 1] += Math.sin(time * 0.3 + positions[i] * 0.5) * 0.001;
+      positions[i] += Math.cos(time * 0.2 + positions[i + 2] * 0.3) * 0.0005;
+    }
+    floatingParticles.geometry.attributes.position.needsUpdate = true;
+    floatingParticles.rotation.y = time * 0.01;
+  }
+
+  renderer.render(scene, camera);
+}
+</script>
+</body>
+</html>

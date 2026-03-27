@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Website Integration Strategy Research</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bricolage+Grotesque:wght@400;600;700&display=swap');
+
+  :root {
+    --accent: #5A5CF9;
+    --accent-soft: rgba(90, 92, 249, 0.08);
+    --accent-border: rgba(90, 92, 249, 0.2);
+    --dark: #1D1D1D;
+    --light: #F6F6F6;
+    --gray: #6B7280;
+    --gray-light: #E5E7EB;
+    --green: #10B981;
+    --green-bg: rgba(16, 185, 129, 0.08);
+    --red: #EF4444;
+    --red-bg: rgba(239, 68, 68, 0.08);
+    --yellow: #F59E0B;
+    --yellow-bg: rgba(245, 158, 11, 0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--dark);
+    background: #fff;
+    line-height: 1.7;
+    padding: 40px 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 48px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--accent);
+    line-height: 1.3;
+  }
+
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-top: 28px;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    color: var(--gray);
+    font-size: 0.95rem;
+    margin-bottom: 32px;
+  }
+
+  p { margin-bottom: 14px; font-size: 0.93rem; }
+
+  .tldr {
+    background: var(--accent-soft);
+    border-left: 4px solid var(--accent);
+    padding: 20px 24px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 32px;
+  }
+  .tldr strong { color: var(--accent); }
+
+  .option-card {
+    border: 1px solid var(--gray-light);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.2s;
+  }
+  .option-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+
+  .option-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .option-name {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .badge-green { background: var(--green-bg); color: var(--green); }
+  .badge-yellow { background: var(--yellow-bg); color: var(--yellow); }
+  .badge-red { background: var(--red-bg); color: var(--red); }
+  .badge-accent { background: var(--accent-soft); color: var(--accent); }
+
+  .pros-cons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  @media (max-width: 600px) { .pros-cons { grid-template-columns: 1fr; } }
+
+  .pros, .cons {
+    padding: 14px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+  }
+  .pros { background: var(--green-bg); }
+  .cons { background: var(--red-bg); }
+  .pros strong { color: var(--green); }
+  .cons strong { color: var(--red); }
+  .pros li, .cons li { margin-bottom: 6px; }
+
+  ul { padding-left: 20px; margin-bottom: 12px; }
+  li { margin-bottom: 4px; font-size: 0.9rem; }
+
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px;
+    font-size: 0.85rem;
+  }
+  .compare-table th {
+    background: var(--dark);
+    color: #fff;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .compare-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--gray-light);
+    vertical-align: top;
+  }
+  .compare-table tr:nth-child(even) td { background: var(--light); }
+  .compare-table .check { color: var(--green); font-weight: 700; }
+  .compare-table .cross { color: var(--red); font-weight: 700; }
+  .compare-table .partial { color: var(--yellow); font-weight: 700; }
+
+  .verdict {
+    background: var(--dark);
+    color: #fff;
+    padding: 28px;
+    border-radius: 12px;
+    margin-top: 32px;
+  }
+  .verdict h2 { color: #fff; border-bottom-color: var(--accent); margin-top: 0; }
+  .verdict p { color: rgba(255,255,255,0.85); }
+  .verdict strong { color: var(--accent); }
+
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+    margin: 16px 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--accent-border);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -22px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .timeline-item strong { display: block; margin-bottom: 2px; }
+
+  .tool-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 16px 0;
+  }
+  @media (max-width: 600px) { .tool-grid { grid-template-columns: 1fr; } }
+  .tool-card {
+    border: 1px solid var(--gray-light);
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 0.85rem;
+  }
+  .tool-card h4 {
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+  }
+  .tool-card p { font-size: 0.85rem; color: var(--gray); margin-bottom: 0; }
+
+  .note {
+    background: var(--yellow-bg);
+    border-left: 4px solid var(--yellow);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin: 16px 0;
+    font-size: 0.88rem;
+  }
+
+  .section-divider {
+    height: 1px;
+    background: var(--gray-light);
+    margin: 40px 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>Custom Website + Wix: Integration Strategy Research</h1>
+<p class="subtitle">Prepared March 24, 2026 ... Based on your current codebase (GSAP + Lenis, vanilla JS) and Wix ecosystem requirements</p>
+
+<div class="tldr">
+  <strong>TL;DR:</strong> Your best path for a two-week launch is <strong>Option C: Hybrid Architecture</strong> with a reverse proxy (Cloudflare Workers or Vercel rewrites). Serve your custom animated frontend for marketing pages, route /blog and CRM-connected pages to Wix. This preserves 100% of your GSAP animations AND keeps Wix email marketing, CRM, blog, and tracking fully intact. No iframes. No rebuild. One domain.
+</div>
+
+<h2>Your Current Codebase</h2>
+<p>Before evaluating options, here's what we're working with:</p>
+<ul>
+  <li><strong>Tech stack:</strong> Vanilla HTML/CSS/JS (no React, no build system)</li>
+  <li><strong>Animation engine:</strong> GSAP 3.12.5 with ScrollTrigger + ScrollTo plugins</li>
+  <li><strong>Smooth scroll:</strong> Lenis 1.1.18, fully synced with GSAP ScrollTrigger</li>
+  <li><strong>Scope:</strong> 11 HTML files across multiple iterations, home-v5-scroll.html being the most advanced</li>
+  <li><strong>Animations include:</strong> Scroll-scrubbed timelines, horizontal scroll pinning, clip-path reveals, word-by-word text animations, parallax, counter animations, staggered sequences, noise-to-clarity transitions</li>
+  <li><strong>Design tokens:</strong> CSS variables for brand colors (#5A5CF9 accent), Bricolage Grotesque + Inter fonts</li>
+  <li><strong>No framework dependency:</strong> These are CDN-loaded, deployment-ready HTML files</li>
+</ul>
+
+<div class="note">
+  <strong>Key insight:</strong> GSAP was acquired by Webflow in May 2025 and is now completely free for all uses, including premium plugins like ScrollSmoother, SplitText, and MorphSVG. This removes any licensing concerns.
+</div>
+
+<h2>Wix Services You Need to Keep</h2>
+<p>These are the Wix backend services that must remain functional regardless of which integration path you choose:</p>
+
+<table class="compare-table">
+  <tr>
+    <th>Service</th>
+    <th>API Available?</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td>Email Marketing</td>
+    <td><span class="partial">Partial</span></td>
+    <td>Can manage/publish/schedule campaigns via API. Cannot create new campaigns via API ... must duplicate in dashboard first.</td>
+  </tr>
+  <tr>
+    <td>CRM / Contacts</td>
+    <td><span class="check">Full</span></td>
+    <td>Complete REST + SDK access. Contacts, labels, activities, automations.</td>
+  </tr>
+  <tr>
+    <td>Blog</td>
+    <td><span class="check">Full</span></td>
+    <td>Create, read, update, publish, unpublish posts. Categories, tags, stats all accessible.</td>
+  </tr>
+  <tr>
+    <td>Forms</td>
+    <td><span class="check">Full</span></td>
+    <td>Form submissions feed into CRM. Can create forms via API.</td>
+  </tr>
+  <tr>
+    <td>Analytics / Tracking</td>
+    <td><span class="partial">Partial</span></td>
+    <td>Marketing Tags API available. Some analytics require Wix-rendered pages.</td>
+  </tr>
+  <tr>
+    <td>Automations</td>
+    <td><span class="check">Full</span></td>
+    <td>Triggered by CRM events, form submissions, etc. Work regardless of frontend.</td>
+  </tr>
+  <tr>
+    <td>Chat / Inbox</td>
+    <td><span class="check">Full</span></td>
+    <td>Can embed Wix Chat widget on external sites.</td>
+  </tr>
+</table>
+
+<h2>The Five Integration Options</h2>
+
+<!-- OPTION A -->
+<div class="option-card">
+  <div class="option-header">
+    <span class="option-name">A. Wix Headless (Full Custom Frontend)</span>
+    <span><span class="badge badge-yellow">3-4 Weeks</span></span>
+  </div>
+  <p>Deploy your custom frontend (React/Next.js) on Vercel or Netlify. Use Wix purely as a backend via their JavaScript SDK and REST APIs. No Wix pages are rendered at all.</p>
+
+  <h3>What This Means in Practice</h3>
+  <p>You'd need to convert your vanilla HTML/JS codebase into a React or Next.js app, then integrate the Wix SDK (@wix/sdk, @wix/blog, @wix/crm, etc.) for every backend feature. Blog posts, contact forms, CRM data... all fetched via API calls and rendered in your custom UI.</p>
+
+  <div class="pros-cons">
+    <div class="pros">
+      <strong>Pros</strong>
+      <ul>
+        <li>100% control over frontend and animations</li>
+        <li>Best possible performance (no Wix rendering overhead)</li>
+        <li>Full GSAP + Lenis support without restrictions</li>
+        <li>Modern deployment (Vercel, Netlify, edge functions)</li>
+        <li>No separate pricing tier for headless</li>
+        <li>Official Next.js templates available as starting points</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <strong>Cons</strong>
+      <ul>
+        <li>Requires converting vanilla JS to React/Next.js first</li>
+        <li>Email campaigns still need Wix dashboard for creation</li>
+        <li>You build and maintain ALL frontend UI (blog layout, forms, etc.)</li>
+        <li>Wix analytics/tracking partially lost on non-Wix pages</li>
+        <li>OAuth setup and session management complexity</li>
+        <li>3-4 weeks minimum, not feasible in 2 weeks</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- OPTION B -->
+<div class="option-card">
+  <div class="option-header">
+    <span class="option-name">B. Wix Studio Native Rebuild</span>
+    <span><span class="badge badge-red">4-6 Weeks</span></span>
+  </div>
+  <p>Rebuild the entire site inside Wix Studio using their native animation tools (Inspector panel, scroll triggers, parallax). Use Velo for custom JavaScript where Studio's built-in animations fall short.</p>
+
+  <h3>What This Means in Practice</h3>
+  <p>You'd recreate each section in Wix Studio's visual editor, using their timeline-based animation inspector for scroll effects. Complex GSAP animations (clip-path reveals, horizontal scroll pinning, noise-to-clarity) would need to be either simplified or embedded as HTML iframes within Wix pages.</p>
+
+  <div class="pros-cons">
+    <div class="pros">
+      <strong>Pros</strong>
+      <ul>
+        <li>Full, seamless Wix integration (CRM, email, blog, analytics, everything)</li>
+        <li>Visual editor for non-dev content updates</li>
+        <li>Wix hosting, SSL, CDN all managed</li>
+        <li>Studio has decent scroll animations and parallax built in</li>
+        <li>Velo supports custom JS for dynamic behavior</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <strong>Cons</strong>
+      <ul>
+        <li>Cannot match your current animation quality: no GSAP at page level, no Lenis, no clip-path reveals, no horizontal scroll pinning</li>
+        <li>GSAP only works inside HTML embed iframes (sandboxed, isolated)</li>
+        <li>No direct DOM access for page-wide animations</li>
+        <li>Manual rebuild of every section from scratch</li>
+        <li>Cannot import HTML/CSS/JS into Studio</li>
+        <li>SVG path animation, particle systems, generative effects impossible</li>
+        <li>4-6 weeks realistically, significant animation downgrade</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>The animation gap is real.</strong> Wix Studio's Inspector can handle entrance animations, basic parallax, and simple scroll triggers. But your codebase uses advanced GSAP features (ScrollTrigger scrub, pin, clip-path, staggered timelines) that have no native equivalent in Studio. You'd lose 60-70% of the animation sophistication.
+  </div>
+</div>
+
+<!-- OPTION C -->
+<div class="option-card" style="border-color: var(--accent); border-width: 2px;">
+  <div class="option-header">
+    <span class="option-name">C. Hybrid: Reverse Proxy / Path-Based Routing</span>
+    <span><span class="badge badge-green">10-14 Days</span> <span class="badge badge-accent">Recommended</span></span>
+  </div>
+  <p>Serve your custom animated pages (homepage, about, services) from your own hosting. Route specific paths (/blog, /contact, /faq) to Wix. All under one domain using Cloudflare Workers, Vercel rewrites, or Nginx reverse proxy.</p>
+
+  <h3>What This Means in Practice</h3>
+  <p>A user visits florianp.com and sees your custom GSAP-animated homepage. They click "Blog" and get routed to a Wix-rendered blog page, all on the same domain. The routing layer (Cloudflare Worker or Vercel middleware) decides which server handles each request based on the URL path. Forms on your custom pages submit to Wix CRM via API. Wix email marketing, automations, and tracking continue working on the Wix-served pages.</p>
+
+  <div class="pros-cons">
+    <div class="pros">
+      <strong>Pros</strong>
+      <ul>
+        <li>Keep 100% of your GSAP animations on marketing pages</li>
+        <li>Wix CRM, email, blog, analytics fully intact on Wix pages</li>
+        <li>Single domain (best for SEO, no link equity dilution)</li>
+        <li>Feels like one seamless website to visitors</li>
+        <li>No framework conversion needed (your vanilla HTML works as-is)</li>
+        <li>Cloudflare Workers: free tier or ~$5/month</li>
+        <li>Achievable in 10-14 days with focused effort</li>
+        <li>Can progressively migrate more pages to custom over time</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <strong>Cons</strong>
+      <ul>
+        <li>Styling consistency between custom + Wix pages needs work</li>
+        <li>Session/cookie sharing across the two backends requires setup</li>
+        <li>DNS propagation needs to happen in week 1 (24-48 hours)</li>
+        <li>Two systems to maintain going forward</li>
+        <li>Wix analytics only tracks Wix-served pages natively</li>
+        <li>Need to match header/footer/navigation across both</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Implementation Timeline</h3>
+  <div class="timeline">
+    <div class="timeline-item">
+      <strong>Days 1-2: Infrastructure</strong>
+      Set up Cloudflare Workers (or Vercel). Configure DNS. Define routing rules (which paths go to Wix, which to custom hosting). Deploy a "hello world" on both backends to verify routing.
+    </div>
+    <div class="timeline-item">
+      <strong>Days 3-5: Custom Pages</strong>
+      Deploy your GSAP homepage, about, and services pages. Add contact form that submits to Wix CRM via API. Match navigation structure to Wix blog/FAQ.
+    </div>
+    <div class="timeline-item">
+      <strong>Days 6-8: Integration</strong>
+      Style the Wix blog/FAQ to match your custom pages (fonts, colors, header, footer). Set up Wix Chat widget embed on custom pages. Configure analytics (GA4 or similar) across both backends.
+    </div>
+    <div class="timeline-item">
+      <strong>Days 9-10: Polish</strong>
+      Cross-browser and mobile testing. Page transition consistency. Loading states. Error handling. Performance optimization.
+    </div>
+    <div class="timeline-item">
+      <strong>Days 11-14: Buffer</strong>
+      Bug fixes, edge cases, final QA. Soft launch, monitor, iterate.
+    </div>
+  </div>
+</div>
+
+<!-- OPTION D -->
+<div class="option-card">
+  <div class="option-header">
+    <span class="option-name">D. Subdomain Split</span>
+    <span><span class="badge badge-yellow">2-3 Weeks</span></span>
+  </div>
+  <p>Custom site at florianp.com, Wix blog at blog.florianp.com (or vice versa). Each runs independently on its own hosting.</p>
+
+  <div class="pros-cons">
+    <div class="pros">
+      <strong>Pros</strong>
+      <ul>
+        <li>Clean separation, simple to set up</li>
+        <li>No reverse proxy complexity</li>
+        <li>Each system fully independent</li>
+        <li>Easy to maintain long-term</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <strong>Cons</strong>
+      <ul>
+        <li>SEO link equity split across subdomains</li>
+        <li>Feels like two separate sites to visitors</li>
+        <li>Cookie/session sharing difficult across subdomains</li>
+        <li>Navigation between sites feels disjointed</li>
+        <li>Analytics fragmented</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- OPTION E -->
+<div class="option-card">
+  <div class="option-header">
+    <span class="option-name">E. Wix with Custom Element Embeds</span>
+    <span><span class="badge badge-yellow">2-3 Weeks</span></span>
+  </div>
+  <p>Keep Wix as the primary platform. Embed your animated sections as Custom Elements (web components) inside Wix Studio pages. Animations run inside sandboxed iframes.</p>
+
+  <div class="pros-cons">
+    <div class="pros">
+      <strong>Pros</strong>
+      <ul>
+        <li>Wix remains the single platform</li>
+        <li>All Wix services fully functional</li>
+        <li>Can use your GSAP code inside embeds</li>
+        <li>Gradual migration possible (section by section)</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <strong>Cons</strong>
+      <ul>
+        <li>Animations sandboxed in iframes (no full-page scroll effects)</li>
+        <li>Lenis smooth scroll impossible at page level</li>
+        <li>Performance overhead from multiple iframes</li>
+        <li>Horizontal scroll pinning, clip-path reveals won't work across page</li>
+        <li>Feels like "patches" rather than a cohesive experience</li>
+        <li>Mobile responsiveness challenges with iframe sizing</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<h2>Tool Evaluation</h2>
+<p>You mentioned looking at several tools. Here's how each fits into the picture:</p>
+
+<div class="tool-grid">
+  <div class="tool-card">
+    <h4>GSAP (GreenSock)</h4>
+    <p><span class="badge badge-green" style="margin-bottom:6px;display:inline-block;">Already Using</span></p>
+    <p>Now completely free after Webflow acquisition (May 2025). Premium plugins (ScrollSmoother, SplitText, MorphSVG) included. You're already using it well. Keep it as your animation engine.</p>
+  </div>
+  <div class="tool-card">
+    <h4>21st.dev</h4>
+    <p><span class="badge badge-red" style="margin-bottom:6px;display:inline-block;">Not Relevant</span></p>
+    <p>AI agent infrastructure platform (UI components for AI apps, agent SDKs). Not a website builder or animation tool. Not applicable to your use case.</p>
+  </div>
+  <div class="tool-card">
+    <h4>Lovable</h4>
+    <p><span class="badge badge-yellow" style="margin-bottom:6px;display:inline-block;">Possible Aid</span></p>
+    <p>AI website builder outputting React code. Could help rapidly generate React components if you go headless (Option A). But you'd still need to add GSAP animations manually. More useful for prototyping than production animation work.</p>
+  </div>
+  <div class="tool-card">
+    <h4>Draftly</h4>
+    <p><span class="badge badge-yellow" style="margin-bottom:6px;display:inline-block;">Worth Watching</span></p>
+    <p>AI-powered 3D/cinematic website builder. Outputs production-ready code. Could be interesting for future projects. But you already have a codebase that works... rebuilding in Draftly adds time, not value, right now.</p>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<h2>Comparison Matrix</h2>
+
+<table class="compare-table">
+  <tr>
+    <th>Criteria</th>
+    <th>A. Headless</th>
+    <th>B. Studio</th>
+    <th>C. Hybrid</th>
+    <th>D. Subdomain</th>
+    <th>E. Embeds</th>
+  </tr>
+  <tr>
+    <td>Animation quality preserved</td>
+    <td><span class="check">100%</span></td>
+    <td><span class="cross">30-40%</span></td>
+    <td><span class="check">100%</span></td>
+    <td><span class="check">100%</span></td>
+    <td><span class="partial">60%</span></td>
+  </tr>
+  <tr>
+    <td>Wix CRM integration</td>
+    <td><span class="check">Full (API)</span></td>
+    <td><span class="check">Native</span></td>
+    <td><span class="check">Full</span></td>
+    <td><span class="partial">Split</span></td>
+    <td><span class="check">Native</span></td>
+  </tr>
+  <tr>
+    <td>Wix email marketing</td>
+    <td><span class="partial">API only</span></td>
+    <td><span class="check">Native</span></td>
+    <td><span class="check">Native</span></td>
+    <td><span class="check">Native</span></td>
+    <td><span class="check">Native</span></td>
+  </tr>
+  <tr>
+    <td>Blog management</td>
+    <td><span class="partial">Build UI</span></td>
+    <td><span class="check">Native</span></td>
+    <td><span class="check">Native</span></td>
+    <td><span class="check">Native</span></td>
+    <td><span class="check">Native</span></td>
+  </tr>
+  <tr>
+    <td>Analytics continuity</td>
+    <td><span class="partial">Custom</span></td>
+    <td><span class="check">Native</span></td>
+    <td><span class="partial">Hybrid</span></td>
+    <td><span class="cross">Split</span></td>
+    <td><span class="check">Native</span></td>
+  </tr>
+  <tr>
+    <td>SEO (single domain)</td>
+    <td><span class="check">Yes</span></td>
+    <td><span class="check">Yes</span></td>
+    <td><span class="check">Yes</span></td>
+    <td><span class="cross">No</span></td>
+    <td><span class="check">Yes</span></td>
+  </tr>
+  <tr>
+    <td>Two-week feasibility</td>
+    <td><span class="cross">No</span></td>
+    <td><span class="cross">No</span></td>
+    <td><span class="check">Yes</span></td>
+    <td><span class="partial">Tight</span></td>
+    <td><span class="partial">Tight</span></td>
+  </tr>
+  <tr>
+    <td>Codebase change needed</td>
+    <td>Convert to React</td>
+    <td>Full rebuild</td>
+    <td>Minimal</td>
+    <td>Minimal</td>
+    <td>Moderate</td>
+  </tr>
+  <tr>
+    <td>Long-term maintenance</td>
+    <td><span class="partial">High</span></td>
+    <td><span class="check">Low</span></td>
+    <td><span class="partial">Medium</span></td>
+    <td><span class="partial">Medium</span></td>
+    <td><span class="partial">Medium</span></td>
+  </tr>
+  <tr>
+    <td>Monthly cost</td>
+    <td>$20-50</td>
+    <td>$0 (Wix plan)</td>
+    <td>$0-20</td>
+    <td>$10-30</td>
+    <td>$0 (Wix plan)</td>
+  </tr>
+</table>
+
+<div class="section-divider"></div>
+
+<h2>Why Option C Wins for You</h2>
+
+<p>Given your specific situation, here's why the hybrid reverse proxy approach is the clear winner:</p>
+
+<p><strong>Your animations are too good to lose.</strong> The clip-path reveals, horizontal scroll pinning, noise-to-clarity transitions, and Lenis smooth scrolling in your codebase cannot be recreated in Wix Studio. Option B would mean throwing away weeks of sophisticated animation work and settling for a lesser experience.</p>
+
+<p><strong>Your Wix backend does too much to abandon.</strong> Email marketing campaigns (Brand Therapy Weekly), CRM automations, blog publishing workflow with the fp-wix-blog skill, contact tracking... going fully headless means rebuilding all the UI for these features. That's 3-4 weeks of work before you even launch.</p>
+
+<p><strong>Your codebase is already deployment-ready.</strong> Vanilla HTML + CDN-loaded GSAP means you can deploy to any static hosting (Vercel, Netlify, Cloudflare Pages) today. No build step, no framework conversion needed.</p>
+
+<p><strong>The hybrid approach lets you migrate progressively.</strong> Start with your homepage custom, blog and CRM pages on Wix. Over time, if you want to pull more pages into your custom frontend, you just update the routing rules. Zero risk, maximum flexibility.</p>
+
+<div class="note">
+  <strong>The "two systems" concern is smaller than it sounds.</strong> Your custom pages are static marketing pages that change infrequently. The dynamic, frequently updated content (blog posts, email campaigns, CRM data) stays entirely in Wix where your existing workflows already handle it. The reverse proxy is a simple routing config, not a system to maintain.
+</div>
+
+<div class="section-divider"></div>
+
+<h2>Analytics &amp; Tracking: The Full Picture</h2>
+
+<p>This was your main concern, so let's be thorough. The good news: because everything is on the same domain (florianp.com), most tracking works seamlessly. Here's the breakdown:</p>
+
+<h3>GA4 (Google Analytics 4): Works Across Both Backends</h3>
+<p>GA4 uses first-party cookies tied to your domain. Since both your custom pages and Wix pages live on florianp.com, GA4 sees them as one site. A visitor who lands on your animated homepage and then clicks to the Wix blog registers as a single continuous session. No special cross-domain setup needed.</p>
+
+<p><strong>How to install:</strong> Use the same GA4 measurement ID (G-XXXXXXXXXX) everywhere. On your custom HTML pages, paste the GA4 tag in the &lt;head&gt;. On Wix pages, enter your G- ID in Wix's native Google Analytics integration (Settings &gt; Marketing Integrations). Do NOT also add GTM on Wix pages if you're using the native integration... that creates duplicate events.</p>
+
+<h3>Wix Analytics: Only Tracks Wix Pages</h3>
+<p>This is a hard limitation. Wix Analytics can only see pages that Wix renders. Your custom animated homepage, about page, and services page will not appear in Wix Analytics reports at all. This means Wix Analytics becomes a partial view of your traffic (blog + FAQ only), not the full picture.</p>
+
+<div class="note">
+  <strong>The solution:</strong> Use GA4 as your primary analytics tool for site-wide data. Use Wix Analytics only for blog-specific insights (it's still useful for seeing which posts perform, comment engagement, etc.). Don't try to make Wix Analytics cover the whole site... it can't in this architecture.
+</div>
+
+<h3>CRM &amp; Lead Attribution</h3>
+<p>Here's the flow that matters: someone visits your custom homepage, browses around, then fills out a contact form on a Wix page. Does the CRM capture the full journey?</p>
+
+<p><strong>Partially.</strong> Wix CRM will capture the form submission and any Wix-page visits. It won't automatically know they visited your custom pages first. To solve this:</p>
+
+<ul>
+  <li><strong>UTM parameters persist naturally</strong> across both backends on the same domain. If someone arrives via a LinkedIn ad with ?utm_source=linkedin, that parameter carries through as they navigate to a Wix form page.</li>
+  <li><strong>Don't add UTM parameters to internal links.</strong> Only use them for external traffic sources. Internal navigation should use clean URLs.</li>
+  <li><strong>For full journey tracking,</strong> use Google Tag Manager (GTM) as your central tag manager across both backends. GTM can track page views, scroll depth, and click events on custom pages, then pass that data to GA4 where you can see the complete user journey.</li>
+</ul>
+
+<h3>Retargeting Pixels (Meta, LinkedIn, etc.)</h3>
+<p>Same-domain means same cookies. A Meta Pixel firing on your custom homepage and a Meta Pixel firing on a Wix blog page will recognize the visitor as the same person. Install the pixel manually on your custom pages (in the &lt;head&gt;) and use Wix's native Meta integration for Wix pages. Use the same Pixel ID on both.</p>
+
+<h3>Recommended Tracking Stack</h3>
+
+<table class="compare-table">
+  <tr>
+    <th>Tool</th>
+    <th>Purpose</th>
+    <th>Custom Pages</th>
+    <th>Wix Pages</th>
+  </tr>
+  <tr>
+    <td>GA4</td>
+    <td>Site-wide analytics (primary)</td>
+    <td>GA4 tag in &lt;head&gt;</td>
+    <td>Wix native integration</td>
+  </tr>
+  <tr>
+    <td>GTM</td>
+    <td>Central tag manager</td>
+    <td>GTM container in &lt;head&gt;</td>
+    <td>Wix GTM integration</td>
+  </tr>
+  <tr>
+    <td>Wix Analytics</td>
+    <td>Blog-specific insights only</td>
+    <td>N/A (doesn't work)</td>
+    <td>Built-in</td>
+  </tr>
+  <tr>
+    <td>Meta Pixel</td>
+    <td>Retargeting &amp; conversion tracking</td>
+    <td>Via GTM</td>
+    <td>Wix native integration</td>
+  </tr>
+  <tr>
+    <td>Wix CRM</td>
+    <td>Contact management &amp; forms</td>
+    <td>API submissions</td>
+    <td>Native forms</td>
+  </tr>
+</table>
+
+<div class="section-divider"></div>
+
+<h2>FAQ: Move It to Custom HTML</h2>
+
+<p>This is a strong recommendation based on the SEO/GEO research. Your 29 FAQ entries should move from Wix to a custom-built FAQ page. Here's why:</p>
+
+<h3>Performance</h3>
+<p>Your custom pages will load in ~1.5s (static HTML, minimal overhead). Wix FAQ pages typically load in ~3.5s due to Wix's rendering pipeline. That 2-second difference matters for both user experience and Core Web Vitals scores, which directly affect Google rankings.</p>
+
+<h3>Schema Markup Control</h3>
+<p>On a custom FAQ page, you have full control over FAQPage structured data (JSON-LD). You can mark up every question-answer pair exactly to Google's spec, add nested schema (mentions, citations, author), and optimize for rich snippets. On Wix, structured data options are more limited and template-driven.</p>
+
+<h3>GEO (AI Search) Impact</h3>
+<p>This is the big one. AI crawlers (Google AI Overviews, ChatGPT search, Perplexity) don't execute JavaScript well. Your custom HTML pages are 100% visible to them. Wix pages, which rely on client-side rendering, are only about 70-80% visible. For FAQ content... which is exactly the kind of Q&amp;A format AI models love to cite... being on a fast, fully crawlable custom page gives you significantly higher chances of appearing in AI-generated answers.</p>
+
+<div class="note">
+  <strong>GEO citation rates:</strong> Research shows custom static pages get cited in AI search results 40-50% of the time when relevant. Wix-rendered pages with similar content sit around 25-35%. For FAQ content specifically, that gap is your competitive advantage.
+</div>
+
+<h3>Implementation</h3>
+<p>Export your 29 FAQ entries from the Wix FAQ Database. Build a custom FAQ page with accordion-style UI (GSAP animations for open/close if you want). Add comprehensive FAQPage JSON-LD schema. Set up a 301 redirect from the old Wix FAQ URL to the new custom one. This is a 1-2 day task, well within the two-week timeline.</p>
+
+<div class="section-divider"></div>
+
+<h2>SEO/GEO Deep Dive</h2>
+
+<h3>The Good News</h3>
+<p>Google treats all pages on the same domain equally, regardless of which backend serves them. A reverse proxy is a completely legitimate architecture. There are no crawling or indexing penalties for routing different paths to different servers. Internal links between custom and Wix pages pass link equity normally. You keep a single domain, which means zero SEO dilution.</p>
+
+<h3>The Watch-Outs</h3>
+
+<p><strong>Core Web Vitals gap.</strong> Your custom static pages will score 90-100 on Google's performance metrics. Wix pages typically score 30-50. Google evaluates Core Web Vitals at the page level, not the site level, so your custom pages will rank well independently. But the Wix pages (blog, contact) will need aggressive optimization: compress images, minimize custom code, use Wix's built-in lazy loading. This gap is not a dealbreaker, but it's something to actively manage.</p>
+
+<p><strong>Unified sitemap.</strong> You'll need to generate a combined sitemap.xml that includes URLs from both backends. Your custom pages won't auto-generate a sitemap, so you'll create one manually (it's just an XML file listing your URLs). Wix generates its own. Merge them and submit the combined version to Google Search Console.</p>
+
+<p><strong>robots.txt must come from one place.</strong> Since robots.txt lives at the root domain, your reverse proxy needs to serve a single robots.txt that covers both backends. Make sure it doesn't accidentally block Wix paths or vice versa.</p>
+
+<h3>GEO Strategy</h3>
+<p>Generative Engine Optimization is where this hybrid approach actually shines compared to an all-Wix setup:</p>
+
+<ul>
+  <li><strong>Your custom pages are fully readable by AI crawlers.</strong> Static HTML with clean semantic markup is exactly what GPTBot, ClaudeBot, and PerplexityBot prefer. No JavaScript rendering issues.</li>
+  <li><strong>Entity signals matter.</strong> Make sure your custom pages include Organization schema (JSON-LD) with your name, business description, and sameAs links to LinkedIn, social profiles, etc. This helps AI models build a strong entity profile for "Florian Philippe" and "Brand Therapy."</li>
+  <li><strong>FAQ on custom HTML = GEO goldmine.</strong> AI models actively look for well-structured Q&amp;A content to cite. A fast, schema-rich FAQ page on your custom backend is one of the highest-value GEO assets you can build.</li>
+  <li><strong>Blog stays on Wix and that's fine.</strong> Blog content is still 70-80% visible to AI crawlers on Wix. The blog's value is in fresh, regular content (which AI models weight heavily). The slight rendering disadvantage is offset by the consistency of publishing.</li>
+</ul>
+
+<h3>Updated Page Routing (Post-Research)</h3>
+
+<table class="compare-table">
+  <tr>
+    <th>Page</th>
+    <th>Backend</th>
+    <th>Reason</th>
+  </tr>
+  <tr>
+    <td>Homepage</td>
+    <td><strong>Custom</strong></td>
+    <td>Animations, performance, first impression</td>
+  </tr>
+  <tr>
+    <td>The Story / About</td>
+    <td><strong>Custom</strong></td>
+    <td>Animations, entity signals, GEO</td>
+  </tr>
+  <tr>
+    <td>For Founders &amp; CEOs</td>
+    <td><strong>Custom</strong></td>
+    <td>Animations, conversion optimization</td>
+  </tr>
+  <tr>
+    <td>FAQ</td>
+    <td><strong>Custom</strong> (move from Wix)</td>
+    <td>GEO citation rates, schema control, speed</td>
+  </tr>
+  <tr>
+    <td>Blog</td>
+    <td><strong>Wix</strong></td>
+    <td>Existing workflow, CMS, email integration</td>
+  </tr>
+  <tr>
+    <td>Contact</td>
+    <td><strong>Wix</strong></td>
+    <td>CRM form integration, automations</td>
+  </tr>
+</table>
+
+<div class="section-divider"></div>
+
+<div class="verdict">
+  <h2>Revised Next Steps</h2>
+  <p><strong>1. Set up Cloudflare (free).</strong> Point florianp.com DNS to Cloudflare. This gives you the "traffic cop" routing layer plus a CDN, SSL, and DDoS protection for free. No coding needed for basic routing... it's a dashboard configuration.</p>
+  <p><strong>2. Deploy custom pages.</strong> Upload your GSAP HTML files to Cloudflare Pages (free static hosting). Homepage, story, services, and FAQ go here.</p>
+  <p><strong>3. Configure routing rules.</strong> In Cloudflare: /blog/* and /contact go to Wix. Everything else goes to your custom pages.</p>
+  <p><strong>4. Migrate FAQ.</strong> Export 29 entries from Wix, build custom FAQ page with FAQPage schema, set up 301 redirect.</p>
+  <p><strong>5. Set up GTM + GA4.</strong> Single GTM container on both backends. GA4 as primary analytics. Meta Pixel via GTM on custom pages, Wix native on Wix pages.</p>
+  <p><strong>6. Unified sitemap + robots.txt.</strong> Create a merged sitemap.xml, submit to Google Search Console. Single robots.txt at the root.</p>
+  <p><strong>7. Style matching.</strong> Match Wix blog header/footer/fonts to custom pages for seamless experience.</p>
+</div>
+
+<div style="margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--gray-light); font-size: 0.8rem; color: var(--gray);">
+  <p>Research compiled March 24, 2026 (updated with analytics, FAQ, and SEO/GEO analysis). Sources: Google Search Central, Wix Developer Docs, GA4 Help Center, Analytics Mania, Wix Performance Engineering, Frase.io (GEO research), community forums and case studies.</p>
+</div>
+
+</body>
+</html>

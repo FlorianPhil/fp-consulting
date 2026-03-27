@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Florian P. | Brand Therapist</title>
+<meta name="description" content="Brand strategy for founders and the companies they lead. Clarity that makes you impossible to ignore.">
+
+<!-- Fonts: Bricolage Grotesque + Inter — LOCKED -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- GSAP + ScrollTrigger + ScrollTo -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+
+<!-- Lenis smooth scroll -->
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+<style>
+/* ============================================
+   DESIGN TOKENS
+   ============================================ */
+:root {
+  --accent: #5A5CF9;
+  --accent-glow: rgba(90, 92, 249, 0.35);
+  --accent-soft: rgba(90, 92, 249, 0.08);
+  --dark: #1D1D1D;
+  --light: #F6F6F6;
+  --white: #FFFFFF;
+  --black: #000000;
+  --gray: #949494;
+  --gray-light: #E0E0E0;
+
+  --ff-primary: 'Bricolage Grotesque', sans-serif;
+  --ff-body: 'Inter', sans-serif;
+
+  --section-pad: clamp(100px, 12vw, 180px);
+  --container: 1240px;
+  --gutter: clamp(24px, 5vw, 64px);
+
+  --purple-edge: 3px;
+  --grain-opacity: 0.035;
+}
+
+/* ============================================
+   RESET
+   ============================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+body {
+  font-family: var(--ff-body);
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--black);
+  background: var(--light);
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+button { border: none; background: none; font-family: inherit; }
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--ff-primary);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ============================================
+   LOADER
+   ============================================ */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.loader-logo {
+  font-family: var(--ff-primary);
+  font-size: clamp(48px, 8vw, 80px);
+  font-weight: 800;
+  color: var(--white);
+  opacity: 0;
+}
+
+.loader-logo .dot { color: var(--accent); }
+
+.loader-sub {
+  font-family: var(--ff-body);
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+  opacity: 0;
+}
+
+.loader-line {
+  width: 60px;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  margin-top: 8px;
+}
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 24px 0;
+  transition: background 0.4s, padding 0.4s, backdrop-filter 0.4s;
+}
+
+nav.scrolled {
+  background: rgba(246, 246, 246, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 16px 0;
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.nav-logo {
+  font-family: var(--ff-primary);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--black);
+}
+
+.nav-logo .dot { color: var(--accent); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover { color: var(--accent); }
+
+.nav-cta {
+  background: var(--black);
+  color: var(--white) !important;
+  padding: 12px 28px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.nav-cta:hover { background: var(--accent); }
+
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+}
+
+.nav-mobile-toggle span {
+  width: 24px;
+  height: 2px;
+  background: var(--black);
+  transition: 0.3s;
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-mobile-toggle { display: flex; }
+}
+
+/* ============================================
+   HERO — CHAPTER 1
+   ============================================ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 100px;
+  padding-bottom: 60px;
+  position: relative;
+  background: var(--light);
+  overflow: hidden;
+}
+
+.hero .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+}
+
+.hero-label {
+  font-family: var(--ff-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+
+.hero h1 {
+  font-size: clamp(42px, 5.5vw, 76px);
+  margin-bottom: 28px;
+}
+
+.hero .word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.hero .word-inner {
+  display: inline-block;
+  transform: translateY(120%);
+}
+
+.hero .accent { color: var(--accent); }
+
+.hero-sub {
+  font-size: clamp(16px, 1.3vw, 19px);
+  color: var(--gray);
+  max-width: 480px;
+  line-height: 1.7;
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.hero-ctas {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  background: var(--black);
+  color: var(--white);
+  padding: 16px 36px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--ff-body);
+  transition: background 0.3s, transform 0.3s;
+}
+
+.btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+
+.btn-ghost {
+  font-size: 15px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.3s;
+}
+
+.btn-ghost:hover { color: var(--accent); }
+
+.btn-ghost .arrow {
+  transition: transform 0.3s;
+}
+
+.btn-ghost:hover .arrow { transform: translateX(4px); }
+
+.hero-image-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.hero-image-wrap img {
+  width: 100%;
+  height: auto;
+  transform: scale(1.08);
+  will-change: transform;
+}
+
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+}
+
+.hero-scroll-indicator span {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: var(--gray-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-line::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  animation: scrollPulse 2s infinite;
+}
+
+@keyframes scrollPulse {
+  0% { top: -100%; }
+  100% { top: 100%; }
+}
+
+@media (max-width: 900px) {
+  .hero .container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .hero-sub { margin-left: auto; margin-right: auto; }
+  .hero-ctas { justify-content: center; }
+  .hero-image-wrap { max-width: 400px; margin: 0 auto; }
+}
+
+/* ============================================
+   CHAPTER 2: THE NOISE -> CLARITY WIPE
+   ============================================ */
+.noise-section {
+  position: relative;
+  height: 300vh; /* scroll distance for the sequence */
+  background: var(--dark);
+}
+
+.noise-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Grain texture for dark sections */
+.noise-sticky::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* Purple edge at bottom */
+.noise-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--purple-edge);
+  background: var(--accent);
+  z-index: 5;
+}
+
+.noise-words {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.noise-word {
+  position: absolute;
+  font-family: var(--ff-primary);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.06);
+  white-space: nowrap;
+  user-select: none;
+  will-change: transform, opacity;
+}
+
+/* The clarity reveal circle */
+.clarity-reveal {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: var(--light);
+  clip-path: circle(0% at 50% 50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: clip-path;
+}
+
+.clarity-inner {
+  text-align: center;
+  max-width: 800px;
+  padding: 0 var(--gutter);
+}
+
+.clarity-inner h2 {
+  font-size: clamp(36px, 5vw, 68px);
+  margin-bottom: 24px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.clarity-inner h2 .accent { color: var(--accent); }
+
+.clarity-inner p {
+  font-size: clamp(16px, 1.3vw, 20px);
+  color: var(--gray);
+  line-height: 1.7;
+  max-width: 560px;
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* ============================================
+   CHAPTER 3: THE PROMISE (BENEFITS)
+   ============================================ */
+.promise-section {
+  background: var(--white);
+  padding: var(--section-pad) 0;
+  position: relative;
+  z-index: 10;
+}
+
+.promise-header {
+  text-align: center;
+  margin-bottom: clamp(60px, 8vw, 100px);
+}
+
+.eyebrow {
+  font-family: var(--ff-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.promise-header h2 {
+  font-size: clamp(32px, 4vw, 56px);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(40px, 5vw, 80px);
+}
+
+.benefit-item {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.benefit-number {
+  font-family: var(--ff-primary);
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--accent);
+  opacity: 0.2;
+  margin-bottom: 16px;
+  line-height: 1;
+}
+
+.benefit-item h3 {
+  font-size: clamp(20px, 2vw, 28px);
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.benefit-item p {
+  font-size: 16px;
+  color: var(--gray);
+  line-height: 1.7;
+  max-width: 400px;
+}
+
+@media (max-width: 600px) {
+  .benefits-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================
+   CHAPTER 4: THE BRAND SPECTRUM
+   ============================================ */
+.spectrum-section {
+  position: relative;
+  z-index: 10;
+  height: 400vh; /* long scroll for the interactive spectrum */
+  background: var(--dark);
+}
+
+/* Grain + purple edge */
+.spectrum-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.spectrum-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--purple-edge);
+  background: var(--accent);
+  z-index: 5;
+}
+
+.spectrum-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  padding: 0 var(--gutter);
+}
+
+.spectrum-intro {
+  text-align: center;
+  max-width: 700px;
+  margin-bottom: 60px;
+}
+
+.spectrum-intro .eyebrow { color: var(--accent); }
+
+.spectrum-intro h2 {
+  font-size: clamp(28px, 3.5vw, 48px);
+  color: var(--white);
+  margin-bottom: 16px;
+}
+
+.spectrum-intro p {
+  font-size: clamp(15px, 1.2vw, 18px);
+  color: var(--gray);
+  line-height: 1.7;
+}
+
+/* The spectrum track */
+.spectrum-track-wrap {
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+}
+
+.spectrum-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.spectrum-label {
+  font-family: var(--ff-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  transition: color 0.4s;
+}
+
+.spectrum-label.active { color: var(--white); }
+
+.spectrum-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  position: relative;
+  border-radius: 2px;
+}
+
+.spectrum-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), #9B5CF9, #E05CF9);
+  border-radius: 2px;
+  transition: width 0.1s linear;
+}
+
+.spectrum-indicator {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background: var(--white);
+  border-radius: 50%;
+  box-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(90, 92, 249, 0.15);
+  transition: left 0.1s linear;
+}
+
+.spectrum-context {
+  margin-top: 48px;
+  text-align: center;
+  min-height: 120px;
+}
+
+.spectrum-context-card {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.5s;
+  width: 100%;
+  max-width: 600px;
+}
+
+.spectrum-context-card.active {
+  opacity: 1;
+}
+
+.spectrum-context-card h3 {
+  font-size: clamp(22px, 2.5vw, 36px);
+  color: var(--white);
+  margin-bottom: 12px;
+}
+
+.spectrum-context-card p {
+  font-size: 16px;
+  color: var(--gray);
+  line-height: 1.7;
+}
+
+/* Fork CTAs */
+.spectrum-fork {
+  display: flex;
+  gap: 24px;
+  margin-top: 48px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.fork-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--white);
+  font-size: 15px;
+  font-weight: 500;
+  font-family: var(--ff-body);
+  transition: border-color 0.3s, background 0.3s;
+  background: transparent;
+  text-decoration: none;
+}
+
+.fork-btn:hover {
+  border-color: var(--accent);
+  background: rgba(90, 92, 249, 0.08);
+}
+
+.fork-btn .arrow {
+  font-size: 18px;
+  transition: transform 0.3s;
+}
+
+.fork-btn:hover .arrow { transform: translateX(4px); }
+
+@media (max-width: 600px) {
+  .spectrum-fork { flex-direction: column; }
+}
+
+/* ============================================
+   CHAPTER 5: TESTIMONIALS (HORIZONTAL SCROLL)
+   ============================================ */
+.testimonials-section {
+  background: var(--white);
+  padding: var(--section-pad) 0;
+  overflow: hidden;
+  position: relative;
+  z-index: 10;
+}
+
+.testimonials-header {
+  text-align: center;
+  margin-bottom: clamp(48px, 6vw, 80px);
+}
+
+.testimonials-header h2 {
+  font-size: clamp(32px, 4vw, 56px);
+}
+
+.testimonials-track-wrap {
+  position: relative;
+  overflow: visible;
+  padding: 0 var(--gutter);
+}
+
+.testimonials-track {
+  display: flex;
+  gap: 32px;
+  will-change: transform;
+}
+
+.testimonial-card {
+  flex-shrink: 0;
+  width: clamp(340px, 40vw, 480px);
+  background: var(--light);
+  padding: clamp(32px, 4vw, 48px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.testimonial-number {
+  font-family: var(--ff-primary);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+
+.testimonial-quote {
+  font-family: var(--ff-primary);
+  font-size: clamp(20px, 2.2vw, 28px);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.testimonial-body {
+  font-size: 15px;
+  color: var(--gray);
+  line-height: 1.7;
+  margin-bottom: 32px;
+  flex: 1;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.testimonial-author-line {
+  width: 32px;
+  height: 2px;
+  background: var(--accent);
+}
+
+.testimonial-author-info strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.testimonial-author-info span {
+  font-size: 13px;
+  color: var(--gray);
+}
+
+/* ============================================
+   PHOTO BREAK
+   ============================================ */
+.photo-break {
+  position: relative;
+  z-index: 10;
+  height: 70vh;
+  overflow: hidden;
+  background: var(--dark);
+}
+
+.photo-break img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.7;
+  will-change: transform;
+}
+
+.photo-break-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 var(--gutter);
+}
+
+.photo-break-overlay blockquote {
+  font-family: var(--ff-primary);
+  font-size: clamp(28px, 3.5vw, 52px);
+  font-weight: 700;
+  color: var(--white);
+  max-width: 800px;
+  line-height: 1.15;
+}
+
+/* ============================================
+   CHAPTER 6: CTA CONVERGENCE
+   ============================================ */
+.cta-section {
+  background: var(--light);
+  padding: clamp(120px, 15vw, 240px) 0;
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.cta-inner {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.cta-inner h2 {
+  font-size: clamp(36px, 5vw, 72px);
+  margin-bottom: 24px;
+}
+
+.cta-inner h2 .accent { color: var(--accent); }
+
+.cta-inner p {
+  font-size: clamp(16px, 1.3vw, 20px);
+  color: var(--gray);
+  max-width: 520px;
+  margin: 0 auto 48px;
+  line-height: 1.7;
+}
+
+.cta-inner .btn-primary {
+  background: var(--accent);
+  padding: 20px 48px;
+  font-size: 16px;
+}
+
+.cta-inner .btn-primary:hover {
+  background: var(--black);
+}
+
+/* Floating convergence elements */
+.cta-float {
+  position: absolute;
+  opacity: 0.06;
+  font-family: var(--ff-primary);
+  font-weight: 800;
+  color: var(--black);
+  white-space: nowrap;
+  user-select: none;
+  will-change: transform;
+}
+
+.cta-float-1 { font-size: 120px; top: 10%; left: -5%; }
+.cta-float-2 { font-size: 80px; bottom: 15%; right: -3%; }
+.cta-float-3 { font-size: 100px; top: 50%; left: 60%; }
+
+/* ============================================
+   FOOTER
+   ============================================ */
+footer {
+  background: var(--dark);
+  color: var(--white);
+  padding: 60px 0 40px;
+  position: relative;
+}
+
+footer::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--purple-edge);
+  background: var(--accent);
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.footer-brand .nav-logo { color: var(--white); font-size: 32px; }
+
+.footer-brand p {
+  color: var(--gray);
+  font-size: 14px;
+  margin-top: 12px;
+  max-width: 280px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 60px;
+}
+
+.footer-col h4 {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 16px;
+  font-family: var(--ff-body);
+}
+
+.footer-col a {
+  display: block;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 10px;
+  transition: color 0.3s;
+}
+
+.footer-col a:hover { color: var(--accent); }
+
+.footer-bottom {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--gray);
+}
+
+@media (max-width: 768px) {
+  .footer-inner { flex-direction: column; }
+  .footer-links { flex-direction: column; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 8px; }
+}
+
+/* ============================================
+   PROGRESS BAR
+   ============================================ */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--accent);
+  z-index: 999;
+  transform-origin: left;
+  transform: scaleX(0);
+  will-change: transform;
+}
+
+/* ============================================
+   UTILITIES
+   ============================================ */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-logo">FP<span class="dot">.</span></div>
+  <div class="loader-sub">Brand Therapist</div>
+  <div class="loader-line"></div>
+</div>
+
+<!-- NAVIGATION -->
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">FP<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="#promise">What You Get</a></li>
+      <li><a href="#spectrum">Who It's For</a></li>
+      <li><a href="#testimonials">Proof</a></li>
+      <li><a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="nav-cta" target="_blank" rel="noopener">Book a Call</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- =============================================
+     CHAPTER 1: HERO
+     ============================================= -->
+<section class="hero" id="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-label">Brand Therapist</div>
+      <h1>
+        <span class="word"><span class="word-inner">Clarity</span></span>
+        <span class="word"><span class="word-inner">That</span></span>
+        <span class="word"><span class="word-inner">Makes</span></span>
+        <span class="word"><span class="word-inner">You</span></span><br>
+        <span class="word"><span class="word-inner accent">Impossible</span></span>
+        <span class="word"><span class="word-inner">to</span></span>
+        <span class="word"><span class="word-inner">Ignore.</span></span>
+      </h1>
+      <p class="hero-sub">Brand strategy, positioning, and differentiation for founders and the companies they lead.</p>
+      <div class="hero-ctas">
+        <a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="btn-primary" target="_blank" rel="noopener"><span>Book Your Free Intro Call</span></a>
+        <a href="#noise" class="btn-ghost">Discover the process <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
+    <div class="hero-image-wrap" id="heroImage">
+      <img src="images/florian/florian-editorial-lens-bw.png" alt="Florian Philippe holding a glass lens, revealing clarity through brand strategy" loading="eager">
+    </div>
+  </div>
+  <div class="hero-scroll-indicator" id="scrollIndicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- =============================================
+     CHAPTER 2: THE NOISE -> CLARITY WIPE
+     ============================================= -->
+<section class="noise-section" id="noise">
+  <div class="noise-sticky">
+    <!-- Chaotic noise words -->
+    <div class="noise-words" id="noiseWords">
+      <span class="noise-word" style="font-size: 5vw; top: 15%; left: 8%;">invisible in your market</span>
+      <span class="noise-word" style="font-size: 3.5vw; top: 35%; left: 55%;">saying what everyone else says</span>
+      <span class="noise-word" style="font-size: 6vw; top: 55%; left: 12%;">who even are we?</span>
+      <span class="noise-word" style="font-size: 4vw; top: 20%; left: 65%;">competing on price</span>
+      <span class="noise-word" style="font-size: 3vw; top: 72%; left: 45%;">no differentiation</span>
+      <span class="noise-word" style="font-size: 5.5vw; top: 45%; left: 30%;">scattered messaging</span>
+      <span class="noise-word" style="font-size: 3.5vw; top: 80%; left: 15%;">growing but invisible</span>
+      <span class="noise-word" style="font-size: 4.5vw; top: 10%; left: 35%;">best-kept secret</span>
+      <span class="noise-word" style="font-size: 3vw; top: 65%; left: 70%;">lost in the noise</span>
+      <span class="noise-word" style="font-size: 4vw; top: 85%; left: 60%;">pricing questioned</span>
+      <span class="noise-word" style="font-size: 3.5vw; top: 30%; left: 5%;">content that falls flat</span>
+      <span class="noise-word" style="font-size: 5vw; top: 50%; left: 65%;">no clear position</span>
+    </div>
+
+    <!-- Clarity circle wipe reveals this -->
+    <div class="clarity-reveal" id="clarityReveal">
+      <div class="clarity-inner">
+        <h2>What if your brand said <span class="accent">exactly</span> what it needed to?</h2>
+        <p>No noise. No guesswork. Just a brand so clear, the right people find you... and everyone else steps aside.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     CHAPTER 3: THE PROMISE (BENEFITS)
+     ============================================= -->
+<section class="promise-section" id="promise">
+  <div class="container">
+    <div class="promise-header">
+      <div class="eyebrow">What clarity actually does</div>
+      <h2>Strategy that changes how your brand competes.</h2>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-item">
+        <div class="benefit-number">01</div>
+        <h3>Your message lands in seconds</h3>
+        <p>People get what you do, who it's for, and why you're the obvious choice... before the first meeting even starts.</p>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-number">02</div>
+        <h3>Your audience self-selects</h3>
+        <p>The right clients recognize themselves in your brand. The wrong ones filter out. Your pipeline cleans itself.</p>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-number">03</div>
+        <h3>Your pricing stops being questioned</h3>
+        <p>When positioning is sharp, you stop competing on price. Clients pay for clarity because they feel the difference.</p>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-number">04</div>
+        <h3>Your content writes itself</h3>
+        <p>With a clear brand foundation, every post, pitch, and page flows from the same source. No more staring at a blank screen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     CHAPTER 4: THE BRAND SPECTRUM
+     ============================================= -->
+<section class="spectrum-section" id="spectrum">
+  <div class="spectrum-sticky">
+    <div class="spectrum-intro">
+      <div class="eyebrow">Where do you sit?</div>
+      <h2>Every brand lives somewhere on the spectrum.</h2>
+      <p>From faceless companies to personal brands... the ones that win know exactly where they stand. And they own it.</p>
+    </div>
+
+    <div class="spectrum-track-wrap">
+      <div class="spectrum-labels">
+        <span class="spectrum-label" id="labelCompany">Company Brand</span>
+        <span class="spectrum-label" id="labelMiddle" style="opacity: 0;">The Sweet Spot</span>
+        <span class="spectrum-label" id="labelPersonal">Personal Brand</span>
+      </div>
+      <div class="spectrum-track">
+        <div class="spectrum-fill" id="spectrumFill"></div>
+        <div class="spectrum-indicator" id="spectrumIndicator"></div>
+      </div>
+
+      <div class="spectrum-context" id="spectrumContext">
+        <div class="spectrum-context-card" id="ctx-company">
+          <h3>The invisible brand.</h3>
+          <p>Great product, zero personality. Competes on features and price because nobody knows who's behind it. Interchangeable.</p>
+        </div>
+        <div class="spectrum-context-card" id="ctx-emerging">
+          <h3>The emerging brand.</h3>
+          <p>The company has a name, maybe a decent logo. But the founder is the real magnet. The brand hasn't caught up yet.</p>
+        </div>
+        <div class="spectrum-context-card" id="ctx-sweet" data-sweet="true">
+          <h3>This is where leverage lives.</h3>
+          <p>The founder's credibility amplifies the company. The company's structure scales the founder. They feed each other. This is where Brand Therapy takes you.</p>
+        </div>
+        <div class="spectrum-context-card" id="ctx-founder">
+          <h3>The founder IS the brand.</h3>
+          <p>Massive personal presence, but the business can't exist without them. Every deal, every post, every decision runs through one person.</p>
+        </div>
+        <div class="spectrum-context-card" id="ctx-personal">
+          <h3>Pure personal brand.</h3>
+          <p>All personality, no structure. Audience loves the person but can't explain the offer. Vulnerable to burnout and impossible to sell.</p>
+        </div>
+      </div>
+
+      <div class="spectrum-fork" id="spectrumFork">
+        <a href="/founders" class="fork-btn">I'm a founder building my brand <span class="arrow">&rarr;</span></a>
+        <a href="/companies" class="fork-btn">I'm leading a company brand <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     PHOTO BREAK
+     ============================================= -->
+<div class="photo-break" id="photoBreak">
+  <img src="images/florian/web/florian-editorial-atrium-blue.jpg" alt="Florian Philippe" loading="lazy" id="photoBreakImg">
+  <div class="photo-break-overlay">
+    <blockquote>Most brands don't need more content. They need a reason to be heard.</blockquote>
+  </div>
+</div>
+
+<!-- =============================================
+     CHAPTER 5: TESTIMONIALS
+     ============================================= -->
+<section class="testimonials-section" id="testimonials">
+  <div class="container">
+    <div class="testimonials-header">
+      <div class="eyebrow">The proof</div>
+      <h2>What clients say.</h2>
+    </div>
+  </div>
+  <div class="testimonials-track-wrap">
+    <div class="testimonials-track" id="testimonialsTrack">
+      <div class="testimonial-card">
+        <div class="testimonial-number">01</div>
+        <div class="testimonial-quote">"He's a fucking unicorn"</div>
+        <p class="testimonial-body">Far and away the most skilled Marketing and Branding executive I have come across. Super smart, imaginative, incredibly creative, and yet he brings the technical expertise and the project management expertise in equal measure.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-author-line"></div>
+          <div class="testimonial-author-info">
+            <strong>Jon Tull</strong>
+            <span>Managing Partner, Cachet</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-number">02</div>
+        <div class="testimonial-quote">"Every detail he touches is intentional"</div>
+        <p class="testimonial-body">Florian brings a rare combination of vision and execution. He sees the big picture with a high-level, strategic perspective, yet he's equally skilled at rolling up his sleeves to deliver results on the ground.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-author-line"></div>
+          <div class="testimonial-author-info">
+            <strong>Kevin Meredith</strong>
+            <span>Founder, 4th Sector Innovations</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-number">03</div>
+        <div class="testimonial-quote">"His guidance has been genuinely invaluable"</div>
+        <p class="testimonial-body">He consistently brings thoughtful, structured insight that pushes the work toward clarity, coherence, and stronger decision-making. A rare ability to balance encouragement with restraint.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-author-line"></div>
+          <div class="testimonial-author-info">
+            <strong>Sam Goldman</strong>
+            <span>Tech Founder</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     CHAPTER 6: CTA CONVERGENCE
+     ============================================= -->
+<section class="cta-section" id="cta">
+  <div class="cta-float cta-float-1">Clarity</div>
+  <div class="cta-float cta-float-2">Strategy</div>
+  <div class="cta-float cta-float-3">Brand</div>
+  <div class="container">
+    <div class="cta-inner">
+      <div class="eyebrow">Your next move</div>
+      <h2>Let's find your <span class="accent">clarity.</span></h2>
+      <p>Your next real brand conversation is free. Twenty minutes to find out if Brand Therapy is the right fit... and whether now is the right time.</p>
+      <a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="btn-primary" target="_blank" rel="noopener">Book Your Free Intro Call</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo">FP<span class="dot">.</span></div>
+        <p>Brand strategy, positioning, and differentiation for founders and the companies they lead.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <a href="/story">The Story</a>
+          <a href="/founders">For Founders</a>
+          <a href="/companies">For Companies</a>
+          <a href="/blog">Blog</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="mailto:connect@florianp.com">connect@florianp.com</a>
+          <a href="https://linkedin.com/in/florianphilippe" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" target="_blank" rel="noopener">Book a Call</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Florian P. All rights reserved.</span>
+      <span>Beverly Hills, CA</span>
+    </div>
+  </div>
+</footer>
+
+<!-- =============================================
+     JAVASCRIPT: ALL SCROLL ANIMATIONS
+     ============================================= -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  // ========== LENIS SMOOTH SCROLL ==========
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+  });
+  window.lenis = lenis; // expose for debugging
+
+  lenis.on('scroll', ScrollTrigger.update);
+
+  // Drive Lenis from its own rAF loop (independent of GSAP ticker)
+  function lenisRaf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(lenisRaf);
+  }
+  requestAnimationFrame(lenisRaf);
+
+  // Don't modify GSAP ticker behavior
+
+  // ========== REGISTER GSAP PLUGINS ==========
+  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+  // ========== LOADER ==========
+  lenis.stop();
+
+  // Simple CSS-driven loader with JS fallback
+  const loaderEl = document.getElementById('loader');
+  const loaderLogo = loaderEl.querySelector('.loader-logo');
+  const loaderSub = loaderEl.querySelector('.loader-sub');
+  const loaderLine = loaderEl.querySelector('.loader-line');
+
+  // Animate loader with requestAnimationFrame-safe approach
+  loaderLogo.style.transition = 'opacity 0.6s ease-out';
+  loaderSub.style.transition = 'opacity 0.5s ease-out 0.3s';
+  loaderLine.style.transition = 'transform 0.8s ease-in-out 0.5s';
+
+  requestAnimationFrame(() => {
+    loaderLogo.style.opacity = '1';
+    loaderSub.style.opacity = '1';
+    loaderLine.style.transform = 'scaleX(1)';
+  });
+
+  setTimeout(() => {
+    loaderEl.style.transition = 'opacity 0.5s ease-out';
+    loaderEl.style.opacity = '0';
+    setTimeout(() => {
+      loaderEl.style.display = 'none';
+      lenis.start();
+      heroEntrance();
+    }, 500);
+  }, 2200);
+
+  // ========== HERO ENTRANCE ==========
+  function heroEntrance() {
+    // Use CSS transitions for reliability
+    const words = document.querySelectorAll('.hero .word-inner');
+    words.forEach((word, i) => {
+      word.style.transition = `transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.06}s`;
+      word.style.transform = 'translateY(0)';
+    });
+
+    const sub = document.querySelector('.hero-sub');
+    sub.style.transition = 'opacity 0.7s ease-out 0.4s, transform 0.7s ease-out 0.4s';
+    sub.style.opacity = '1';
+    sub.style.transform = 'translateY(0)';
+
+    const ctas = document.querySelector('.hero-ctas');
+    ctas.style.transition = 'opacity 0.7s ease-out 0.5s, transform 0.7s ease-out 0.5s';
+    ctas.style.opacity = '1';
+    ctas.style.transform = 'translateY(0)';
+
+    const img = document.querySelector('.hero-image-wrap img');
+    img.style.transition = 'transform 1.4s ease-out';
+    img.style.transform = 'scale(1)';
+
+    const scrollInd = document.getElementById('scrollIndicator');
+    scrollInd.style.transition = 'opacity 0.6s ease-out 0.8s';
+    scrollInd.style.opacity = '1';
+  }
+
+  // ========== NAV SCROLL BEHAVIOR ==========
+  ScrollTrigger.create({
+    start: 'top -80',
+    onUpdate: (self) => {
+      document.getElementById('mainNav').classList.toggle('scrolled', self.direction === 1 || window.scrollY > 80);
+    }
+  });
+
+  // ========== PROGRESS BAR ==========
+  gsap.to('#progressBar', {
+    scaleX: 1,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: document.body,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.3,
+    }
+  });
+
+  // ========== HERO PARALLAX ==========
+  gsap.to('.hero-image-wrap img', {
+    y: -80,
+    scrollTrigger: {
+      trigger: '.hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true,
+    }
+  });
+
+  // Fade out scroll indicator
+  gsap.to('#scrollIndicator', {
+    opacity: 0,
+    scrollTrigger: {
+      trigger: '.hero',
+      start: 'top top',
+      end: '+=200',
+      scrub: true,
+    }
+  });
+
+  // ========== CHAPTER 2: NOISE -> CLARITY WIPE ==========
+
+  // Animate noise words drifting chaotically
+  const noiseWords = gsap.utils.toArray('.noise-word');
+
+  // Initial entrance: words fade in and drift
+  const noiseTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.noise-section',
+      start: 'top bottom',
+      end: 'top top',
+      scrub: 1,
+    }
+  });
+
+  noiseWords.forEach((word, i) => {
+    noiseTl.fromTo(word, {
+      opacity: 0,
+      x: (i % 2 === 0 ? -60 : 60),
+    }, {
+      opacity: 1,
+      x: 0,
+      duration: 1,
+    }, i * 0.05);
+  });
+
+  // Noise words intensify (get brighter, more chaotic)
+  const noiseIntensify = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.noise-section',
+      start: 'top top',
+      end: '+=33%',
+      scrub: 1,
+    }
+  });
+
+  noiseWords.forEach((word, i) => {
+    const directions = [
+      { x: -30, y: -20, rotate: -3 },
+      { x: 40, y: 15, rotate: 2 },
+      { x: -20, y: 30, rotate: -2 },
+      { x: 35, y: -25, rotate: 4 },
+      { x: -45, y: 10, rotate: -5 },
+    ];
+    const d = directions[i % directions.length];
+
+    noiseIntensify.to(word, {
+      color: 'rgba(255, 255, 255, 0.15)',
+      x: `+=${d.x}`,
+      y: `+=${d.y}`,
+      rotation: d.rotate,
+      duration: 1,
+    }, 0);
+  });
+
+  // CLARITY CIRCLE WIPE (the main event)
+  gsap.to('#clarityReveal', {
+    clipPath: 'circle(75% at 50% 50%)',
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.noise-section',
+      start: '33% top',
+      end: '66% top',
+      scrub: 1,
+    }
+  });
+
+  // Clarity text reveals
+  const clarityTextTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.noise-section',
+      start: '50% top',
+      end: '75% top',
+      scrub: 1,
+    }
+  });
+
+  clarityTextTl
+    .to('.clarity-inner h2', {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: 'power2.out',
+    })
+    .to('.clarity-inner p', {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: 'power2.out',
+    }, '-=0.5');
+
+  // ========== CHAPTER 3: BENEFITS REVEAL ==========
+  gsap.utils.toArray('.benefit-item').forEach((item, i) => {
+    gsap.to(item, {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: item,
+        start: 'top 85%',
+        end: 'top 60%',
+        scrub: 1,
+      }
+    });
+  });
+
+  // ========== CHAPTER 4: BRAND SPECTRUM ==========
+  const spectrumCards = [
+    document.getElementById('ctx-company'),
+    document.getElementById('ctx-emerging'),
+    document.getElementById('ctx-sweet'),
+    document.getElementById('ctx-founder'),
+    document.getElementById('ctx-personal'),
+  ];
+
+  ScrollTrigger.create({
+    trigger: '.spectrum-section',
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: 0.5,
+    onUpdate: (self) => {
+      const progress = self.progress;
+      const pct = progress * 100;
+
+      // Move indicator and fill
+      document.getElementById('spectrumFill').style.width = `${pct}%`;
+      document.getElementById('spectrumIndicator').style.left = `${pct}%`;
+
+      // Determine which context card to show
+      let activeIndex;
+      if (pct < 15) activeIndex = 0;
+      else if (pct < 35) activeIndex = 1;
+      else if (pct < 65) activeIndex = 2;
+      else if (pct < 85) activeIndex = 3;
+      else activeIndex = 4;
+
+      spectrumCards.forEach((card, i) => {
+        card.classList.toggle('active', i === activeIndex);
+      });
+
+      // Label highlights
+      document.getElementById('labelCompany').classList.toggle('active', pct < 30);
+      document.getElementById('labelMiddle').style.opacity = (pct > 30 && pct < 70) ? 1 : 0;
+      document.getElementById('labelPersonal').classList.toggle('active', pct > 70);
+
+      // Show fork CTAs when in sweet spot
+      if (pct > 40 && pct < 60) {
+        gsap.to('#spectrumFork', { opacity: 1, y: 0, duration: 0.5 });
+      } else {
+        gsap.to('#spectrumFork', { opacity: 0, y: 20, duration: 0.3 });
+      }
+    }
+  });
+
+  // ========== PHOTO BREAK PARALLAX ==========
+  gsap.to('#photoBreakImg', {
+    y: -60,
+    scrollTrigger: {
+      trigger: '.photo-break',
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: true,
+    }
+  });
+
+  gsap.from('.photo-break-overlay blockquote', {
+    opacity: 0,
+    y: 40,
+    scrollTrigger: {
+      trigger: '.photo-break',
+      start: 'top 60%',
+      end: 'top 30%',
+      scrub: 1,
+    }
+  });
+
+  // ========== CHAPTER 5: HORIZONTAL TESTIMONIALS ==========
+  const track = document.getElementById('testimonialsTrack');
+  const cards = track.querySelectorAll('.testimonial-card');
+  const totalScroll = track.scrollWidth - window.innerWidth + 100;
+
+  gsap.to(track, {
+    x: () => -totalScroll,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.testimonials-section',
+      start: 'top top',
+      end: () => `+=${totalScroll}`,
+      scrub: 1,
+      pin: true,
+      anticipatePin: 1,
+    }
+  });
+
+  // ========== CHAPTER 6: CTA CONVERGENCE ==========
+  const ctaFloats = gsap.utils.toArray('.cta-float');
+  ctaFloats.forEach((el, i) => {
+    gsap.from(el, {
+      x: i % 2 === 0 ? -200 : 200,
+      y: i === 1 ? 100 : -100,
+      scrollTrigger: {
+        trigger: '.cta-section',
+        start: 'top bottom',
+        end: 'top 20%',
+        scrub: 1,
+      }
+    });
+  });
+
+  gsap.from('.cta-inner .eyebrow', {
+    opacity: 0,
+    y: 30,
+    scrollTrigger: {
+      trigger: '.cta-section',
+      start: 'top 60%',
+      toggleActions: 'play none none none',
+    }
+  });
+
+  gsap.from('.cta-inner h2', {
+    opacity: 0,
+    y: 40,
+    scrollTrigger: {
+      trigger: '.cta-section',
+      start: 'top 55%',
+      toggleActions: 'play none none none',
+    }
+  });
+
+  gsap.from('.cta-inner p', {
+    opacity: 0,
+    y: 30,
+    scrollTrigger: {
+      trigger: '.cta-section',
+      start: 'top 50%',
+      toggleActions: 'play none none none',
+    }
+  });
+
+  gsap.from('.cta-inner .btn-primary', {
+    opacity: 0,
+    y: 20,
+    scrollTrigger: {
+      trigger: '.cta-section',
+      start: 'top 45%',
+      toggleActions: 'play none none none',
+    }
+  });
+
+  // ========== FOOTER ENTRANCE ==========
+  gsap.from('.footer-inner', {
+    opacity: 0,
+    y: 30,
+    scrollTrigger: {
+      trigger: 'footer',
+      start: 'top 90%',
+      toggleActions: 'play none none none',
+    }
+  });
+
+}); // end DOMContentLoaded
+</script>
+
+</body>
+</html>

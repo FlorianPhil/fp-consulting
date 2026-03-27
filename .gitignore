@@ -1,14 +1,48 @@
-# Exclude oversized originals (keep web-optimized versions)
-florian/*.png
-florian/*.jpeg
-florian/*.jpg
-florian/*.avif
-!florian/web/
+# Heavy originals (photography, 265MB+)
+brand-assets/florian/*.png
+brand-assets/florian/*.avif
+brand-assets/florian/*.jpeg
+brand-assets/florian/*.jpg
+!brand-assets/florian/web/
 
-# Exclude client asset originals over 5MB
-client-assets/adam-freed/adam-freed-ai-portrait-*.png
-client-assets/adam-freed/adam-freed-brand-after.png
+# Client work (confidential)
+brand-assets/client-assets/
+
+# Heavy imagery originals
+brand-assets/imagery/*.png
+
+# Staging (temporary landing zone)
+content/_staging/
+
+# Website builds (has its own git repo)
+website-v9/
+website/
+node_modules/
+
+# Design system builds
+design-system/node_modules/
 
 # OS files
 .DS_Store
+**/.DS_Store
 Thumbs.db
+
+# Secrets
+.env
+*.key
+
+# Claude local state
+.claude/
+
+# Temporary files
+*.tmp
+*.bak
+skills-temp/
+temporary/
+
+# Large non-web files in brand-assets root
+brand-assets/fp-brand-moodboard.html
+brand-assets/fp-design-skills-architecture.docx
+
+# PDFs (client deliverables)
+brand-assets/**/*.pdf

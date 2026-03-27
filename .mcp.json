@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "freepik": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://api.freepik.com/mcp",
+        "--header",
+        "x-freepik-api-key:FPSXac90904ffb033f4d963b7ea22caf77bb"
+      ],
+      "env": {}
+    }
+  }
+}

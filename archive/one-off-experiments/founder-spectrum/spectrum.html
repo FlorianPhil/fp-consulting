@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Founder–Brand Spectrum</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================
+       FIGMA-READY CSS — V2
+       No pseudo-elements, no CSS variables,
+       no backdrop-filter, no clamp(), no !important
+       1280px canvas · 1080px content
+       ============================================ */
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      background: #FFFFFF;
+      color: #1D1D1D;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---- SECTION (1280 canvas) ---- */
+    .spectrum-section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 100px 100px;
+      background: #FFFFFF;
+    }
+
+    .spectrum-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    /* ---- HEADER ---- */
+    .s-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #5A5CF9;
+      margin-bottom: 20px;
+    }
+
+    .s-heading {
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      color: #1D1D1D;
+      margin-bottom: 16px;
+    }
+
+    .s-subhead {
+      font-size: 17px;
+      line-height: 1.7;
+      color: #6B6B6B;
+      max-width: 580px;
+      margin-bottom: 56px;
+    }
+
+    /* ============================================
+       FLOATING LOGO ANIMATIONS
+       3 different paths for organic movement
+       ============================================ */
+    @keyframes floatA {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(2px, -6px) rotate(0.6deg); }
+      50% { transform: translate(-1px, -3px) rotate(-0.4deg); }
+      75% { transform: translate(1px, -7px) rotate(0.3deg); }
+    }
+
+    @keyframes floatB {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      30% { transform: translate(-3px, -5px) rotate(-0.5deg); }
+      60% { transform: translate(2px, -8px) rotate(0.4deg); }
+      80% { transform: translate(-1px, -4px) rotate(-0.2deg); }
+    }
+
+    @keyframes floatC {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      20% { transform: translate(1px, -7px) rotate(0.3deg); }
+      45% { transform: translate(-2px, -4px) rotate(-0.6deg); }
+      70% { transform: translate(2px, -6px) rotate(0.2deg); }
+    }
+
+    /* ============================================
+       DESKTOP PANORAMA
+       ============================================ */
+    .panorama {
+      display: flex;
+      gap: 0;
+    }
+
+    .p-col {
+      flex: 1;
+      cursor: pointer;
+      padding: 16px 6px 16px;
+      border-radius: 12px;
+      transition: background 0.35s ease, box-shadow 0.35s ease;
+      text-align: center;
+    }
+
+    .p-col:hover {
+      background: rgba(246, 246, 246, 0.5);
+    }
+
+    .p-col.active {
+      background: rgba(90, 92, 249, 0.03);
+      box-shadow: 0 0 0 1px rgba(90, 92, 249, 0.06);
+    }
+
+    /* ---- Visual composition (overlapping layered) ---- */
+    .p-visual {
+      width: 100%;
+      height: 280px;
+      position: relative;
+      margin-bottom: 14px;
+      overflow: visible;
+    }
+
+    /* Person cutout */
+    .p-person {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      display: block;
+      object-fit: contain;
+      filter: grayscale(1);
+      opacity: 0.65;
+      transition: filter 0.5s ease, opacity 0.5s ease, transform 0.4s ease;
+    }
+
+    .p-col.active .p-person {
+      filter: grayscale(0);
+      opacity: 1;
+    }
+
+    .p-col:hover .p-person {
+      filter: grayscale(0.4);
+      opacity: 0.85;
+    }
+
+    .p-col.active:hover .p-person {
+      filter: grayscale(0);
+      opacity: 1;
+    }
+
+    /* Logo badge (rounded white frame) */
+    .p-logo-badge {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 14px rgba(0, 0, 0, 0.06), 0 10px 28px rgba(0, 0, 0, 0.03);
+      filter: grayscale(1);
+      opacity: 0.65;
+      transition: filter 0.5s ease, opacity 0.5s ease, box-shadow 0.5s ease;
+    }
+
+    .p-col.active .p-logo-badge {
+      filter: grayscale(0);
+      opacity: 1;
+      box-shadow: 0 2px 6px rgba(90, 92, 249, 0.06), 0 8px 20px rgba(90, 92, 249, 0.08), 0 14px 36px rgba(90, 92, 249, 0.05);
+    }
+
+    .p-col:hover .p-logo-badge {
+      filter: grayscale(0.4);
+      opacity: 0.85;
+    }
+
+    .p-col.active:hover .p-logo-badge {
+      filter: grayscale(0);
+      opacity: 1;
+    }
+
+    /* Floating animation — only on active */
+    .p-col.active .p-logo-badge {
+      animation-play-state: running;
+    }
+
+    .p-logo-badge {
+      animation-play-state: paused;
+    }
+
+    .logo-float-a {
+      animation: floatA 3.8s ease-in-out infinite;
+    }
+
+    .logo-float-b {
+      animation: floatB 4.2s ease-in-out infinite;
+    }
+
+    .logo-float-c {
+      animation: floatC 3.5s ease-in-out infinite;
+    }
+
+    .p-logo-badge img {
+      display: block;
+      object-fit: contain;
+    }
+
+    /* ---- Position labels ---- */
+    .p-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #949494;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+      margin-bottom: 3px;
+      transition: color 0.35s ease;
+    }
+
+    .p-col.active .p-label {
+      color: #5A5CF9;
+    }
+
+    .p-col:hover .p-label {
+      color: #6B6B6B;
+    }
+
+    .p-col.active:hover .p-label {
+      color: #5A5CF9;
+    }
+
+    .p-example {
+      font-size: 11px;
+      color: #B8B8B8;
+      font-weight: 500;
+      transition: color 0.35s ease;
+    }
+
+    .p-col.active .p-example {
+      color: #949494;
+    }
+
+    /* ============================================
+       SPECTRUM BAR
+       ============================================ */
+    .s-bar {
+      margin-top: 24px;
+      margin-bottom: 32px;
+      padding: 0 9.5%;
+    }
+
+    .s-bar-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .s-bar-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #949494;
+    }
+
+    .s-bar-track {
+      height: 2px;
+      background: #E8E8E8;
+      border-radius: 99px;
+      position: relative;
+    }
+
+    .s-bar-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #5A5CF9, #8B8DFF);
+      border-radius: 99px;
+      transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .s-nodes {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .s-node {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 2px solid #E8E8E8;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .s-node.passed {
+      background: #5A5CF9;
+      border-color: #5A5CF9;
+    }
+
+    .s-node.active {
+      width: 14px;
+      height: 14px;
+      background: #5A5CF9;
+      border-color: #5A5CF9;
+      margin-top: -2px;
+      box-shadow: 0 0 0 4px rgba(90, 92, 249, 0.15), 0 2px 8px rgba(90, 92, 249, 0.25);
+    }
+
+    /* ============================================
+       DETAIL PANEL
+       ============================================ */
+    .detail {
+      background: #F6F6F6;
+      border-radius: 12px;
+      padding: 32px 36px;
+      display: none;
+    }
+
+    .detail.active {
+      display: block;
+    }
+
+    .detail-header {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .detail-badge {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #5A5CF9;
+      background: rgba(90, 92, 249, 0.08);
+      padding: 5px 10px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .detail-name {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #1D1D1D;
+    }
+
+    .detail-desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #6B6B6B;
+      margin-bottom: 24px;
+      max-width: 640px;
+    }
+
+    .detail-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 24px;
+    }
+
+    .detail-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 99px;
+      background: rgba(90, 92, 249, 0.06);
+      color: #5A5CF9;
+    }
+
+    .detail-grid {
+      display: flex;
+      gap: 40px;
+    }
+
+    .detail-col {
+      flex: 1;
+    }
+
+    .detail-col h4 {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .detail-col-pro h4 { color: #5A5CF9; }
+    .detail-col-con h4 { color: #949494; }
+
+    .detail-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .detail-col li {
+      font-size: 13px;
+      line-height: 1.55;
+      color: #6B6B6B;
+    }
+
+    /* ============================================
+       MOBILE: PILL NAV + CARDS
+       ============================================ */
+    .m-nav {
+      display: none;
+      gap: 6px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 4px;
+      margin-bottom: 20px;
+      scrollbar-width: none;
+    }
+
+    .m-nav::-webkit-scrollbar { display: none; }
+
+    .m-pill {
+      padding: 8px 14px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #949494;
+      cursor: pointer;
+      white-space: nowrap;
+      border: 1px solid #E8E8E8;
+      background: #FFFFFF;
+      font-family: inherit;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .m-pill:hover { border-color: #C8C8C8; color: #6B6B6B; }
+
+    .m-pill.active {
+      background: #1D1D1D;
+      border-color: #1D1D1D;
+      color: #FFFFFF;
+    }
+
+    .m-card {
+      display: none;
+      background: #F6F6F6;
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .m-card.active { display: block; }
+
+    .m-visual {
+      height: 220px;
+      position: relative;
+      margin-bottom: 20px;
+      overflow: visible;
+    }
+
+    .m-visual .p-person {
+      filter: grayscale(0);
+      opacity: 1;
+    }
+
+    .m-visual .p-logo-badge {
+      filter: grayscale(0);
+      opacity: 1;
+      animation-play-state: running;
+    }
+
+    .m-minibar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .m-minibar-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #949494;
+      width: 56px;
+      flex-shrink: 0;
+    }
+
+    .m-minibar-label-right {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #949494;
+      width: 56px;
+      flex-shrink: 0;
+      text-align: right;
+    }
+
+    .m-minibar-track {
+      flex: 1;
+      height: 2px;
+      background: #E0E0E0;
+      border-radius: 99px;
+      position: relative;
+    }
+
+    .m-minibar-dot {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 8px;
+      height: 8px;
+      background: #5A5CF9;
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(90, 92, 249, 0.15);
+    }
+
+    .m-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    .m-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #6B6B6B;
+      margin-bottom: 16px;
+    }
+
+    .m-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 16px;
+    }
+
+    .m-tag {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 99px;
+      background: rgba(90, 92, 249, 0.06);
+      color: #5A5CF9;
+    }
+
+    .m-cols {
+      display: flex;
+      gap: 20px;
+      padding-top: 16px;
+      border-top: 1px solid #E0E0E0;
+    }
+
+    .m-col { flex: 1; }
+
+    .m-col h4 {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .m-col-pro h4 { color: #5A5CF9; }
+    .m-col-con h4 { color: #949494; }
+
+    .m-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .m-col li {
+      font-size: 12px;
+      line-height: 1.45;
+      color: #6B6B6B;
+    }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 899px) {
+      .spectrum-section { padding: 60px 24px; }
+      .s-heading { font-size: 32px; }
+      .s-subhead { margin-bottom: 32px; }
+      .panorama { display: none; }
+      .s-bar { display: none; }
+      .detail { display: none; }
+      .m-nav { display: flex; }
+    }
+
+    @media (min-width: 900px) {
+      .m-nav { display: none; }
+      .m-card { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .m-cols { flex-direction: column; gap: 16px; }
+      .detail-grid { flex-direction: column; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="spectrum-section">
+    <div class="spectrum-inner">
+
+      <!-- Header -->
+      <div class="s-eyebrow">The Founder–Brand Spectrum</div>
+      <h2 class="s-heading">Where does your company sit?</h2>
+      <p class="s-subhead">Every founder-led company falls somewhere on this spectrum. There's no right answer — but there is a right strategy for each position.</p>
+
+
+      <!-- ========================================================
+           DESKTOP PANORAMA — overlapping compositions
+           ======================================================== -->
+      <div class="panorama" id="panorama">
+
+        <!-- ---- Position 1: Pure Company Brand (Shein) ---- -->
+        <div class="p-col" data-pos="0">
+          <div class="p-visual">
+            <!-- Anonymous person: small, faded, behind -->
+            <img class="p-person" src="Anonymous.png" alt=""
+                 style="height: 130px; transform: translateX(-50%); opacity: 0.14;">
+            <!-- Shein logo: large, centered, in front -->
+            <div class="p-logo-badge logo-float-a"
+                 style="top: 55px; left: 50%; transform: translateX(-50%); padding: 14px 20px; z-index: 3;">
+              <img src="Shein.png" alt="Shein" style="height: 28px;">
+            </div>
+          </div>
+          <div class="p-label">Pure Company<br>Brand</div>
+          <div class="p-example">Shein</div>
+        </div>
+
+        <!-- ---- Position 2: Company-Led, Founder-Visible (BoA / Moynihan) ---- -->
+        <div class="p-col" data-pos="1">
+          <div class="p-visual">
+            <!-- Brian: positioned right, face visible -->
+            <img class="p-person" src="Brian Moynihan.png" alt="Brian Moynihan"
+                 style="height: 160px; transform: translateX(-30%); z-index: 1;">
+            <!-- BoA logo: large, positioned left-center, in front of lower body -->
+            <div class="p-logo-badge logo-float-b"
+                 style="bottom: 40px; left: 6px; padding: 12px 14px; z-index: 3;">
+              <img src="BoA.png" alt="Bank of America" style="height: 60px;">
+            </div>
+          </div>
+          <div class="p-label">Company-Led,<br>Founder-Visible</div>
+          <div class="p-example">BoA / Brian Moynihan</div>
+        </div>
+
+        <!-- ---- Position 3: Symbiotic Brands (Meta / Zuckerberg) ---- -->
+        <div class="p-col active" data-pos="2">
+          <div class="p-visual">
+            <!-- Zuckerberg: centered, large -->
+            <img class="p-person" src="Mark Zuckerberg.png" alt="Mark Zuckerberg"
+                 style="height: 175px; transform: translateX(-50%); z-index: 1;">
+            <!-- Meta logo: floating at left shoulder -->
+            <div class="p-logo-badge logo-float-c"
+                 style="top: 30px; left: 4px; padding: 12px; z-index: 3;">
+              <img src="Meta.png" alt="Meta" style="height: 44px;">
+            </div>
+          </div>
+          <div class="p-label">Symbiotic<br>Brands</div>
+          <div class="p-example">Meta / Mark Zuckerberg</div>
+        </div>
+
+        <!-- ---- Position 4: Founder-Led, Company-Supported (Tesla / Elon) ---- -->
+        <div class="p-col" data-pos="3">
+          <div class="p-visual">
+            <!-- Elon: large, centered, dominant, in front -->
+            <img class="p-person" src="Elon Musk.png" alt="Elon Musk"
+                 style="height: 195px; transform: translateX(-50%); z-index: 3;">
+            <!-- Tesla logo: behind right shoulder, partially overshadowed -->
+            <div class="p-logo-badge logo-float-a"
+                 style="top: 18px; right: 4px; padding: 11px; z-index: 1;">
+              <img src="Tesla.png" alt="Tesla" style="height: 42px;">
+            </div>
+          </div>
+          <div class="p-label">Founder-Led,<br>Company-Supported</div>
+          <div class="p-example">Tesla / Elon Musk</div>
+        </div>
+
+        <!-- ---- Position 5: Pure Personal Brand (Gary Vee) ---- -->
+        <div class="p-col" data-pos="4">
+          <div class="p-visual">
+            <!-- Gary: very large, centered, totally dominant -->
+            <img class="p-person" src="Gary Vee.png" alt="Gary Vaynerchuk"
+                 style="height: 210px; transform: translateX(-50%); z-index: 3;">
+            <!-- Unknown logo: tiny, far corner, barely visible -->
+            <div class="p-logo-badge logo-float-b"
+                 style="top: 12px; right: 2px; padding: 8px; z-index: 1; opacity: 0.35;">
+              <img src="Unknown Company.png" alt="" style="height: 28px;">
+            </div>
+          </div>
+          <div class="p-label">Pure Personal<br>Brand</div>
+          <div class="p-example">Gary Vaynerchuk</div>
+        </div>
+
+      </div>
+
+
+      <!-- ---- Spectrum Bar ---- -->
+      <div class="s-bar" id="spectrumBar">
+        <div class="s-bar-labels">
+          <span class="s-bar-label">Company Brand</span>
+          <span class="s-bar-label">Personal Brand</span>
+        </div>
+        <div class="s-bar-track">
+          <div class="s-bar-fill" id="barFill" style="width: 50%;"></div>
+          <div class="s-nodes" id="barNodes">
+            <div class="s-node passed" data-node="0"></div>
+            <div class="s-node passed" data-node="1"></div>
+            <div class="s-node active" data-node="2"></div>
+            <div class="s-node" data-node="3"></div>
+            <div class="s-node" data-node="4"></div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ---- Detail Panels ---- -->
+      <div class="detail" data-detail="0">
+        <div class="detail-header">
+          <span class="detail-badge">Position 1 of 5</span>
+          <span class="detail-name">Pure Company Brand</span>
+        </div>
+        <p class="detail-desc">The founder plays no public role. Brand equity is entirely institutional. Works when the product or service speaks for itself — nobody knows (or needs to know) who's behind it.</p>
+        <div class="detail-tags">
+          <span class="detail-tag">Enterprise SaaS</span>
+          <span class="detail-tag">Large agencies</span>
+          <span class="detail-tag">Marketplace brands</span>
+        </div>
+        <div class="detail-grid">
+          <div class="detail-col detail-col-pro">
+            <h4>Strengths</h4>
+            <ul>
+              <li>+ Not dependent on any one person</li>
+              <li>+ Easier to sell or transition leadership</li>
+              <li>+ Scalable team identity</li>
+            </ul>
+          </div>
+          <div class="detail-col detail-col-con">
+            <h4>Challenges</h4>
+            <ul>
+              <li>— Harder to build trust early on</li>
+              <li>— Commodity risk without personality</li>
+              <li>— Slower organic growth</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail" data-detail="1">
+        <div class="detail-header">
+          <span class="detail-badge">Position 2 of 5</span>
+          <span class="detail-name">Company-Led, Founder-Visible</span>
+        </div>
+        <p class="detail-desc">The company is the brand, but the founder lends credibility by being visible. Think CEO keynotes, podcast appearances, or a founder blog that drives traffic back to the company. The person is an asset — not the product.</p>
+        <div class="detail-tags">
+          <span class="detail-tag">Tech scale-ups</span>
+          <span class="detail-tag">Funded startups</span>
+          <span class="detail-tag">B2B companies</span>
+        </div>
+        <div class="detail-grid">
+          <div class="detail-col detail-col-pro">
+            <h4>Strengths</h4>
+            <ul>
+              <li>+ Company brand is the primary asset</li>
+              <li>+ Founder adds a human trust layer</li>
+              <li>+ Strong fundraising narrative</li>
+            </ul>
+          </div>
+          <div class="detail-col detail-col-con">
+            <h4>Challenges</h4>
+            <ul>
+              <li>— Founder's time is finite</li>
+              <li>— Risk of mixed messaging</li>
+              <li>— Needs clear content boundaries</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail active" data-detail="2">
+        <div class="detail-header">
+          <span class="detail-badge">Position 3 of 5</span>
+          <span class="detail-name">Symbiotic Brands</span>
+        </div>
+        <p class="detail-desc">The sweet spot for most consulting and services firms. Both brands amplify each other — the founder draws attention, the company converts it. Requires deliberate architecture to maintain the balance.</p>
+        <div class="detail-tags">
+          <span class="detail-tag">Consulting</span>
+          <span class="detail-tag">Services</span>
+          <span class="detail-tag">Studios</span>
+        </div>
+        <div class="detail-grid">
+          <div class="detail-col detail-col-pro">
+            <h4>Strengths</h4>
+            <ul>
+              <li>+ Founder draws, company converts</li>
+              <li>+ Balanced equity across both brands</li>
+              <li>+ Scalable through team growth</li>
+            </ul>
+          </div>
+          <div class="detail-col detail-col-con">
+            <h4>Challenges</h4>
+            <ul>
+              <li>— Needs deliberate brand architecture</li>
+              <li>— Coordinated messaging required</li>
+              <li>— More complex content strategy</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail" data-detail="3">
+        <div class="detail-header">
+          <span class="detail-badge">Position 4 of 5</span>
+          <span class="detail-name">Founder-Led, Company-Supported</span>
+        </div>
+        <p class="detail-desc">People come for the person, stay for the company. The founder's reputation does the heavy lifting — the company brand exists primarily as an operational container. The founder IS the reason people buy.</p>
+        <div class="detail-tags">
+          <span class="detail-tag">Coaches</span>
+          <span class="detail-tag">Advisors</span>
+          <span class="detail-tag">Expert consultants</span>
+        </div>
+        <div class="detail-grid">
+          <div class="detail-col detail-col-pro">
+            <h4>Strengths</h4>
+            <ul>
+              <li>+ Strong personal trust and loyalty</li>
+              <li>+ Fast audience building</li>
+              <li>+ Premium positioning comes naturally</li>
+            </ul>
+          </div>
+          <div class="detail-col detail-col-con">
+            <h4>Challenges</h4>
+            <ul>
+              <li>— Hard to scale beyond the founder</li>
+              <li>— Burnout risk is real</li>
+              <li>— Exit and succession are difficult</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail" data-detail="4">
+        <div class="detail-header">
+          <span class="detail-badge">Position 5 of 5</span>
+          <span class="detail-name">Pure Personal Brand</span>
+        </div>
+        <p class="detail-desc">The founder IS the entire brand. No company name needed — people buy the person. Maximum personal leverage but maximum personal dependency. You're the product, the marketing, and the moat.</p>
+        <div class="detail-tags">
+          <span class="detail-tag">Thought leaders</span>
+          <span class="detail-tag">Creators</span>
+          <span class="detail-tag">Authors</span>
+        </div>
+        <div class="detail-grid">
+          <div class="detail-col detail-col-pro">
+            <h4>Strengths</h4>
+            <ul>
+              <li>+ Maximum authenticity</li>
+              <li>+ Fastest audience growth</li>
+              <li>+ Simple brand architecture</li>
+            </ul>
+          </div>
+          <div class="detail-col detail-col-con">
+            <h4>Challenges</h4>
+            <ul>
+              <li>— You ARE the bottleneck</li>
+              <li>— No separation of identity</li>
+              <li>— Extremely difficult to exit</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ========================================================
+           MOBILE: PILLS + CARDS
+           ======================================================== -->
+      <div class="m-nav" id="mobileNav">
+        <button class="m-pill" data-mp="0">Pure Company</button>
+        <button class="m-pill" data-mp="1">Company-Led</button>
+        <button class="m-pill active" data-mp="2">Symbiotic</button>
+        <button class="m-pill" data-mp="3">Founder-Led</button>
+        <button class="m-pill" data-mp="4">Pure Personal</button>
+      </div>
+
+      <!-- Mobile Card 1 -->
+      <div class="m-card" data-mc="0">
+        <div class="m-visual">
+          <img class="p-person" src="Anonymous.png" alt=""
+               style="height: 110px; transform: translateX(-50%); opacity: 0.14;">
+          <div class="p-logo-badge logo-float-a"
+               style="top: 40px; left: 50%; transform: translateX(-50%); padding: 14px 20px; z-index: 3;">
+            <img src="Shein.png" alt="Shein" style="height: 26px;">
+          </div>
+        </div>
+        <div class="m-minibar">
+          <span class="m-minibar-label">Company</span>
+          <div class="m-minibar-track"><div class="m-minibar-dot" style="left: 0%;"></div></div>
+          <span class="m-minibar-label-right">Personal</span>
+        </div>
+        <div class="m-title">Pure Company Brand</div>
+        <p class="m-desc">The founder plays no public role. Brand equity is entirely institutional. Nobody knows who's behind it.</p>
+        <div class="m-tags"><span class="m-tag">Enterprise SaaS</span><span class="m-tag">Large agencies</span></div>
+        <div class="m-cols">
+          <div class="m-col m-col-pro"><h4>Strengths</h4><ul><li>+ Not dependent on one person</li><li>+ Easier to sell or transition</li><li>+ Scalable team identity</li></ul></div>
+          <div class="m-col m-col-con"><h4>Challenges</h4><ul><li>— Harder to build trust early</li><li>— Commodity risk</li><li>— Slower organic growth</li></ul></div>
+        </div>
+      </div>
+
+      <!-- Mobile Card 2 -->
+      <div class="m-card" data-mc="1">
+        <div class="m-visual">
+          <img class="p-person" src="Brian Moynihan.png" alt="Brian Moynihan"
+               style="height: 140px; transform: translateX(-30%); z-index: 1;">
+          <div class="p-logo-badge logo-float-b"
+               style="bottom: 30px; left: 10px; padding: 12px 14px; z-index: 3;">
+            <img src="BoA.png" alt="Bank of America" style="height: 55px;">
+          </div>
+        </div>
+        <div class="m-minibar">
+          <span class="m-minibar-label">Company</span>
+          <div class="m-minibar-track"><div class="m-minibar-dot" style="left: 25%;"></div></div>
+          <span class="m-minibar-label-right">Personal</span>
+        </div>
+        <div class="m-title">Company-Led, Founder-Visible</div>
+        <p class="m-desc">Company is the brand. The founder — Brian Moynihan — lends credibility by being visible. An asset, not the product.</p>
+        <div class="m-tags"><span class="m-tag">Tech scale-ups</span><span class="m-tag">Funded startups</span></div>
+        <div class="m-cols">
+          <div class="m-col m-col-pro"><h4>Strengths</h4><ul><li>+ Company brand is primary</li><li>+ Human trust layer</li><li>+ Good for fundraising</li></ul></div>
+          <div class="m-col m-col-con"><h4>Challenges</h4><ul><li>— Founder time is finite</li><li>— Mixed signals risk</li><li>— Needs clear boundaries</li></ul></div>
+        </div>
+      </div>
+
+      <!-- Mobile Card 3 -->
+      <div class="m-card active" data-mc="2">
+        <div class="m-visual">
+          <img class="p-person" src="Mark Zuckerberg.png" alt="Mark Zuckerberg"
+               style="height: 150px; transform: translateX(-50%); z-index: 1;">
+          <div class="p-logo-badge logo-float-c"
+               style="top: 20px; left: 8px; padding: 12px; z-index: 3;">
+            <img src="Meta.png" alt="Meta" style="height: 40px;">
+          </div>
+        </div>
+        <div class="m-minibar">
+          <span class="m-minibar-label">Company</span>
+          <div class="m-minibar-track"><div class="m-minibar-dot" style="left: 50%;"></div></div>
+          <span class="m-minibar-label-right">Personal</span>
+        </div>
+        <div class="m-title">Symbiotic Brands</div>
+        <p class="m-desc">The sweet spot. Both brands amplify each other — founder draws attention, company converts it.</p>
+        <div class="m-tags"><span class="m-tag">Consulting</span><span class="m-tag">Services</span><span class="m-tag">Studios</span></div>
+        <div class="m-cols">
+          <div class="m-col m-col-pro"><h4>Strengths</h4><ul><li>+ Balanced equity</li><li>+ Scalable through team</li><li>+ Dual brand value</li></ul></div>
+          <div class="m-col m-col-con"><h4>Challenges</h4><ul><li>— Deliberate architecture needed</li><li>— Coordinated messaging</li><li>— Complex content strategy</li></ul></div>
+        </div>
+      </div>
+
+      <!-- Mobile Card 4 -->
+      <div class="m-card" data-mc="3">
+        <div class="m-visual">
+          <img class="p-person" src="Elon Musk.png" alt="Elon Musk"
+               style="height: 170px; transform: translateX(-50%); z-index: 3;">
+          <div class="p-logo-badge logo-float-a"
+               style="top: 10px; right: 10px; padding: 11px; z-index: 1;">
+            <img src="Tesla.png" alt="Tesla" style="height: 38px;">
+          </div>
+        </div>
+        <div class="m-minibar">
+          <span class="m-minibar-label">Company</span>
+          <div class="m-minibar-track"><div class="m-minibar-dot" style="left: 75%;"></div></div>
+          <span class="m-minibar-label-right">Personal</span>
+        </div>
+        <div class="m-title">Founder-Led, Company-Supported</div>
+        <p class="m-desc">People come for Elon, stay for the company. The founder's reputation does the heavy lifting.</p>
+        <div class="m-tags"><span class="m-tag">Coaches</span><span class="m-tag">Advisors</span><span class="m-tag">Consultants</span></div>
+        <div class="m-cols">
+          <div class="m-col m-col-pro"><h4>Strengths</h4><ul><li>+ Strong personal trust</li><li>+ Fast audience building</li><li>+ Premium positioning</li></ul></div>
+          <div class="m-col m-col-con"><h4>Challenges</h4><ul><li>— Hard to scale</li><li>— Burnout risk</li><li>— Succession issues</li></ul></div>
+        </div>
+      </div>
+
+      <!-- Mobile Card 5 -->
+      <div class="m-card" data-mc="4">
+        <div class="m-visual">
+          <img class="p-person" src="Gary Vee.png" alt="Gary Vaynerchuk"
+               style="height: 185px; transform: translateX(-50%); z-index: 3;">
+          <div class="p-logo-badge logo-float-b"
+               style="top: 8px; right: 6px; padding: 8px; z-index: 1; opacity: 0.35;">
+            <img src="Unknown Company.png" alt="" style="height: 26px;">
+          </div>
+        </div>
+        <div class="m-minibar">
+          <span class="m-minibar-label">Company</span>
+          <div class="m-minibar-track"><div class="m-minibar-dot" style="left: 100%;"></div></div>
+          <span class="m-minibar-label-right">Personal</span>
+        </div>
+        <div class="m-title">Pure Personal Brand</div>
+        <p class="m-desc">The founder IS the brand. Maximum personal leverage, maximum personal dependency.</p>
+        <div class="m-tags"><span class="m-tag">Thought leaders</span><span class="m-tag">Creators</span><span class="m-tag">Authors</span></div>
+        <div class="m-cols">
+          <div class="m-col m-col-pro"><h4>Strengths</h4><ul><li>+ Maximum authenticity</li><li>+ Fastest growth</li><li>+ Simple architecture</li></ul></div>
+          <div class="m-col m-col-con"><h4>Challenges</h4><ul><li>— You ARE the bottleneck</li><li>— No identity separation</li><li>— Difficult to exit</li></ul></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <script>
+    // ---- DESKTOP: Panorama interaction ----
+    var cols = document.querySelectorAll('#panorama .p-col');
+    var details = document.querySelectorAll('.detail');
+    var nodes = document.querySelectorAll('.s-node');
+    var barFill = document.getElementById('barFill');
+
+    function setDesktopActive(idx) {
+      // Columns
+      cols.forEach(function(c) { c.classList.remove('active'); });
+      cols[idx].classList.add('active');
+
+      // Detail panels
+      details.forEach(function(d) { d.classList.remove('active'); });
+      var target = document.querySelector('.detail[data-detail="' + idx + '"]');
+      if (target) target.classList.add('active');
+
+      // Bar fill with gradient
+      var pct = (idx / 4) * 100;
+      barFill.style.width = pct + '%';
+
+      // Nodes
+      nodes.forEach(function(n, i) {
+        n.classList.remove('active', 'passed');
+        if (i < idx) n.classList.add('passed');
+        if (i === idx) n.classList.add('active');
+      });
+    }
+
+    cols.forEach(function(col) {
+      col.addEventListener('click', function() {
+        setDesktopActive(parseInt(col.dataset.pos));
+      });
+    });
+
+    nodes.forEach(function(node) {
+      node.addEventListener('click', function() {
+        setDesktopActive(parseInt(node.dataset.node));
+      });
+    });
+
+    // ---- MOBILE: Pill navigation ----
+    var pills = document.querySelectorAll('.m-pill');
+    var mCards = document.querySelectorAll('.m-card');
+
+    pills.forEach(function(pill) {
+      pill.addEventListener('click', function() {
+        var idx = pill.dataset.mp;
+        pills.forEach(function(p) { p.classList.remove('active'); });
+        pill.classList.add('active');
+        mCards.forEach(function(c) { c.classList.remove('active'); });
+        var target = document.querySelector('.m-card[data-mc="' + idx + '"]');
+        if (target) target.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

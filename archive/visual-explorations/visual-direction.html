@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FP. Visual Direction v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Bricolage+Grotesque:opsz@12..96;wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #0A0A0A;
+    --dark: #161616;
+    --dark-border: #2A2A2A;
+    --gray-600: #555;
+    --gray-400: #999;
+    --gray-200: #D4D4D4;
+    --gray-100: #ECECEC;
+    --off-white: #F5F5F3;
+    --white: #FAFAF8;
+    --pure-white: #FFFFFF;
+    --purple: #5A5CF9;
+    --purple-glow: rgba(90, 92, 249, 0.35);
+    --purple-soft: rgba(90, 92, 249, 0.07);
+    --glass-bg: rgba(255, 255, 255, 0.07);
+    --glass-border: rgba(255, 255, 255, 0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--white);
+    color: var(--black);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+  .container--wide { max-width: 1400px; margin: 0 auto; padding: 0 48px; }
+
+  /* ===== SCROLL ANIMATIONS ===== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* Character-by-character text reveal */
+  .text-reveal span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .text-reveal.visible span {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== SECTION: COVER ===== */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    background: var(--white);
+    overflow: hidden;
+  }
+
+  .cover-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .cover-text { position: relative; z-index: 2; }
+
+  .cover-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    margin-bottom: 32px;
+  }
+
+  .cover h1 {
+    font-family: 'Bricolage Grotesque', serif;
+    font-size: clamp(72px, 10vw, 160px);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -5px;
+    color: var(--black);
+  }
+
+  .cover h1 .dot { color: var(--purple); }
+
+  .cover-sub {
+    margin-top: 32px;
+    font-size: 17px;
+    color: var(--gray-600);
+    max-width: 380px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .cover-meta {
+    margin-top: 48px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray-400);
+  }
+
+  .cover-visual {
+    position: relative;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* The unique element: a rotating prism gradient that refracts */
+  .prism {
+    width: 400px;
+    height: 400px;
+    position: relative;
+  }
+
+  .prism-core {
+    position: absolute;
+    inset: 0;
+    background: conic-gradient(from 0deg, var(--purple), #c084fc, #f0abfc, var(--pure-white), #93c5fd, var(--purple));
+    border-radius: 50%;
+    animation: prism-spin 20s linear infinite;
+    opacity: 0.15;
+    filter: blur(80px);
+  }
+
+  .prism-ring {
+    position: absolute;
+    inset: 40px;
+    border: 1px solid var(--gray-200);
+    border-radius: 50%;
+    animation: prism-spin 30s linear infinite reverse;
+  }
+
+  .prism-ring::after {
+    content: '';
+    position: absolute;
+    top: -4px; left: 50%;
+    width: 8px; height: 8px;
+    background: var(--purple);
+    border-radius: 50%;
+    transform: translateX(-50%);
+  }
+
+  .prism-center {
+    position: absolute;
+    inset: 120px;
+    background: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bricolage Grotesque', serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray-400);
+  }
+
+  @keyframes prism-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Purple line at very bottom */
+  .purple-edge {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--purple);
+  }
+
+  /* ===== SHARED SECTION STYLES ===== */
+  section { padding: 140px 0; position: relative; }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-family: 'Bricolage Grotesque', serif;
+    font-size: clamp(36px, 4.5vw, 64px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+  }
+
+  .section-desc {
+    font-size: 17px;
+    color: var(--gray-600);
+    max-width: 520px;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* ===== SECTION: THE TENSION (white bg) ===== */
+  .tension { background: var(--white); }
+
+  .tension-header {
+    max-width: 700px;
+    margin-bottom: 100px;
+  }
+
+  .tension-cols {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 0;
+    align-items: start;
+  }
+
+  .tension-col h3 {
+    font-family: 'Bricolage Grotesque', serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--black);
+  }
+
+  .tension-col p {
+    font-size: 15px;
+    color: var(--gray-600);
+    line-height: 1.8;
+  }
+
+  .tension-divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding-top: 8px;
+  }
+
+  .tension-divider .line {
+    width: 1px;
+    height: 200px;
+    background: linear-gradient(to bottom, var(--gray-200), var(--purple), var(--gray-200));
+  }
+
+  .tension-keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 28px;
+  }
+
+  .kw {
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    border: 1px solid var(--gray-200);
+    color: var(--gray-600);
+    transition: all 0.3s;
+  }
+
+  .kw:hover { border-color: var(--purple); color: var(--purple); }
+
+  .tension-sweet-spot {
+    margin-top: 100px;
+    padding: 80px;
+    border-radius: 32px;
+    background: var(--off-white);
+    text-align: center;
+  }
+
+  .sweet-spot-text {
+    font-family: 'Bricolage Grotesque', serif;
+    font-size: clamp(24px, 3vw, 40px);
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--black);
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .sweet-spot-text .accent { color: var(--purple); }
+
+  /* ===== SECTION: PALETTE (white bg) ===== */
+  .palette { background: var(--pure-white); border-top: 1px solid var(--gray-100); }
+
+  .color-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 60px;
+  }
+
+  .color-chip {
+    flex: 1;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--gray-100);
+    transition: transform 0.3s;
+  }
+
+  .color-chip:hover { transform: translateY(-6px); }
+
+  .color-chip .swatch {
+    height: 160px;
+  }
+
+  .color-chip .info {
+    padding: 20px;
+    background: var(--pure-white);
+  }
+
+  .color-chip .name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .color-chip .hex {
+    font-size: 12px;
+    color: var(--gray-400);
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    letter-spacing: 0.5px;
+  }
+
+  .color-chip .use {
+    font-size: 11px;
+    color: var(--gray-400);
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  /* ===== MASSIVE TYPE SECTION (white bg, full-bleed) ===== */
+  .big-type {
+    background: var(--white);
+    padding: 180px 0;
+    overflow: hidden;
+    border-top: 1px solid var(--gray-100);
+  }
+
+  .big-type-scroll {
+    white-space: nowrap;
+    animation: marquee 25s linear infinite;
+  }
+
+  .big-type-text {
+    font-family: 'Bricolage Grotesque', serif;
+    font-size: clamp(80px, 12vw, 200px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -6px;
+    color: var(--gray-100);
+    display: inline-block;
+    -webkit-text-stroke: 1px var(--gray-200);
+    -webkit-text-fill-color: transparent;
+    user-select: none;
+  }
+
+  .big-type-text .filled {
+    -webkit-text-fill-color: var(--black);
+    -webkit-text-stroke: 0;
+  }
+
+  .big-type-text .purple-fill {
+    -webkit-text-fill-color: var(--purple);
+    -webkit-text-stroke: 0;
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ===== DARK SECTION: PROCESS (glass cards) ===== */
+  .process {
+    background: var(--black);
+    color: var(--pure-white);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Grain texture only on dark sections */
+  .process::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px;
+  }
+
+  .process .container { position: relative; z-index: 1; }
+
+  .process .section-label { color: var(--purple); }
+  .process .section-title { color: var(--pure-white); }
+  .process .section-desc { color: var(--gray-400); }
+
+  .process-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, var(--purple-glow), transparent 70%);
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 80px;
+  }
+
+  .glass-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 48px 36px;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  }
+
+  .glass-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 32px 64px rgba(0,0,0,0.3);
+  }
+
+  .glass-card .num {
+    font-family: 'Bricolage Grotesque', serif;
+    font-size: 56px;
+    font-weight: 800;
+    color: var(--purple);
+    opacity: 0.4;
+    line-height: 1;
+    margin-bottom: 32px;
+  }
+
+  .glass-card h4 {
+    font-family: 'Bricolage Grotesque', serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--pure-white);
+  }
+
+  .glass-card p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.7;
+  }
+
+  /* ===== SECTION: EDITORIAL / LIGHT CARDS (white bg) ===== */
+  .editorial {
+    background: var(--white);
+    border-top: 1px solid var(--gray-100);
+  }
+
+  .editorial-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 80px;
+  }
+
+  .ed-card {
+    padding: 56px;
+    border: 1px solid var(--gray-100);
+    border-radius: 24px;
+    background: var(--pure-white);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ed-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--purple);
+    transform: scaleX(0);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transform-origin: left;
+  }
+
+  .ed-card:hover {
+    border-color: var(--gray-200);
+    box-shadow: 0 16px 64px rgba(0,0,0,0.05);
+    transform: translateY(-6px);
+  }
+
+  .ed-card:hover::after { transform: scaleX(1); }
+
+  .ed-card h4 {
+    font-family: 'Bricolage Grotesque', serif;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--black);
+  }
+
+  .ed-card p {
+    font-size: 15px;
+    color: var(--gray-600);
+    line-height: 1.8;
+  }
+
+  .ed-tag {
+    display: inline-block;
+    margin-top: 24px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray-400);
+  }
+
+  /* ===== PURPLE MOMENT (full-bleed) ===== */
+  .purple-moment {
+    background: var(--purple);
+    color: var(--pure-white);
+    text-align: center;
+    padding: 160px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .purple-moment::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px;
+  }
+
+  .purple-statement {
+    font-family: 'Bricolage Grotesque', serif;
+    font-size: clamp(40px, 6vw, 84px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -3px;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== BUTTONS (editorial, understated) ===== */
+  .btn-section {
+    background: var(--off-white);
+    border-top: 1px solid var(--gray-100);
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    align-items: center;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Primary: solid black, no rounding - editorial */
+  .btn--primary {
+    background: var(--black);
+    color: var(--pure-white);
+    border-radius: 0;
+  }
+  .btn--primary:hover { background: #222; }
+
+  /* Ghost: just text + underline */
+  .btn--ghost {
+    background: none;
+    color: var(--black);
+    padding: 14px 4px;
+    border-bottom: 1px solid var(--black);
+    border-radius: 0;
+  }
+  .btn--ghost:hover { color: var(--purple); border-color: var(--purple); }
+
+  /* Pill: rounded, for CTA moments */
+  .btn--pill {
+    background: var(--purple);
+    color: var(--pure-white);
+    border-radius: 100px;
+    padding: 14px 36px;
+  }
+  .btn--pill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--purple-glow);
+  }
+
+  /* Outline: clean border */
+  .btn--outline {
+    background: transparent;
+    color: var(--black);
+    border: 1px solid var(--gray-200);
+    border-radius: 100px;
+    padding: 13px 32px;
+  }
+  .btn--outline:hover { border-color: var(--black); }
+
+  /* Arrow indicator */
+  .btn .arrow {
+    transition: transform 0.3s;
+    font-size: 16px;
+  }
+  .btn:hover .arrow { transform: translateX(4px); }
+
+  /* ===== TESTIMONIAL (white bg, big quote) ===== */
+  .testimonial-section {
+    background: var(--white);
+    border-top: 1px solid var(--gray-100);
+  }
+
+  .testimonial-big {
+    margin-top: 80px;
+  }
+
+  .testi-quote {
+    font-family: 'Bricolage Grotesque', serif;
+    font-size: clamp(32px, 4vw, 56px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -1.5px;
+    color: var(--black);
+    max-width: 900px;
+    margin-bottom: 48px;
+  }
+
+  .testi-quote .hl { color: var(--purple); }
+
+  .testi-attr {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .testi-dot {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--off-white);
+    border: 1px solid var(--gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--purple);
+  }
+
+  .testi-name { font-size: 15px; font-weight: 600; }
+  .testi-role { font-size: 13px; color: var(--gray-400); }
+
+  /* ===== STATS (white bg, bold numbers) ===== */
+  .stats-section {
+    background: var(--off-white);
+    border-top: 1px solid var(--gray-100);
+    padding: 100px 0;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 48px;
+  }
+
+  .stat {
+    text-align: left;
+    padding-left: 24px;
+    border-left: 3px solid var(--gray-200);
+    transition: border-color 0.3s;
+  }
+
+  .stat:hover { border-color: var(--purple); }
+
+  .stat-num {
+    font-family: 'Bricolage Grotesque', serif;
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--black);
+    margin-bottom: 8px;
+  }
+
+  .stat-text {
+    font-size: 13px;
+    color: var(--gray-400);
+    line-height: 1.5;
+  }
+
+  /* Counter animation */
+  .stat-num[data-target] {
+    transition: color 0.3s;
+  }
+
+  /* ===== TEXTURE SAMPLES (in dark section) ===== */
+  .textures {
+    background: var(--white);
+    border-top: 1px solid var(--gray-100);
+  }
+
+  .texture-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 60px;
+  }
+
+  .tex-card {
+    height: 240px;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    padding: 24px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .tex-card:hover { transform: scale(1.03); }
+
+  .tex-card--dark {
+    background: var(--dark);
+    color: var(--pure-white);
+  }
+  .tex-card--dark::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.07;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px;
+  }
+
+  .tex-card--glass {
+    background: linear-gradient(135deg, rgba(90,92,249,0.12), rgba(90,92,249,0.04));
+    border: 1px solid rgba(90,92,249,0.15);
+    backdrop-filter: blur(20px);
+    color: var(--black);
+  }
+
+  .tex-card--purple {
+    background: var(--purple);
+    color: var(--pure-white);
+  }
+  .tex-card--purple::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px;
+  }
+
+  .tex-card--white {
+    background: var(--pure-white);
+    border: 1px solid var(--gray-100);
+    color: var(--black);
+  }
+
+  .tex-label { position: relative; z-index: 1; }
+  .tex-label h4 { font-size: 15px; font-weight: 600; }
+  .tex-label p { font-size: 11px; opacity: 0.5; margin-top: 2px; }
+
+  /* ===== RHYTHM MAP (white bg) ===== */
+  .rhythm {
+    background: var(--off-white);
+    border-top: 1px solid var(--gray-100);
+  }
+
+  .rhythm-blocks {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 60px;
+  }
+
+  .r-block {
+    padding: 20px 28px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 500;
+    transition: transform 0.3s;
+  }
+
+  .r-block:hover { transform: translateX(8px); }
+
+  .r-block--white { background: var(--pure-white); border: 1px solid var(--gray-100); color: var(--black); }
+  .r-block--dark { background: var(--black); color: var(--pure-white); }
+  .r-block--purple { background: var(--purple); color: var(--pure-white); }
+  .r-block--glass { background: var(--dark); color: var(--pure-white); border: 1px solid var(--dark-border); }
+
+  .r-block .r-note {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    opacity: 0.4;
+  }
+
+  /* ===== CTA (dark, with purple glow) ===== */
+  .cta-section {
+    background: var(--black);
+    color: var(--pure-white);
+    text-align: center;
+    padding: 180px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    bottom: -150px; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 400px;
+    background: radial-gradient(ellipse, var(--purple-glow), transparent 70%);
+    opacity: 0.25;
+    pointer-events: none;
+  }
+
+  .cta-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px;
+  }
+
+  .cta-inner { position: relative; z-index: 1; }
+
+  .cta-headline {
+    font-family: 'Bricolage Grotesque', serif;
+    font-size: clamp(44px, 6vw, 88px);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -3px;
+    margin-bottom: 24px;
+  }
+
+  .cta-sub {
+    font-size: 17px;
+    color: var(--gray-400);
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+
+  /* ===== FOOTER ===== */
+  .foot {
+    padding: 60px 48px 32px;
+    text-align: center;
+    background: var(--white);
+    border-top: 1px solid var(--gray-100);
+    position: relative;
+  }
+
+  .foot-mark {
+    font-family: 'Bricolage Grotesque', serif;
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 16px;
+  }
+
+  .foot-mark .dot { color: var(--purple); }
+
+  .foot p { font-size: 13px; color: var(--gray-400); }
+
+  /* ===== NAV DEMO ===== */
+  .nav-demo-section {
+    background: var(--white);
+    border-top: 1px solid var(--gray-100);
+  }
+
+  .nav-bar-demo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px;
+    background: var(--pure-white);
+    border: 1px solid var(--gray-100);
+    border-radius: 14px;
+    margin-top: 40px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+  }
+
+  .nav-logo {
+    font-family: 'Bricolage Grotesque', serif;
+    font-size: 20px;
+    font-weight: 800;
+  }
+
+  .nav-logo .dot { color: var(--purple); }
+
+  .nav-items {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-items li {
+    font-size: 13px;
+    color: var(--gray-400);
+    cursor: pointer;
+    transition: color 0.2s;
+    font-weight: 500;
+  }
+
+  .nav-items li:hover, .nav-items li.active { color: var(--black); }
+
+  .nav-cta-btn {
+    padding: 9px 24px;
+    background: var(--black);
+    color: var(--pure-white);
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .nav-cta-btn:hover { background: #333; }
+
+  /* Alt: dark nav */
+  .nav-bar-dark {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--dark-border);
+    border-radius: 14px;
+    margin-top: 16px;
+    color: var(--pure-white);
+  }
+
+  .nav-bar-dark .nav-items li { color: rgba(255,255,255,0.5); }
+  .nav-bar-dark .nav-items li:hover, .nav-bar-dark .nav-items li.active { color: var(--pure-white); }
+
+  .nav-bar-dark .nav-cta-btn {
+    background: var(--purple);
+  }
+
+  /* ===== TYPE SPECIMENS (white) ===== */
+  .type-section {
+    background: var(--pure-white);
+    border-top: 1px solid var(--gray-100);
+  }
+
+  .type-specimens {
+    margin-top: 80px;
+  }
+
+  .type-row {
+    padding: 48px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .type-row:last-child { border-bottom: none; }
+
+  .type-meta {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    margin-bottom: 16px;
+  }
+
+  .type-display {
+    font-family: 'Bricolage Grotesque', serif;
+    font-size: clamp(60px, 9vw, 130px);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -4px;
+    color: var(--black);
+  }
+
+  .type-body-demo {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--gray-600);
+    max-width: 600px;
+    font-weight: 300;
+  }
+
+  .type-label-demo {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    font-weight: 500;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .cover-inner { grid-template-columns: 1fr; gap: 40px; }
+    .cover-visual { height: 40vh; }
+    .tension-cols { grid-template-columns: 1fr; }
+    .tension-divider { display: none; }
+    .process-grid { grid-template-columns: 1fr; }
+    .editorial-grid { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .color-row { flex-wrap: wrap; }
+    .color-chip { flex: 1 1 calc(50% - 8px); }
+    .texture-row { grid-template-columns: 1fr 1fr; }
+    .container, .container--wide { padding: 0 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== COVER (white, bold, unique) ===== -->
+<section class="cover">
+  <div class="container--wide">
+    <div class="cover-inner">
+      <div class="cover-text">
+        <p class="cover-label">Visual Direction</p>
+        <h1>FP<span class="dot">.</span></h1>
+        <p class="cover-sub">The aesthetic contract for everything that follows. Luxurious enough to signal expertise. Approachable enough to start a conversation.</p>
+        <p class="cover-meta">March 2026</p>
+      </div>
+      <div class="cover-visual">
+        <div class="prism">
+          <div class="prism-core"></div>
+          <div class="prism-ring"></div>
+          <div class="prism-center">Clarity</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MASSIVE SCROLLING TYPE ===== -->
+<div class="big-type">
+  <div class="big-type-scroll">
+    <span class="big-type-text"><span class="filled">Clarity</span> That Makes You <span class="purple-fill">Impossible</span> to Ignore &nbsp;&middot;&nbsp; <span class="filled">Clarity</span> That Makes You <span class="purple-fill">Impossible</span> to Ignore &nbsp;&middot;&nbsp; </span>
+  </div>
+</div>
+
+<!-- ===== TENSION ===== -->
+<section class="tension">
+  <div class="container">
+    <div class="tension-header reveal">
+      <p class="section-label">01 / The Tension</p>
+      <h2 class="section-title">Luxurious Without<br>Looking Exclusive</h2>
+      <p class="section-desc">Every design decision lives inside this tension. Tip too far either way and the brand breaks.</p>
+    </div>
+
+    <div class="tension-cols">
+      <div class="tension-col reveal">
+        <h3>Luxury Signal</h3>
+        <p>Matte dark surfaces. Restrained type. Generous space. Glass and grain textures that feel physical, like holding a premium business card. The black card with a purple edge.</p>
+        <div class="tension-keywords">
+          <span class="kw">Matte Black</span>
+          <span class="kw">Grain Texture</span>
+          <span class="kw">Glass UI</span>
+          <span class="kw">Negative Space</span>
+        </div>
+      </div>
+      <div class="tension-divider">
+        <div class="line"></div>
+      </div>
+      <div class="tension-col reveal reveal-delay-2">
+        <h3>Approachability Signal</h3>
+        <p>Bold, direct copy that speaks to founders' actual problems. Real photography. Clear CTAs that say "let's talk" not "inquire." Purple as an energetic accent. Warmth of someone who's been there.</p>
+        <div class="tension-keywords">
+          <span class="kw">Direct Language</span>
+          <span class="kw">Real Photography</span>
+          <span class="kw">Clear CTAs</span>
+          <span class="kw">Human Warmth</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tension-sweet-spot reveal">
+      <p class="sweet-spot-text">The sweet spot: <span class="accent">a private doctor's office</span>, not a nightclub. Premium, calm, expert. But the door is open.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PALETTE ===== -->
+<section class="palette">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">02 / Palette</p>
+      <h2 class="section-title">Color System</h2>
+      <p class="section-desc">Three modes. Black for authority. White for clarity. Purple for moments that matter.</p>
+    </div>
+
+    <div class="color-row reveal">
+      <div class="color-chip">
+        <div class="swatch" style="background: #0A0A0A;"></div>
+        <div class="info"><p class="name">Matte Black</p><p class="hex">#0A0A0A</p><p class="use">Dark sections, CTA, process</p></div>
+      </div>
+      <div class="color-chip">
+        <div class="swatch" style="background: #FAFAF8;"></div>
+        <div class="info"><p class="name">Off White</p><p class="hex">#FAFAF8</p><p class="use">Primary background, editorial</p></div>
+      </div>
+      <div class="color-chip">
+        <div class="swatch" style="background: #5A5CF9;"></div>
+        <div class="info"><p class="name">Brand Purple</p><p class="hex">#5A5CF9</p><p class="use">Accents, CTAs, moments</p></div>
+      </div>
+      <div class="color-chip">
+        <div class="swatch" style="background: #161616;"></div>
+        <div class="info"><p class="name">Dark Elevated</p><p class="hex">#161616</p><p class="use">Cards on dark surfaces</p></div>
+      </div>
+      <div class="color-chip">
+        <div class="swatch" style="background: linear-gradient(135deg, rgba(90,92,249,0.12), rgba(255,255,255,0.05)); border-bottom: 1px solid var(--gray-100);"></div>
+        <div class="info"><p class="name">Glass</p><p class="hex">rgba(255,255,255,0.07)</p><p class="use">Frosted cards on dark</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TYPOGRAPHY ===== -->
+<section class="type-section">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">03 / Typography</p>
+      <h2 class="section-title">Type System</h2>
+      <p class="section-desc">Bricolage Grotesque for headlines. Inter for everything else.</p>
+    </div>
+
+    <div class="type-specimens">
+      <div class="type-row reveal">
+        <p class="type-meta">Display / Bricolage Grotesque 800</p>
+        <p class="type-display">Clarity.</p>
+      </div>
+      <div class="type-row reveal">
+        <p class="type-meta">Body / Inter 300</p>
+        <p class="type-body-demo">Most brand projects start with deliverables. Brand Therapy starts with the truth. It's a diagnostic-first approach for founders who want clarity that drives decisions.</p>
+      </div>
+      <div class="type-row reveal">
+        <p class="type-meta">Detail / Inter 500 / Uppercase</p>
+        <p class="type-label-demo">Brand Therapy &nbsp;&middot;&nbsp; For Founders and CEOs &nbsp;&middot;&nbsp; The Process</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TEXTURES ===== -->
+<section class="textures">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">04 / Texture</p>
+      <h2 class="section-title">Surface Treatments</h2>
+      <p class="section-desc">Not flat. Tactile. Every dark surface has subtle grain. Like matte paper stock or powder-coated metal.</p>
+    </div>
+
+    <div class="texture-row reveal">
+      <div class="tex-card tex-card--dark">
+        <div class="tex-label"><h4>Matte Dark</h4><p>Grain at 7% opacity</p></div>
+      </div>
+      <div class="tex-card tex-card--glass">
+        <div class="tex-label"><h4>Frosted Glass</h4><p>blur + purple tint</p></div>
+      </div>
+      <div class="tex-card tex-card--purple">
+        <div class="tex-label"><h4>Purple Moment</h4><p>Solid + grain at 5%</p></div>
+      </div>
+      <div class="tex-card tex-card--white">
+        <div class="tex-label"><h4>Clean White</h4><p>No grain. Breathing room.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROCESS (dark, glass cards) ===== -->
+<section class="process">
+  <div class="process-glow"></div>
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">05 / Glass UI</p>
+      <h2 class="section-title">The Process</h2>
+      <p class="section-desc">Glass cards float on matte dark surfaces. The grain gives weight. The glow gives depth.</p>
+    </div>
+
+    <div class="process-grid">
+      <div class="glass-card reveal">
+        <div class="num">01</div>
+        <h4>Discovery Call</h4>
+        <p>We talk about your brand, your market, and the clarity gap. No pitch. No pressure.</p>
+      </div>
+      <div class="glass-card reveal reveal-delay-1">
+        <div class="num">02</div>
+        <h4>The Blueprint</h4>
+        <p>A strategic brand document built on truth, not trends. Positioning, voice, visual direction.</p>
+      </div>
+      <div class="glass-card reveal reveal-delay-2">
+        <div class="num">03</div>
+        <h4>Show Up</h4>
+        <p>Implementation guidance so your brand shows up consistently. Website, LinkedIn, pitch decks.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EDITORIAL CARDS (white) ===== -->
+<section class="editorial">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">06 / Editorial Cards</p>
+      <h2 class="section-title">Light Mode</h2>
+      <p class="section-desc">Text-heavy sections breathe on white. Clean, editorial, generous. The contrast against dark sections creates rhythm.</p>
+    </div>
+
+    <div class="editorial-grid">
+      <div class="ed-card reveal">
+        <h4>Strategic Positioning</h4>
+        <p>Not just a tagline. A defensible place in your market. Positioning built around what makes you different, not what sounds good on paper.</p>
+        <span class="ed-tag">Strategy</span>
+      </div>
+      <div class="ed-card reveal reveal-delay-1">
+        <h4>Brand Identity System</h4>
+        <p>Visual identity, messaging architecture, and strategic guidelines your whole team can execute from. Consistent across every touchpoint.</p>
+        <span class="ed-tag">Identity</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIAL (white, big type) ===== -->
+<section class="testimonial-section">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">07 / Social Proof</p>
+    </div>
+
+    <div class="testimonial-big reveal">
+      <p class="testi-quote">"He's super smart, he's imaginative, he's <span class="hl">incredibly creative</span>, and yet he brings the technical expertise in equal measure."</p>
+      <div class="testi-attr">
+        <div class="testi-dot">K</div>
+        <div>
+          <p class="testi-name">Executive Leader</p>
+          <p class="testi-role">VP Marketing, Fortune 500</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STATS ===== -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-row">
+      <div class="stat reveal">
+        <p class="stat-num" data-target="250">0%</p>
+        <p class="stat-text">Average engagement increase</p>
+      </div>
+      <div class="stat reveal reveal-delay-1">
+        <p class="stat-num" data-target="500">0%</p>
+        <p class="stat-text">LinkedIn growth for clients</p>
+      </div>
+      <div class="stat reveal reveal-delay-2">
+        <p class="stat-num" data-target="1000000">0</p>
+        <p class="stat-text">Impressions generated</p>
+      </div>
+      <div class="stat reveal reveal-delay-3">
+        <p class="stat-num" data-target="1200000">0</p>
+        <p class="stat-text">Content views last year</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PURPLE MOMENT ===== -->
+<section class="purple-moment">
+  <p class="purple-statement reveal">Your identity is your biggest competitive asset.</p>
+</section>
+
+<!-- ===== BUTTONS ===== -->
+<section class="btn-section">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">08 / Buttons</p>
+      <h2 class="section-title">UI Elements</h2>
+      <p class="section-desc">Less branded. More editorial. The button doesn't shout; the message does.</p>
+    </div>
+
+    <div style="margin-top: 48px;">
+      <p class="type-meta" style="margin-bottom: 16px;">On Light Backgrounds</p>
+      <div class="btn-row reveal">
+        <button class="btn btn--primary">Book a Call <span class="arrow">&rarr;</span></button>
+        <button class="btn btn--ghost">Learn More <span class="arrow">&rarr;</span></button>
+        <button class="btn btn--outline">View Process</button>
+      </div>
+    </div>
+
+    <div style="margin-top: 48px;">
+      <p class="type-meta" style="margin-bottom: 16px;">CTA Moments (sparingly)</p>
+      <div class="btn-row reveal">
+        <button class="btn btn--pill">Start the Conversation <span class="arrow">&rarr;</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== NAV DEMOS ===== -->
+<section class="nav-demo-section">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">09 / Navigation</p>
+      <h2 class="section-title">Two Modes</h2>
+    </div>
+
+    <div class="reveal">
+      <p class="type-meta" style="margin-bottom: 12px;">Light (default)</p>
+      <div class="nav-bar-demo">
+        <div class="nav-logo">Florian P<span class="dot">.</span></div>
+        <ul class="nav-items">
+          <li class="active">Home</li>
+          <li>The Story</li>
+          <li>Blog</li>
+          <li>For Founders</li>
+        </ul>
+        <button class="nav-cta-btn">Book a Call</button>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <p class="type-meta" style="margin-top: 32px; margin-bottom: 12px;">Dark (on dark sections)</p>
+      <div class="nav-bar-dark">
+        <div class="nav-logo" style="color: var(--pure-white);">Florian P<span class="dot">.</span></div>
+        <ul class="nav-items">
+          <li class="active">Home</li>
+          <li>The Story</li>
+          <li>Blog</li>
+          <li>For Founders</li>
+        </ul>
+        <button class="nav-cta-btn">Book a Call</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== RHYTHM ===== -->
+<section class="rhythm">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">10 / Page Rhythm</p>
+      <h2 class="section-title">Section Flow</h2>
+      <p class="section-desc">White is the default. Dark is the accent. Purple appears once.</p>
+    </div>
+
+    <div class="rhythm-blocks reveal">
+      <div class="r-block r-block--white"><span>Hero</span><span class="r-note">White + editorial portrait</span></div>
+      <div class="r-block r-block--white"><span>Brand Therapy Intro</span><span class="r-note">White + consulting photo</span></div>
+      <div class="r-block r-block--dark"><span>Social Proof + Stats</span><span class="r-note">Dark + glass testimonial cards</span></div>
+      <div class="r-block r-block--white"><span>What Clarity Does</span><span class="r-note">White + editorial cards</span></div>
+      <div class="r-block r-block--dark"><span>The Process</span><span class="r-note">Dark + glass steps + purple glow</span></div>
+      <div class="r-block r-block--purple"><span>Statement</span><span class="r-note">One bold line. Your identity.</span></div>
+      <div class="r-block r-block--glass"><span>CTA</span><span class="r-note">Dark + grain + purple glow from below</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta-section">
+  <div class="cta-inner reveal">
+    <p class="section-label" style="color: var(--purple);">11 / CTA</p>
+    <p class="cta-headline">Your next real<br>brand conversation<br>is free.</p>
+    <p class="cta-sub">No pitch. No pressure. Just clarity.</p>
+    <button class="btn btn--pill" style="font-size: 15px; padding: 18px 44px;">Book Your Intro Call <span class="arrow">&rarr;</span></button>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<div class="foot">
+  <p class="foot-mark">FP<span class="dot">.</span></p>
+  <p>Visual Direction / March 2026</p>
+  <div class="purple-edge"></div>
+</div>
+
+<!-- ===== SCROLL ANIMATION + COUNTER SCRIPT ===== -->
+<script>
+  // Intersection Observer for reveal animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Character-by-character animation for text-reveal elements
+  document.querySelectorAll('.text-reveal').forEach(el => {
+    const text = el.textContent;
+    el.innerHTML = '';
+    text.split('').forEach((char, i) => {
+      const span = document.createElement('span');
+      span.textContent = char === ' ' ? '\u00A0' : char;
+      span.style.transitionDelay = `${i * 0.03}s`;
+      el.appendChild(span);
+    });
+  });
+
+  // Counter animation for stats
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.target);
+        const duration = 2000;
+        const start = performance.now();
+        const isPercent = target <= 1000;
+        const isMillion = target >= 1000000;
+
+        function update(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+          const current = Math.round(target * eased);
+
+          if (isMillion) {
+            el.textContent = (current / 1000000).toFixed(current >= 1000000 ? 0 : 1) + 'M+';
+          } else if (isPercent) {
+            el.textContent = current + '%';
+          } else {
+            el.textContent = current.toLocaleString();
+          }
+
+          if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+        counterObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('.stat-num[data-target]').forEach(el => counterObserver.observe(el));
+</script>
+
+</body>
+</html>

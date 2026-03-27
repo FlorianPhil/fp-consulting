@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FP. Crystal Prism v2</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0d0d0d;
+    overflow: hidden;
+    cursor: crosshair;
+  }
+  canvas { display: block; }
+  #info {
+    position: fixed;
+    bottom: 28px;
+    left: 32px;
+    color: rgba(255,255,255,0.2);
+    font-family: -apple-system, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    pointer-events: none;
+    z-index: 10;
+  }
+  #logo {
+    position: fixed;
+    top: 28px;
+    left: 32px;
+    font-family: -apple-system, sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    pointer-events: none;
+    z-index: 10;
+  }
+  #logo span { color: #5A5CF9; }
+</style>
+</head>
+<body>
+<div id="logo">FP<span>.</span></div>
+<div id="info">Move mouse to interact</div>
+
+<canvas id="c"></canvas>
+
+<script>
+// ============================================================
+// FP. CRYSTAL PRISM v2 — Stylized / Wireframe / Light particles
+// Pure canvas 2D — no Three.js dependency, no ugly glass
+// ============================================================
+
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+
+let W, H;
+let mouseX = 0.5, mouseY = 0.5;
+let time = 0;
+
+const PURPLE = '#5A5CF9';
+const PURPLE_RGB = [90, 92, 249];
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX / W;
+  mouseY = e.clientY / H;
+});
+
+document.addEventListener('touchmove', e => {
+  mouseX = e.touches[0].clientX / W;
+  mouseY = e.touches[0].clientY / H;
+});
+
+// ---- 3D PROJECTION HELPERS ----
+const fov = 600;
+
+function project(x, y, z) {
+  const scale = fov / (fov + z);
+  return {
+    x: W / 2 + x * scale,
+    y: H / 2 + y * scale,
+    scale: scale
+  };
+}
+
+function rotateY(x, y, z, angle) {
+  const cos = Math.cos(angle);
+  const sin = Math.sin(angle);
+  return { x: x * cos - z * sin, y: y, z: x * sin + z * cos };
+}
+
+function rotateX(x, y, z, angle) {
+  const cos = Math.cos(angle);
+  const sin = Math.sin(angle);
+  return { x: x, y: y * cos - z * sin, z: y * sin + z * cos };
+}
+
+// ---- PRISM GEOMETRY (triangular prism) ----
+const prismSize = 120;
+const prismDepth = 180;
+
+function getPrismVertices(rotY, rotX) {
+  const s = prismSize;
+  const d = prismDepth / 2;
+  // Triangular cross-section
+  const tri = [
+    { x: 0, y: -s * 0.9 },     // top
+    { x: -s * 0.8, y: s * 0.5 }, // bottom-left
+    { x: s * 0.8, y: s * 0.5 },  // bottom-right
+  ];
+
+  const verts3D = [];
+  // Front face
+  tri.forEach(v => verts3D.push({ x: v.x, y: v.y, z: -d }));
+  // Back face
+  tri.forEach(v => verts3D.push({ x: v.x, y: v.y, z: d }));
+
+  // Apply rotation
+  return verts3D.map(v => {
+    let r = rotateY(v.x, v.y, v.z, rotY);
+    r = rotateX(r.x, r.y, r.z, rotX);
+    return project(r.x, r.y, r.z + 300);
+  });
+}
+
+// Edges: pairs of vertex indices
+const prismEdges = [
+  [0,1],[1,2],[2,0],   // front face
+  [3,4],[4,5],[5,3],   // back face
+  [0,3],[1,4],[2,5],   // connecting edges
+];
+
+// ---- PARTICLES flowing through the prism ----
+class Particle {
+  constructor(isRefracted = false, colorIndex = -1) {
+    this.isRefracted = isRefracted;
+    this.colorIndex = colorIndex;
+    this.reset();
+  }
+
+  reset() {
+    if (this.isRefracted) {
+      // Start from center, fan out to the right
+      this.x = 0;
+      this.y = (Math.random() - 0.5) * 20;
+      this.z = (Math.random() - 0.5) * 80;
+      const spreadAngle = (this.colorIndex - 3) * 0.06;
+      this.vx = 2.5 + Math.random() * 1.5;
+      this.vy = spreadAngle * 3 + (Math.random() - 0.5) * 0.2;
+      this.vz = (Math.random() - 0.5) * 0.3;
+      this.life = 0;
+      this.maxLife = 80 + Math.random() * 60;
+      this.size = 1.5 + Math.random() * 2;
+    } else {
+      // White beam particles entering from the left
+      this.x = -W * 0.4 + Math.random() * 50;
+      this.y = (Math.random() - 0.5) * 8;
+      this.z = (Math.random() - 0.5) * 80;
+      this.vx = 3 + Math.random() * 2;
+      this.vy = (Math.random() - 0.5) * 0.1;
+      this.vz = (Math.random() - 0.5) * 0.2;
+      this.life = 0;
+      this.maxLife = 60 + Math.random() * 40;
+      this.size = 1 + Math.random() * 1.5;
+    }
+  }
+
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.z += this.vz;
+    this.life++;
+    if (this.life > this.maxLife || this.x > W * 0.5) {
+      this.reset();
+    }
+  }
+}
+
+// Spectrum colors for refracted particles
+const spectrumColors = [
+  [255, 40, 40],    // Red
+  [255, 150, 30],   // Orange
+  [255, 235, 50],   // Yellow
+  [100, 255, 80],   // Green
+  [50, 220, 255],   // Cyan
+  [90, 92, 249],    // Brand purple
+  [200, 50, 255],   // Violet
+];
+
+// Create particles
+const beamParticles = [];
+for (let i = 0; i < 120; i++) {
+  beamParticles.push(new Particle(false));
+  // Stagger initial positions
+  beamParticles[i].x = -W * 0.4 + Math.random() * W * 0.4;
+  beamParticles[i].life = Math.random() * 60;
+}
+
+const refractedParticles = [];
+for (let c = 0; c < 7; c++) {
+  for (let i = 0; i < 20; i++) {
+    const p = new Particle(true, c);
+    p.x = Math.random() * W * 0.35;
+    p.life = Math.random() * 80;
+    refractedParticles.push(p);
+  }
+}
+
+// ---- AMBIENT FLOATING PARTICLES ----
+class AmbientParticle {
+  constructor() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.size = Math.random() * 1.5 + 0.3;
+    this.speed = Math.random() * 0.3 + 0.05;
+    this.opacity = Math.random() * 0.15 + 0.03;
+    this.angle = Math.random() * Math.PI * 2;
+    this.isPurple = Math.random() > 0.8;
+  }
+
+  update() {
+    this.y -= this.speed;
+    this.x += Math.sin(this.angle + time * 0.005) * 0.2;
+    if (this.y < -10) { this.y = H + 10; this.x = Math.random() * W; }
+  }
+}
+
+const ambientParticles = [];
+for (let i = 0; i < 80; i++) {
+  ambientParticles.push(new AmbientParticle());
+}
+
+// ---- DRAW FUNCTIONS ----
+
+function drawPrism(rotY, rotX) {
+  const verts = getPrismVertices(rotY, rotX);
+
+  // Glow behind the prism
+  const cx = W / 2, cy = H / 2;
+  const glowGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 200);
+  glowGrad.addColorStop(0, 'rgba(90, 92, 249, 0.06)');
+  glowGrad.addColorStop(0.5, 'rgba(90, 92, 249, 0.02)');
+  glowGrad.addColorStop(1, 'rgba(90, 92, 249, 0)');
+  ctx.fillStyle = glowGrad;
+  ctx.fillRect(cx - 250, cy - 250, 500, 500);
+
+  // Fill faces with very subtle transparency
+  // Front face
+  ctx.beginPath();
+  ctx.moveTo(verts[0].x, verts[0].y);
+  ctx.lineTo(verts[1].x, verts[1].y);
+  ctx.lineTo(verts[2].x, verts[2].y);
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(90, 92, 249, 0.03)';
+  ctx.fill();
+
+  // Back face
+  ctx.beginPath();
+  ctx.moveTo(verts[3].x, verts[3].y);
+  ctx.lineTo(verts[4].x, verts[4].y);
+  ctx.lineTo(verts[5].x, verts[5].y);
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(90, 92, 249, 0.02)';
+  ctx.fill();
+
+  // Side faces
+  const sideFaces = [[0,1,4,3], [1,2,5,4], [2,0,3,5]];
+  sideFaces.forEach((face, fi) => {
+    ctx.beginPath();
+    ctx.moveTo(verts[face[0]].x, verts[face[0]].y);
+    face.forEach(idx => ctx.lineTo(verts[idx].x, verts[idx].y));
+    ctx.closePath();
+    ctx.fillStyle = `rgba(90, 92, 249, ${0.02 + fi * 0.01})`;
+    ctx.fill();
+  });
+
+  // Draw edges with glow
+  prismEdges.forEach(([a, b]) => {
+    const va = verts[a], vb = verts[b];
+
+    // Outer glow
+    ctx.beginPath();
+    ctx.moveTo(va.x, va.y);
+    ctx.lineTo(vb.x, vb.y);
+    ctx.strokeStyle = 'rgba(90, 92, 249, 0.15)';
+    ctx.lineWidth = 6;
+    ctx.stroke();
+
+    // Inner bright line
+    ctx.beginPath();
+    ctx.moveTo(va.x, va.y);
+    ctx.lineTo(vb.x, vb.y);
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  });
+
+  // Vertex dots
+  verts.forEach(v => {
+    ctx.beginPath();
+    ctx.arc(v.x, v.y, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+    ctx.fill();
+
+    // Vertex glow
+    ctx.beginPath();
+    ctx.arc(v.x, v.y, 6, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(90, 92, 249, 0.2)';
+    ctx.fill();
+  });
+}
+
+function drawBeamParticles() {
+  const beamY = H / 2 + (mouseY - 0.5) * 60;
+
+  beamParticles.forEach(p => {
+    p.update();
+    const alpha = Math.sin((p.life / p.maxLife) * Math.PI) * 0.8;
+    const screenX = W / 2 + p.x;
+    const screenY = beamY + p.y;
+
+    // Particle
+    ctx.beginPath();
+    ctx.arc(screenX, screenY, p.size * alpha, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.7})`;
+    ctx.fill();
+
+    // Soft glow
+    ctx.beginPath();
+    ctx.arc(screenX, screenY, p.size * 3 * alpha, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.08})`;
+    ctx.fill();
+  });
+
+  // Main beam line (subtle)
+  ctx.beginPath();
+  ctx.moveTo(0, beamY);
+  ctx.lineTo(W / 2 - 60, beamY);
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Beam glow line
+  ctx.beginPath();
+  ctx.moveTo(0, beamY);
+  ctx.lineTo(W / 2 - 60, beamY);
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.02)';
+  ctx.lineWidth = 20;
+  ctx.stroke();
+}
+
+function drawRefractedParticles() {
+  const exitX = W / 2 + 60;
+  const exitY = H / 2 + (mouseY - 0.5) * 60;
+
+  refractedParticles.forEach(p => {
+    p.update();
+    const alpha = Math.sin((p.life / p.maxLife) * Math.PI) * 0.9;
+    const color = spectrumColors[p.colorIndex];
+    const screenX = exitX + p.x;
+    const spreadY = (p.colorIndex - 3) * (p.x * 0.08);
+    const screenY = exitY + p.y + spreadY;
+
+    // Particle
+    ctx.beginPath();
+    ctx.arc(screenX, screenY, p.size * alpha, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha * 0.8})`;
+    ctx.fill();
+
+    // Glow
+    ctx.beginPath();
+    ctx.arc(screenX, screenY, p.size * 4 * alpha, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha * 0.1})`;
+    ctx.fill();
+  });
+
+  // Refracted ray lines (very subtle)
+  spectrumColors.forEach((color, i) => {
+    const angle = (i - 3) * 0.05;
+    const endX = exitX + 500;
+    const endY = exitY + angle * 500 * 3;
+
+    ctx.beginPath();
+    ctx.moveTo(exitX, exitY);
+    ctx.lineTo(endX, endY);
+    ctx.strokeStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.04)`;
+    ctx.lineWidth = 12;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(exitX, exitY);
+    ctx.lineTo(endX, endY);
+    ctx.strokeStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.08)`;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  });
+}
+
+function drawAmbientParticles() {
+  ambientParticles.forEach(p => {
+    p.update();
+    const color = p.isPurple ? `rgba(90, 92, 249, ${p.opacity})` : `rgba(255, 255, 255, ${p.opacity})`;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+  });
+}
+
+function drawFloorReflection() {
+  const floorY = H * 0.72;
+  const grad = ctx.createLinearGradient(W/2, floorY, W/2, H);
+  grad.addColorStop(0, 'rgba(90, 92, 249, 0.03)');
+  grad.addColorStop(0.3, 'rgba(90, 92, 249, 0.01)');
+  grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+  ctx.fillStyle = grad;
+  ctx.fillRect(W * 0.2, floorY, W * 0.6, H - floorY);
+
+  // Subtle spectrum reflection on floor
+  const exitX = W / 2 + 100;
+  spectrumColors.forEach((color, i) => {
+    const x = exitX + i * 40 + Math.sin(time * 0.02 + i) * 10;
+    const reflGrad = ctx.createRadialGradient(x, floorY + 30, 0, x, floorY + 30, 60);
+    reflGrad.addColorStop(0, `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.04)`);
+    reflGrad.addColorStop(1, `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0)`);
+    ctx.fillStyle = reflGrad;
+    ctx.fillRect(x - 60, floorY, 120, 80);
+  });
+}
+
+// ---- MAIN LOOP ----
+function frame() {
+  requestAnimationFrame(frame);
+  time++;
+
+  // Clear with slight trail for motion blur
+  ctx.fillStyle = 'rgba(13, 13, 13, 0.3)';
+  ctx.fillRect(0, 0, W, H);
+
+  // Full clear every few frames to prevent buildup
+  if (time % 3 === 0) {
+    ctx.fillStyle = '#0d0d0d';
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  // Mouse-reactive rotation
+  const rotY = (mouseX - 0.5) * 0.6 + Math.sin(time * 0.005) * 0.15;
+  const rotX = (mouseY - 0.5) * 0.3 + Math.sin(time * 0.004) * 0.08;
+
+  drawAmbientParticles();
+  drawFloorReflection();
+  drawBeamParticles();
+  drawPrism(rotY, rotX);
+  drawRefractedParticles();
+}
+
+frame();
+</script>
+</body>
+</html>

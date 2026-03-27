@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FP. Visual Direction v3 — Bolder, Not Different</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    /* ACTUAL BRAND COLORS from Notion Visual System */
+    --purple: #5A5CF9;
+    --dark: #1D1D1D;
+    --light: #F6F6F6;
+    --white: #FFFFFF;
+    --black: #000000;
+    --mid-gray: #949494;
+    --purple-glow: rgba(90, 92, 249, 0.3);
+    --purple-soft: rgba(90, 92, 249, 0.08);
+    --glass-bg: rgba(255, 255, 255, 0.06);
+    --glass-border: rgba(255, 255, 255, 0.1);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--light);
+    color: var(--black);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== TYPOGRAPHY — EXISTING BRAND SYSTEM ===== */
+  h1, h2, h3, .display { font-family: 'Bricolage Grotesque', sans-serif; }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+  .container--wide { max-width: 1440px; margin: 0 auto; padding: 0 48px; }
+
+  /* ===== SCROLL REVEAL ===== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ===== GRAIN TEXTURE (dark surfaces only) ===== */
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 150px;
+  }
+
+  /* ===== PURPLE EDGE — BUSINESS CARD CALLBACK ===== */
+  .purple-edge { border-bottom: 3px solid var(--purple); }
+  .purple-edge-left { border-left: 3px solid var(--purple); }
+
+  /* ============================= */
+  /* COVER                         */
+  /* ============================= */
+  .cover {
+    min-height: 100vh;
+    background: var(--dark);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .cover .grain::after { opacity: 0.04; }
+
+  .cover-content {
+    position: relative;
+    z-index: 2;
+    padding: 80px 48px;
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .cover-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 32px;
+  }
+
+  .cover-title {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(48px, 7vw, 96px);
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.05;
+    max-width: 900px;
+    margin-bottom: 24px;
+  }
+
+  .cover-title em {
+    font-style: normal;
+    color: var(--purple);
+  }
+
+  .cover-sub {
+    font-size: 18px;
+    color: var(--mid-gray);
+    max-width: 520px;
+    line-height: 1.6;
+  }
+
+  .cover-version {
+    position: absolute;
+    top: 40px;
+    right: 48px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mid-gray);
+  }
+
+  /* Prism glow accent on cover */
+  .cover-prism {
+    position: absolute;
+    right: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 320px;
+    height: 320px;
+    opacity: 0.15;
+  }
+
+  .cover-prism .prism-shape {
+    width: 100%;
+    height: 100%;
+    background: conic-gradient(from 180deg, transparent, var(--purple), transparent, rgba(90,92,249,0.3), transparent);
+    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    animation: prism-rotate 12s linear infinite;
+  }
+
+  @keyframes prism-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* ============================= */
+  /* SECTION: PRINCIPLES           */
+  /* ============================= */
+  .section { padding: 120px 0; }
+  .section--dark {
+    background: var(--dark);
+    color: var(--white);
+    position: relative;
+  }
+  .section--white { background: var(--white); }
+  .section--light { background: var(--light); }
+  .section--purple { background: var(--purple); color: var(--white); }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mid-gray);
+    margin-bottom: 16px;
+  }
+  .section--dark .section-label { color: var(--purple); }
+  .section--purple .section-label { color: rgba(255,255,255,0.6); }
+
+  .section-title {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(32px, 4.5vw, 56px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+
+  .section-body {
+    font-size: 17px;
+    line-height: 1.7;
+    color: #555;
+    max-width: 640px;
+  }
+  .section--dark .section-body { color: var(--mid-gray); }
+
+  /* ============================= */
+  /* PRINCIPLE: BOLDER NOT DIFFERENT*/
+  /* ============================= */
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 64px;
+  }
+
+  .principle-card {
+    padding: 40px 32px;
+    background: var(--white);
+    border: 1px solid #E8E8E8;
+    transition: border-color 0.3s;
+  }
+
+  .principle-card:hover { border-color: var(--purple); }
+
+  .principle-number {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--light);
+    margin-bottom: 16px;
+    line-height: 1;
+  }
+
+  .principle-card:hover .principle-number { color: var(--purple-soft); }
+
+  .principle-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+
+  .principle-card p {
+    font-size: 15px;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  /* ============================= */
+  /* COLOR SYSTEM                  */
+  /* ============================= */
+  .color-row {
+    display: flex;
+    gap: 24px;
+    margin-top: 48px;
+    flex-wrap: wrap;
+  }
+
+  .color-swatch {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .swatch-block {
+    width: 100%;
+    height: 140px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .swatch-block--dark { background: var(--dark); }
+  .swatch-block--purple { background: var(--purple); }
+  .swatch-block--light { background: var(--light); border: 1px solid #E0E0E0; }
+  .swatch-block--white { background: var(--white); border: 1px solid #E0E0E0; }
+  .swatch-block--gray { background: var(--mid-gray); }
+
+  .swatch-label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .swatch-hex {
+    font-size: 13px;
+    color: var(--mid-gray);
+    font-family: 'SF Mono', 'Consolas', monospace;
+  }
+
+  .swatch-usage {
+    font-size: 13px;
+    color: #888;
+    margin-top: 4px;
+  }
+
+  /* ============================= */
+  /* TYPOGRAPHY SHOWCASE           */
+  /* ============================= */
+  .type-showcase { margin-top: 48px; }
+
+  .type-row {
+    padding: 40px 0;
+    border-bottom: 1px solid #E8E8E8;
+  }
+
+  .type-row:last-child { border-bottom: none; }
+
+  .type-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 16px;
+  }
+
+  .type-meta-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mid-gray);
+  }
+
+  .type-meta-spec {
+    font-size: 12px;
+    color: var(--mid-gray);
+    font-family: 'SF Mono', monospace;
+  }
+
+  .type-display {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    line-height: 1.05;
+  }
+
+  .type-display--hero { font-size: clamp(48px, 6vw, 80px); }
+  .type-display--section { font-size: clamp(36px, 4vw, 56px); }
+  .type-display--card { font-size: 28px; }
+
+  .type-body-sample {
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+    color: #555;
+    max-width: 600px;
+  }
+
+  .keyword-emphasis {
+    font-weight: 700;
+    color: var(--purple);
+  }
+
+  /* ============================= */
+  /* PHOTOGRAPHY DIRECTION         */
+  /* ============================= */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 16px;
+    margin-top: 48px;
+  }
+
+  .photo-item {
+    position: relative;
+    overflow: hidden;
+    background: var(--dark);
+  }
+
+  .photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .photo-item--hero {
+    grid-column: 1 / 8;
+    grid-row: 1 / 3;
+    min-height: 500px;
+  }
+
+  .photo-item--portrait {
+    grid-column: 8 / 13;
+    grid-row: 1 / 2;
+    min-height: 240px;
+  }
+
+  .photo-item--editorial {
+    grid-column: 8 / 13;
+    grid-row: 2 / 3;
+    min-height: 240px;
+  }
+
+  .photo-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px 20px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* ============================= */
+  /* MOTIF SHOWCASE                */
+  /* ============================= */
+  .motif-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .motif-card {
+    background: var(--dark);
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1;
+  }
+
+  .motif-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.85;
+    transition: opacity 0.4s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .motif-card:hover img { opacity: 1; transform: scale(1.03); }
+
+  .motif-label {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    z-index: 2;
+  }
+
+  .motif-label h4 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 4px;
+  }
+
+  .motif-label p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .motif-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(transparent, rgba(0,0,0,0.6));
+    z-index: 1;
+  }
+
+  /* ============================= */
+  /* MARQUEE                       */
+  /* ============================= */
+  .marquee-section {
+    overflow: hidden;
+    padding: 48px 0;
+    border-top: 1px solid #E0E0E0;
+    border-bottom: 1px solid #E0E0E0;
+  }
+
+  .marquee-track {
+    display: flex;
+    animation: marquee 25s linear infinite;
+    white-space: nowrap;
+  }
+
+  .marquee-item {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(48px, 6vw, 80px);
+    font-weight: 800;
+    padding: 0 48px;
+    flex-shrink: 0;
+    color: var(--black);
+    opacity: 0.08;
+  }
+
+  .marquee-item.active {
+    opacity: 1;
+    color: var(--black);
+  }
+
+  .marquee-item .dot { color: var(--purple); }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ============================= */
+  /* HOMEPAGE MOCKUP SECTIONS      */
+  /* ============================= */
+  .mockup-frame {
+    background: var(--white);
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 48px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  }
+
+  .mockup-browser {
+    background: #F0F0F0;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #E0E0E0;
+  }
+
+  .mockup-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #D0D0D0;
+  }
+
+  .mockup-url {
+    flex: 1;
+    background: white;
+    padding: 6px 16px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #999;
+    margin-left: 8px;
+  }
+
+  .mockup-content { padding: 0; }
+
+  /* Hero mockup */
+  .mock-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 480px;
+    background: var(--white);
+  }
+
+  .mock-hero-text {
+    padding: 80px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .mock-hero-headline {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: 24px;
+    color: var(--black);
+  }
+
+  .mock-hero-sub {
+    font-size: 17px;
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 32px;
+    max-width: 420px;
+  }
+
+  .mock-hero-image {
+    background: #E8E8E8;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mock-hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  /* Process mockup (dark section) */
+  .mock-process {
+    background: var(--dark);
+    padding: 80px 64px;
+    position: relative;
+  }
+
+  .mock-process-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 16px;
+  }
+
+  .mock-process-title {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 48px;
+    line-height: 1.1;
+  }
+
+  .mock-process-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .glass-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 32px 28px;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+
+  .glass-card:hover {
+    border-color: rgba(90, 92, 249, 0.3);
+  }
+
+  .glass-card-number {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--purple);
+    margin-bottom: 16px;
+  }
+
+  .glass-card h4 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 10px;
+  }
+
+  .glass-card p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+  }
+
+  /* Stats mockup */
+  .mock-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--white);
+    border-top: 1px solid #E8E8E8;
+  }
+
+  .stat-item {
+    padding: 48px 32px;
+    text-align: center;
+    border-right: 1px solid #E8E8E8;
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-number {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--black);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-number .counter { display: inline; }
+
+  .stat-label {
+    font-size: 14px;
+    color: var(--mid-gray);
+  }
+
+  /* CTA mockup */
+  .mock-cta {
+    background: var(--dark);
+    padding: 80px 64px;
+    text-align: center;
+    position: relative;
+  }
+
+  .mock-cta-title {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 44px;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+
+  .mock-cta-sub {
+    font-size: 17px;
+    color: var(--mid-gray);
+    margin-bottom: 40px;
+  }
+
+  /* ============================= */
+  /* BUTTONS — CURRENT SITE STYLE  */
+  /* ============================= */
+  .btn-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 48px;
+    align-items: center;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s;
+    border: none;
+  }
+
+  /* Primary: solid black, sharp corners (current site style) */
+  .btn--primary {
+    background: var(--black);
+    color: var(--white);
+    padding: 16px 32px;
+  }
+  .btn--primary:hover { background: #333; }
+
+  /* Primary on dark */
+  .btn--primary-light {
+    background: var(--white);
+    color: var(--black);
+    padding: 16px 32px;
+  }
+  .btn--primary-light:hover { background: var(--light); }
+
+  /* Ghost: text + arrow */
+  .btn--ghost {
+    background: none;
+    color: var(--black);
+    padding: 16px 0;
+    position: relative;
+  }
+  .btn--ghost::after {
+    content: '\2192';
+    transition: transform 0.3s;
+  }
+  .btn--ghost:hover::after { transform: translateX(4px); }
+
+  /* Outline */
+  .btn--outline {
+    background: none;
+    color: var(--black);
+    padding: 16px 32px;
+    border: 1.5px solid var(--black);
+  }
+  .btn--outline:hover { background: var(--black); color: var(--white); }
+
+  /* Outline on dark */
+  .btn--outline-light {
+    background: none;
+    color: var(--white);
+    padding: 16px 32px;
+    border: 1.5px solid rgba(255,255,255,0.3);
+  }
+  .btn--outline-light:hover { border-color: var(--white); }
+
+  /* Purple CTA (reserved for key moments) */
+  .btn--purple {
+    background: var(--purple);
+    color: var(--white);
+    padding: 18px 40px;
+    font-size: 16px;
+  }
+  .btn--purple:hover { background: #4A4CD9; }
+
+  /* ============================= */
+  /* NAV MOCKUP                    */
+  /* ============================= */
+  .nav-mock {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 64px;
+    border-bottom: 1px solid #E8E8E8;
+  }
+
+  .nav-logo {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--black);
+  }
+
+  .nav-logo .dot { color: var(--purple); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--black);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* ============================= */
+  /* SECTION: WHAT CHANGED v2→v3   */
+  /* ============================= */
+  .change-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    margin-top: 48px;
+    background: #E0E0E0;
+  }
+
+  .change-card {
+    padding: 40px 32px;
+    background: var(--white);
+  }
+
+  .change-card h4 {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .change-card h4.old { color: #C44; }
+  .change-card h4.new { color: var(--purple); }
+
+  .change-card p {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  /* ============================= */
+  /* DARK SECTION TEXTURE DEMO     */
+  /* ============================= */
+  .texture-demo {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .texture-swatch {
+    aspect-ratio: 4/3;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+  }
+
+  .texture-swatch--matte {
+    background: var(--dark);
+  }
+
+  .texture-swatch--grain {
+    background: var(--dark);
+  }
+
+  .texture-swatch--purple-edge {
+    background: var(--dark);
+    border-bottom: 3px solid var(--purple);
+  }
+
+  .texture-label {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 500;
+  }
+
+  /* ============================= */
+  /* IMAGE DIRECTION SECTION       */
+  /* ============================= */
+  .img-direction-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 48px;
+  }
+
+  .img-direction-item {
+    aspect-ratio: 1;
+    position: relative;
+    overflow: hidden;
+    background: var(--dark);
+  }
+
+  .img-direction-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .img-direction-item:hover img { transform: scale(1.05); }
+
+  .img-direction-item--wide {
+    grid-column: span 2;
+    aspect-ratio: 2/1;
+  }
+
+  /* ============================= */
+  /* RESPONSIVE                    */
+  /* ============================= */
+  @media (max-width: 900px) {
+    .container, .container--wide { padding: 0 24px; }
+    .section { padding: 80px 0; }
+    .principles-grid { grid-template-columns: 1fr; }
+    .color-row { flex-direction: column; }
+    .photo-grid {
+      grid-template-columns: 1fr;
+    }
+    .photo-item--hero,
+    .photo-item--portrait,
+    .photo-item--editorial {
+      grid-column: 1;
+      grid-row: auto;
+      min-height: 300px;
+    }
+    .motif-grid { grid-template-columns: 1fr; }
+    .mock-hero { grid-template-columns: 1fr; }
+    .mock-hero-text { padding: 48px 32px; }
+    .mock-hero-image { min-height: 300px; }
+    .mock-process { padding: 48px 32px; }
+    .mock-process-grid { grid-template-columns: 1fr; }
+    .mock-stats { grid-template-columns: repeat(2, 1fr); }
+    .mock-cta { padding: 48px 32px; }
+    .change-grid { grid-template-columns: 1fr; }
+    .texture-demo { grid-template-columns: 1fr; }
+    .img-direction-grid { grid-template-columns: 1fr 1fr; }
+    .cover-content { padding: 48px 24px; }
+    .cover-prism { display: none; }
+    .nav-mock { padding: 16px 24px; }
+    .nav-links { gap: 16px; }
+    .marquee-item { font-size: 36px; padding: 0 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========================= COVER ========================= -->
+<section class="cover grain">
+  <span class="cover-version">Visual Direction v3</span>
+  <div class="cover-content">
+    <p class="cover-label">FP. Website Enhancement</p>
+    <h1 class="cover-title">Bolder<em>.</em><br>Not Different<em>.</em></h1>
+    <p class="cover-sub">Same brand. Same fonts. Same colors. Just sharper, more impactful, more you. Grounded in your actual imagery and visual system.</p>
+  </div>
+  <div class="cover-prism">
+    <div class="prism-shape"></div>
+  </div>
+</section>
+
+<!-- ========================= WHAT CHANGED ========================= -->
+<section class="section section--white">
+  <div class="container">
+    <p class="section-label reveal">v2 Corrections</p>
+    <h2 class="section-title reveal">What I Got Wrong.<br>What v3 Fixes.</h2>
+
+    <div class="change-grid reveal">
+      <div class="change-card">
+        <h4 class="old">v2: Changed the Fonts</h4>
+        <p>I introduced new typography you didn't ask for. The brand already has Bricolage Grotesque + Inter. That's the system. Don't touch it.</p>
+      </div>
+      <div class="change-card">
+        <h4 class="new">v3: Your Exact Type System</h4>
+        <p>Bricolage Grotesque for headlines (bold, large). Inter for body. Exactly what's on the site now. Same weights, same hierarchy.</p>
+      </div>
+      <div class="change-card">
+        <h4 class="old">v2: Swung to All-White</h4>
+        <p>Overcorrected from "too dark." Lost the tension and drama. Became a template.</p>
+      </div>
+      <div class="change-card">
+        <h4 class="new">v3: Mode B Default + Dark Accents</h4>
+        <p>Light (#F6F6F6) as base per the Visual System. 1-2 dark sections (Process, CTA) for contrast. This is the brand's actual rhythm.</p>
+      </div>
+      <div class="change-card">
+        <h4 class="old">v2: No Real Imagery</h4>
+        <p>Generic UI exercise. Didn't use your photography, your prism imagery, or the lens concept at all.</p>
+      </div>
+      <div class="change-card">
+        <h4 class="new">v3: Built on Your Actual Assets</h4>
+        <p>Every section references real photos. Prism motifs woven into the design language. The lens/glass concept is the throughline.</p>
+      </div>
+      <div class="change-card">
+        <h4 class="old">v2: Wrong Color Values</h4>
+        <p>Used #0A0A0A, #FAFAF8, #161616. Close but not the brand.</p>
+      </div>
+      <div class="change-card">
+        <h4 class="new">v3: Actual Brand Palette</h4>
+        <p>#5A5CF9 (purple), #1D1D1D (dark), #F6F6F6 (light), #FFFFFF (white), #000000 (headlines). Exactly per the Visual System.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= MARQUEE ========================= -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">Clarity That Makes You Impossible to Ignore<span class="dot">.</span></span>
+    <span class="marquee-item active">Clarity That Makes You Impossible to Ignore<span class="dot">.</span></span>
+    <span class="marquee-item">Clarity That Makes You Impossible to Ignore<span class="dot">.</span></span>
+    <span class="marquee-item active">Clarity That Makes You Impossible to Ignore<span class="dot">.</span></span>
+  </div>
+</div>
+
+<!-- ========================= COLOR SYSTEM ========================= -->
+<section class="section section--light">
+  <div class="container">
+    <p class="section-label reveal">Brand Colors</p>
+    <h2 class="section-title reveal">The Palette Is Intentionally Narrow.</h2>
+    <p class="section-body reveal">Restriction creates recognition. Three colors do the work. Purple is always the accent, never the base. No warm colors. No gradients.</p>
+
+    <div class="color-row reveal">
+      <div class="color-swatch">
+        <div class="swatch-block swatch-block--dark grain" style="position:relative;"></div>
+        <p class="swatch-label">Dark Base</p>
+        <p class="swatch-hex">#1D1D1D</p>
+        <p class="swatch-usage">Social, thumbnails, accent sections</p>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-block swatch-block--purple"></div>
+        <p class="swatch-label">Electric Indigo</p>
+        <p class="swatch-hex">#5A5CF9</p>
+        <p class="swatch-usage">Logo dot, CTAs, accent elements</p>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-block swatch-block--light"></div>
+        <p class="swatch-label">Off-White (Web Default)</p>
+        <p class="swatch-hex">#F6F6F6</p>
+        <p class="swatch-usage">Primary background for web</p>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-block swatch-block--white"></div>
+        <p class="swatch-label">Pure White</p>
+        <p class="swatch-hex">#FFFFFF</p>
+        <p class="swatch-usage">Cards, sections, breathing zones</p>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-block swatch-block--gray"></div>
+        <p class="swatch-label">Mid Gray</p>
+        <p class="swatch-hex">#949494</p>
+        <p class="swatch-usage">Subtitles, secondary text</p>
+      </div>
+    </div>
+
+    <!-- Purple edge demo -->
+    <div style="margin-top:64px;" class="reveal">
+      <p class="section-label">Signature Detail</p>
+      <h3 style="font-size:24px; font-weight:700; margin-bottom:16px;">The Purple Edge</h3>
+      <p class="section-body" style="margin-bottom:32px;">A callback to the matte black business card. A thin purple line at the bottom of dark sections. Subtle brand recognition that accumulates.</p>
+      <div class="texture-demo">
+        <div class="texture-swatch texture-swatch--matte">
+          <span class="texture-label">Matte Black</span>
+        </div>
+        <div class="texture-swatch texture-swatch--grain grain">
+          <span class="texture-label">+ Grain Texture</span>
+        </div>
+        <div class="texture-swatch texture-swatch--purple-edge grain">
+          <span class="texture-label">+ Purple Edge</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= TYPOGRAPHY ========================= -->
+<section class="section section--white">
+  <div class="container">
+    <p class="section-label reveal">Typography</p>
+    <h2 class="section-title reveal">Bricolage Grotesque + Inter.</h2>
+    <p class="section-body reveal">Unchanged. The type system already works. The improvement is in how we SIZE it and how we USE it. Bigger headlines. More breathing room. One keyword per section gets the <span class="keyword-emphasis">purple emphasis</span>.</p>
+
+    <div class="type-showcase reveal">
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="type-meta-label">Hero Headline</span>
+          <span class="type-meta-spec">Bricolage Grotesque 800 / 64-80px</span>
+        </div>
+        <p class="type-display type-display--hero">Clarity That Makes You Impossible to Ignore.</p>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="type-meta-label">Section Headline</span>
+          <span class="type-meta-spec">Bricolage Grotesque 800 / 40-56px</span>
+        </div>
+        <p class="type-display type-display--section">Brand Therapy Is Not<br>a Luxury. It's a <span class="keyword-emphasis">Lever</span>.</p>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="type-meta-label">Card / Module Title</span>
+          <span class="type-meta-spec">Bricolage Grotesque 700 / 20-28px</span>
+        </div>
+        <p class="type-display type-display--card">A Structured Process That Turns Your Story Into Strategy.</p>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="type-meta-label">Body Copy</span>
+          <span class="type-meta-spec">Inter 400 / 17px / 1.7 line-height</span>
+        </div>
+        <p class="type-body-sample">Brand strategy, positioning, and differentiation for founders who are done being the best-kept secret in the room. You don't need more marketing. You need more <span class="keyword-emphasis">clarity</span>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= PHOTOGRAPHY ========================= -->
+<section class="section section--light">
+  <div class="container--wide">
+    <div class="container">
+      <p class="section-label reveal">Photography</p>
+      <h2 class="section-title reveal">Photography Is Primary.<br>Not Decorative.</h2>
+      <p class="section-body reveal">Florian's presence is a core brand signal. Use photos LARGE. Half-page or full-section. The lens portrait is the signature. B&W with selective color reveal is the treatment.</p>
+    </div>
+
+    <div class="photo-grid reveal">
+      <div class="photo-item photo-item--hero">
+        <img src="images/florian/web/florian-editorial-lens-bw.jpg" alt="Signature lens portrait" onerror="this.parentElement.style.background='#2a2a2a'">
+        <span class="photo-caption">Signature: Lens Portrait / B&W + Selective Color</span>
+      </div>
+      <div class="photo-item photo-item--portrait">
+        <img src="images/florian/web/florian-editorial-atrium-blue.jpg" alt="Atrium editorial" onerror="this.parentElement.style.background='#2a2a2a'">
+        <span class="photo-caption">Editorial: Environment</span>
+      </div>
+      <div class="photo-item photo-item--editorial">
+        <img src="images/florian/web/florian-portrait-formal-dark.jpg" alt="Formal portrait" onerror="this.parentElement.style.background='#2a2a2a'">
+        <span class="photo-caption">Formal: Speaking/Press</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= MOTIFS ========================= -->
+<section class="section section--dark grain" style="position:relative;">
+  <div class="container">
+    <p class="section-label reveal">Signature Motifs</p>
+    <h2 class="section-title reveal" style="color:white;">The Prism Is the Metaphor.</h2>
+    <p class="section-body reveal">Light enters complex. It exits clear. That's Brand Therapy. The prism, the lens, the waveform. These aren't decoration. They're the visual language of transformation.</p>
+
+    <div class="motif-grid reveal">
+      <div class="motif-card">
+        <img src="images/imagery/prism-hand-light-refraction.png" alt="Hand holding prism" onerror="this.parentElement.style.background='#2a2a2a'">
+        <div class="motif-label">
+          <h4>Precision & Human Care</h4>
+          <p>Hand holding crystal. Editorial mode.</p>
+        </div>
+      </div>
+      <div class="motif-card">
+        <img src="images/imagery/prism-rectangular-dark-cubes-rainbow.png" alt="Prism among blocks" onerror="this.parentElement.style.background='#2a2a2a'">
+        <div class="motif-label">
+          <h4>Differentiation</h4>
+          <p>Clarity among confusion. Light among dark.</p>
+        </div>
+      </div>
+      <div class="motif-card">
+        <img src="images/imagery/signal-noise-to-clarity-waveform.jpg" alt="Noise to signal" onerror="this.parentElement.style.background='#2a2a2a'">
+        <div class="motif-label">
+          <h4>Noise to Signal</h4>
+          <p>Chaos becomes clarity. The core promise.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="motif-grid reveal" style="margin-top:24px;">
+      <div class="motif-card">
+        <img src="images/imagery/glass-slab-light-burst-prismatic.png" alt="Glass slab light burst" onerror="this.parentElement.style.background='#2a2a2a'">
+        <div class="motif-label">
+          <h4>Transformation</h4>
+          <p>Before & after. Dark to light.</p>
+        </div>
+      </div>
+      <div class="motif-card">
+        <img src="images/imagery/crystal-pyramid-dark-beam.png" alt="Crystal pyramid" onerror="this.parentElement.style.background='#2a2a2a'">
+        <div class="motif-label">
+          <h4>Focus</h4>
+          <p>Single beam. Single direction.</p>
+        </div>
+      </div>
+      <div class="motif-card">
+        <img src="images/imagery/fp-brand-collateral-mockup-dark.jpg" alt="Brand collateral" onerror="this.parentElement.style.background='#2a2a2a'">
+        <div class="motif-label">
+          <h4>Brand System</h4>
+          <p>Cohesive collateral. The full picture.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--purple);"></div>
+</section>
+
+<!-- ========================= BUTTONS ========================= -->
+<section class="section section--white">
+  <div class="container">
+    <p class="section-label reveal">Components</p>
+    <h2 class="section-title reveal">Buttons Stay As-Is.</h2>
+    <p class="section-body reveal">Sharp corners. Black primary. Ghost for secondary. Purple only for the single most important CTA on the page. No pills, no branded effects.</p>
+
+    <div class="btn-row reveal">
+      <a class="btn btn--primary" href="#">Book a Session</a>
+      <a class="btn btn--outline" href="#">Learn More</a>
+      <a class="btn btn--ghost" href="#">Read the Story </a>
+    </div>
+
+    <p style="margin-top:48px; font-size:13px; color:var(--mid-gray); text-transform:uppercase; letter-spacing:0.1em; font-weight:600;" class="reveal">On Dark Background</p>
+    <div style="background:var(--dark); padding:32px; margin-top:12px; display:flex; gap:16px; flex-wrap:wrap; align-items:center;" class="reveal">
+      <a class="btn btn--primary-light" href="#">Book a Session</a>
+      <a class="btn btn--outline-light" href="#">Learn More</a>
+      <a class="btn btn--purple" href="#">Start Brand Therapy</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= HOMEPAGE MOCKUP ========================= -->
+<section class="section section--light">
+  <div class="container--wide">
+    <div class="container">
+      <p class="section-label reveal">Homepage Mockup</p>
+      <h2 class="section-title reveal">The Sections, Improved.</h2>
+      <p class="section-body reveal">Same structure. Same content. Bolder execution. Photography featured large. Dark Process section with glass cards. Stats with visual weight. Purple edge as signature detail.</p>
+    </div>
+
+    <div class="mockup-frame reveal">
+      <!-- Browser chrome -->
+      <div class="mockup-browser">
+        <div class="mockup-dot"></div>
+        <div class="mockup-dot"></div>
+        <div class="mockup-dot"></div>
+        <div class="mockup-url">florianp.com</div>
+      </div>
+
+      <div class="mockup-content">
+        <!-- Nav -->
+        <nav class="nav-mock">
+          <span class="nav-logo">Florian P<span class="dot">.</span></span>
+          <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">The Story</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">For Founders and CEOs</a></li>
+          </ul>
+        </nav>
+
+        <!-- Hero -->
+        <div class="mock-hero">
+          <div class="mock-hero-text">
+            <h2 class="mock-hero-headline">Clarity That Makes You Impossible to Ignore.</h2>
+            <p class="mock-hero-sub">Brand strategy, positioning, and differentiation for founders who are done being the best-kept secret in the room.</p>
+            <div style="display:flex; gap:16px; align-items:center;">
+              <a class="btn btn--primary" href="#">Book a Session</a>
+              <a class="btn btn--ghost" href="#">Read the Story </a>
+            </div>
+          </div>
+          <div class="mock-hero-image">
+            <img src="images/florian/web/florian-editorial-lens-bw.jpg" alt="Hero portrait" onerror="this.parentElement.style.background='linear-gradient(135deg, #1D1D1D, #333)'">
+          </div>
+        </div>
+
+        <!-- Stats bar -->
+        <div class="mock-stats">
+          <div class="stat-item">
+            <p class="stat-number"><span class="counter" data-target="500">0</span>+</p>
+            <p class="stat-label">Brands Shaped</p>
+          </div>
+          <div class="stat-item">
+            <p class="stat-number"><span class="counter" data-target="15">0</span>+</p>
+            <p class="stat-label">Years Experience</p>
+          </div>
+          <div class="stat-item">
+            <p class="stat-number"><span class="counter" data-target="50">0</span>+</p>
+            <p class="stat-label">Industries</p>
+          </div>
+          <div class="stat-item">
+            <p class="stat-number"><span class="counter" data-target="100">0</span>%</p>
+            <p class="stat-label">Independent</p>
+          </div>
+        </div>
+
+        <!-- Process (dark section) -->
+        <div class="mock-process grain" style="position:relative;">
+          <p class="mock-process-label">The Process</p>
+          <h3 class="mock-process-title">Brand Therapy.<br>Three Sessions to Clarity.</h3>
+          <div class="mock-process-grid">
+            <div class="glass-card">
+              <p class="glass-card-number">01</p>
+              <h4>Discovery</h4>
+              <p>We excavate your story, your values, and the truth about why your brand exists.</p>
+            </div>
+            <div class="glass-card">
+              <p class="glass-card-number">02</p>
+              <h4>Focus</h4>
+              <p>We run the Focus Star framework. Five lenses. One sharp position.</p>
+            </div>
+            <div class="glass-card">
+              <p class="glass-card-number">03</p>
+              <h4>Expression</h4>
+              <p>We translate clarity into language, visuals, and a strategy that moves.</p>
+            </div>
+          </div>
+          <!-- Purple edge at bottom of dark section -->
+          <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--purple);"></div>
+        </div>
+
+        <!-- CTA (dark) -->
+        <div class="mock-cta grain" style="position:relative;">
+          <h3 class="mock-cta-title">Ready for Clarity?</h3>
+          <p class="mock-cta-sub">Book a free intro session. No pitch. Just conversation.</p>
+          <a class="btn btn--purple" href="#">Start Brand Therapy</a>
+          <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--purple);"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= PRINCIPLES ========================= -->
+<section class="section section--white">
+  <div class="container">
+    <p class="section-label reveal">Design Principles</p>
+    <h2 class="section-title reveal">What Makes This Bolder.</h2>
+
+    <div class="principles-grid">
+      <div class="principle-card reveal reveal-delay-1">
+        <p class="principle-number">01</p>
+        <h3>Photography at Scale</h3>
+        <p>No more small avatars or cropped thumbnails. Your photos fill sections. The lens portrait IS the hero, not a sidebar.</p>
+      </div>
+      <div class="principle-card reveal reveal-delay-2">
+        <p class="principle-number">02</p>
+        <h3>Dark as Punctuation</h3>
+        <p>1-2 dark sections per page max. The Process section and CTA go dark with grain texture and glass cards. Everything else breathes in light.</p>
+      </div>
+      <div class="principle-card reveal reveal-delay-3">
+        <p class="principle-number">03</p>
+        <h3>The Purple Edge</h3>
+        <p>A 3px purple line at the bottom of every dark section. It's your business card. It's subtle. It accumulates into recognition.</p>
+      </div>
+      <div class="principle-card reveal reveal-delay-1">
+        <p class="principle-number">04</p>
+        <h3>Prism as Throughline</h3>
+        <p>The prism/lens concept shows up in imagery, in the animated cover element, in the way sections transition from dark to light. Not forced. Woven in.</p>
+      </div>
+      <div class="principle-card reveal reveal-delay-2">
+        <p class="principle-number">05</p>
+        <h3>Scroll-Triggered Reveals</h3>
+        <p>Content fades up as you scroll. Stats count up when visible. Marquee tagline scrolls. Subtle motion that rewards attention.</p>
+      </div>
+      <div class="principle-card reveal reveal-delay-3">
+        <p class="principle-number">06</p>
+        <h3>White Space as Design</h3>
+        <p>Empty is elegant. Generous padding. Sections breathe. Nothing is packed. The brand's confidence shows in what it doesn't fill.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= CLOSING MARQUEE ========================= -->
+<div class="marquee-section" style="border-top:none;">
+  <div class="marquee-track" style="animation-direction: reverse;">
+    <span class="marquee-item">Brand Therapy<span class="dot">.</span></span>
+    <span class="marquee-item active">Brand Therapy<span class="dot">.</span></span>
+    <span class="marquee-item">Brand Therapy<span class="dot">.</span></span>
+    <span class="marquee-item active">Brand Therapy<span class="dot">.</span></span>
+    <span class="marquee-item">Brand Therapy<span class="dot">.</span></span>
+    <span class="marquee-item active">Brand Therapy<span class="dot">.</span></span>
+  </div>
+</div>
+
+<!-- ========================= FOOTER ========================= -->
+<footer style="background:var(--dark); padding:48px; text-align:center; color:var(--mid-gray); font-size:14px; position:relative;" class="grain">
+  <p style="font-family:'Bricolage Grotesque',sans-serif; font-size:24px; font-weight:700; color:white; margin-bottom:8px;">FP<span style="color:var(--purple);">.</span></p>
+  <p>Visual Direction v3 / March 2026</p>
+  <p style="margin-top:4px; font-size:12px;">Bolder, not different. Grounded in the real brand.</p>
+  <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--purple);"></div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Counter animation
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const counters = entry.target.querySelectorAll('.counter');
+      counters.forEach(counter => {
+        const target = parseInt(counter.dataset.target);
+        const duration = 1500;
+        const start = performance.now();
+
+        function update(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          counter.textContent = Math.floor(eased * target);
+          if (progress < 1) requestAnimationFrame(update);
+          else counter.textContent = target;
+        }
+        requestAnimationFrame(update);
+      });
+      counterObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.mock-stats').forEach(el => counterObserver.observe(el));
+</script>
+
+</body>
+</html>

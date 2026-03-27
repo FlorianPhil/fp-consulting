@@ -1,0 +1,1867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Florian P. | Brand Therapist — Clarity That Makes You Impossible to Ignore</title>
+<meta name="description" content="Brand strategy, positioning, and differentiation for founders and the companies they lead. A diagnostic-first clarity process built around the Focus Star framework.">
+<meta name="keywords" content="brand strategist, brand therapy, personal brand strategy, company brand strategy, founder branding, brand positioning, brand clarity, Beverly Hills brand strategist">
+<link rel="canonical" href="https://florianp.com/">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Florian P. | Brand Therapist">
+<meta property="og:description" content="Clarity That Makes You Impossible to Ignore. Brand strategy for founders and the companies they lead.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://florianp.com/">
+<meta property="og:image" content="https://florianp.com/images/florian/web/florian-editorial-lens-bw.jpg">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Florian P. | Brand Therapist">
+<meta name="twitter:description" content="Clarity That Makes You Impossible to Ignore.">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Florian P.",
+  "alternateName": "Brand Therapist",
+  "description": "Brand strategy, positioning, and differentiation for founders and the companies they lead.",
+  "url": "https://florianp.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "9461 Charleville Blvd #1290",
+    "addressLocality": "Beverly Hills",
+    "addressRegion": "CA",
+    "postalCode": "90212",
+    "addressCountry": "US"
+  },
+  "founder": {
+    "@type": "Person",
+    "name": "Florian Philippe",
+    "jobTitle": "Brand Therapist",
+    "url": "https://florianp.com/the-story"
+  },
+  "serviceType": ["Brand Strategy", "Brand Positioning", "Personal Brand Strategy", "Company Brand Strategy"],
+  "areaServed": "Worldwide"
+}
+</script>
+
+<!-- FAQ Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Brand Therapy?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Brand Therapy is a guided clarity process that turns what you do into a sharp position, a voice, and a story people actually feel. It is part strategy, part identity work, part decision making."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who is Brand Therapy for?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Founders, entrepreneurs, and service providers who want to be known for something specific and need crisp positioning, messaging, and a voice that sounds like a real human."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "I work for a company. Is Brand Therapy still relevant?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Company brands do not replace personal credibility anymore. Your career, your opportunities, and your influence travel with you. Brand Therapy helps you communicate your value clearly while still serving the company you work for."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this actual therapy?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not in the clinical sense. But it can feel therapeutic because alignment changes how you see yourself, how you speak, and what you believe you are allowed to do. Brand Therapy is a brand strategy process with a human, reflective approach."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the Focus Star framework?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The proprietary framework at the heart of Brand Therapy. Five edges: Audience, Purpose, Personality, DNA, and Offering. Each gets explored through guided discovery. The final star becomes the strategic blueprint."
+      }
+    }
+  ]
+}
+</script>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+
+<!-- Lenis -->
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+<style>
+/* ============================================
+   DESIGN TOKENS
+   ============================================ */
+:root {
+  --accent: #5A5CF9;
+  --accent-glow: rgba(90, 92, 249, 0.35);
+  --accent-soft: rgba(90, 92, 249, 0.08);
+  --dark: #1D1D1D;
+  --light: #F6F6F6;
+  --white: #FFFFFF;
+  --black: #000000;
+  --gray: #949494;
+  --gray-light: #E0E0E0;
+
+  --ff-primary: 'Bricolage Grotesque', sans-serif;
+  --ff-body: 'Inter', sans-serif;
+
+  --section-pad: clamp(100px, 12vw, 180px);
+  --container: 1240px;
+  --gutter: clamp(24px, 5vw, 64px);
+
+  --purple-edge: 3px;
+  --grain-opacity: 0.035;
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-blur: 16px;
+}
+
+/* ============================================
+   RESET
+   ============================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+body {
+  font-family: var(--ff-body);
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--black);
+  background: var(--light);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+@media (max-width: 768px) { body { cursor: auto; } }
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+button { border: none; background: none; font-family: inherit; cursor: none; }
+@media (max-width: 768px) { button { cursor: pointer; } }
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--ff-primary);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.container { max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter); }
+.container--wide { max-width: 1100px; margin: 0 auto; padding: 0 var(--gutter); }
+
+.eyebrow {
+  font-family: var(--ff-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+/* ============================================
+   CUSTOM CURSOR
+   ============================================ */
+.cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.cursor.hovering {
+  width: 48px;
+  height: 48px;
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+@media (max-width: 768px) { .cursor { display: none; } }
+
+/* ============================================
+   LOADER
+   ============================================ */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.loader-logo {
+  font-family: var(--ff-primary);
+  font-size: clamp(48px, 8vw, 80px);
+  font-weight: 800;
+  color: var(--white);
+  opacity: 0;
+}
+
+.loader-logo .dot { color: var(--accent); }
+
+.loader-sub {
+  font-family: var(--ff-body);
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+  opacity: 0;
+}
+
+.loader-line {
+  width: 60px;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  margin-top: 8px;
+}
+
+/* ============================================
+   PROGRESS BAR
+   ============================================ */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--accent);
+  z-index: 999;
+  transform-origin: left;
+  transform: scaleX(0);
+  will-change: transform;
+}
+
+/* ============================================
+   NAV — hidden on hero, glassmorphic after
+   ============================================ */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 20px 0;
+  background: rgba(246, 246, 246, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s;
+}
+
+nav.visible { transform: translateY(0); opacity: 1; }
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.nav-logo {
+  font-family: var(--ff-primary);
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.nav-logo .dot { color: var(--accent); }
+
+.nav-links { display: flex; align-items: center; gap: 40px; list-style: none; }
+
+.nav-links a {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover { color: var(--accent); }
+
+.nav-cta {
+  background: var(--black);
+  color: var(--white) !important;
+  padding: 12px 28px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.nav-cta:hover { background: var(--accent); }
+
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+}
+
+.nav-mobile-toggle span { width: 24px; height: 2px; background: var(--black); transition: 0.3s; }
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-mobile-toggle { display: flex; }
+}
+
+/* ============================================
+   1. HERO
+   ============================================ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 80px 0 60px;
+  background: var(--light);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+}
+
+.hero-label {
+  font-family: var(--ff-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+
+.hero h1 { font-size: clamp(42px, 5.5vw, 76px); margin-bottom: 28px; }
+
+.hero .word { display: inline-block; overflow: hidden; vertical-align: bottom; }
+.hero .word-inner { display: inline-block; transform: translateY(120%); }
+.hero .accent { color: var(--accent); }
+
+.hero-sub {
+  font-size: clamp(16px, 1.3vw, 19px);
+  color: var(--gray);
+  max-width: 480px;
+  line-height: 1.7;
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.hero-ctas {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  background: var(--accent);
+  color: var(--white);
+  padding: 16px 36px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--ff-body);
+  transition: background 0.3s, transform 0.3s;
+}
+
+.btn-primary:hover { background: var(--black); transform: translateY(-2px); }
+
+.btn-primary--dark { background: var(--black); }
+.btn-primary--dark:hover { background: var(--accent); }
+
+.btn-ghost {
+  font-size: 15px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.3s;
+}
+
+.btn-ghost:hover { color: var(--accent); }
+.btn-ghost .arrow { transition: transform 0.3s; }
+.btn-ghost:hover .arrow { transform: translateX(4px); }
+
+.hero-image-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-image-wrap img {
+  width: 100%;
+  height: auto;
+  transform: scale(1.08);
+  will-change: transform;
+}
+
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+}
+
+.hero-scroll-indicator span {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: var(--gray-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-line::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  animation: scrollPulse 2s infinite;
+}
+
+@keyframes scrollPulse { 0% { top: -100%; } 100% { top: 100%; } }
+
+@media (max-width: 900px) {
+  .hero .container { grid-template-columns: 1fr; text-align: center; }
+  .hero-sub { margin-left: auto; margin-right: auto; }
+  .hero-ctas { justify-content: center; }
+  .hero-image-wrap { max-width: 420px; margin: 0 auto; }
+}
+
+/* ============================================
+   2. DARK STATEMENT (word-by-word scroll)
+   Transition: light hero → dark statement is continuous
+   ============================================ */
+.statement-section {
+  background: var(--dark);
+  position: relative;
+  padding: clamp(120px, 15vw, 200px) 0;
+}
+
+/* Grain */
+.grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.statement-text {
+  font-family: var(--ff-primary);
+  font-weight: 800;
+  font-size: clamp(36px, 5.5vw, 72px);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  max-width: 1000px;
+  position: relative;
+  z-index: 2;
+}
+
+.statement-text .word {
+  display: inline-block;
+  opacity: 0.15;
+  transition: opacity 0.1s;
+}
+
+.statement-text .word.active { opacity: 1; }
+
+.statement-text em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+/* ============================================
+   3. CIRCLE WIPE (dark → light)
+   Continues from dark statement
+   ============================================ */
+.noise-section {
+  position: relative;
+  height: 200vh;
+  background: var(--dark);
+}
+
+.noise-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.noise-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--purple-edge);
+  background: var(--accent);
+  z-index: 5;
+}
+
+.clarity-reveal {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: var(--light);
+  clip-path: circle(0% at 50% 50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: clip-path;
+}
+
+.clarity-inner {
+  text-align: center;
+  max-width: 800px;
+  padding: 0 var(--gutter);
+}
+
+.clarity-inner h2 {
+  font-size: clamp(32px, 4.5vw, 60px);
+  margin-bottom: 24px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.clarity-inner p {
+  font-size: clamp(16px, 1.3vw, 20px);
+  color: var(--gray);
+  line-height: 1.7;
+  max-width: 560px;
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* ============================================
+   4. BRAND THERAPY PROCESS
+   ============================================ */
+.process-section {
+  background: var(--white);
+  padding: var(--section-pad) 0;
+}
+
+.process-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(48px, 6vw, 80px);
+  align-items: start;
+}
+
+.process-text h2 {
+  font-size: clamp(36px, 4vw, 56px);
+  margin-bottom: 20px;
+}
+
+.process-text > p {
+  font-size: clamp(16px, 1.2vw, 18px);
+  color: var(--gray);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.focus-star-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.focus-star-card {
+  padding: 24px;
+  border-left: 3px solid var(--accent);
+  background: var(--light);
+}
+
+.focus-star-card h4 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  font-family: var(--ff-primary);
+  line-height: 1.3;
+}
+
+.focus-star-card p {
+  font-size: 14px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+/* Last card spans full width for even layout */
+.focus-star-card:nth-child(5) {
+  grid-column: 1 / -1;
+  max-width: calc(50% - 8px);
+}
+
+.process-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.process-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 900px) {
+  .process-grid { grid-template-columns: 1fr; }
+  .focus-star-card:nth-child(5) { max-width: 100%; }
+}
+
+@media (max-width: 500px) {
+  .focus-star-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================
+   5. BENEFITS — What clarity does
+   ============================================ */
+.benefits-section {
+  background: var(--light);
+  padding: var(--section-pad) 0;
+}
+
+.benefits-header {
+  text-align: center;
+  margin-bottom: clamp(48px, 6vw, 80px);
+}
+
+.benefits-header h2 {
+  font-size: clamp(32px, 4vw, 52px);
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.benefit-card {
+  padding: clamp(32px, 3vw, 40px);
+  background: var(--white);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.benefit-card h3 {
+  font-size: clamp(20px, 1.8vw, 24px);
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.benefit-card p {
+  font-size: 15px;
+  color: var(--gray);
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .benefits-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================
+   6. BRAND SPECTRUM (placeholder)
+   ============================================ */
+.spectrum-section {
+  background: var(--dark);
+  padding: var(--section-pad) 0;
+  position: relative;
+}
+
+.spectrum-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--purple-edge);
+  background: var(--accent);
+  z-index: 5;
+}
+
+.spectrum-header {
+  text-align: center;
+  margin-bottom: clamp(48px, 6vw, 80px);
+  position: relative;
+  z-index: 2;
+}
+
+.spectrum-header h2 {
+  font-size: clamp(28px, 3.5vw, 48px);
+  color: var(--white);
+}
+
+.spectrum-header p {
+  font-size: clamp(15px, 1.2vw, 18px);
+  color: var(--gray);
+  margin-top: 16px;
+}
+
+.spectrum-embed {
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.spectrum-embed iframe {
+  width: 100%;
+  height: 600px;
+  border: none;
+}
+
+/* ============================================
+   7. TWO WAYS TO WORK TOGETHER
+   ============================================ */
+.paths-section {
+  background: var(--white);
+  padding: var(--section-pad) 0;
+}
+
+.paths-header {
+  text-align: center;
+  margin-bottom: clamp(48px, 6vw, 80px);
+}
+
+.paths-header h2 {
+  font-size: clamp(32px, 4vw, 52px);
+  margin-bottom: 16px;
+}
+
+.paths-header p {
+  font-size: clamp(15px, 1.2vw, 18px);
+  color: var(--gray);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.paths-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.path-card {
+  padding: clamp(36px, 4vw, 48px);
+  border: 1px solid var(--gray-light);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.path-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.path-card .eyebrow { margin-bottom: 16px; }
+
+.path-card h3 {
+  font-size: clamp(22px, 2.2vw, 30px);
+  margin-bottom: 12px;
+  line-height: 1.15;
+}
+
+.path-card .tagline {
+  font-style: italic;
+  color: var(--accent);
+  font-size: 15px;
+  margin-bottom: 16px;
+}
+
+.path-card p {
+  font-size: 15px;
+  color: var(--gray);
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.path-card .btn-ghost {
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .paths-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================
+   8. FEATURED IN (marquee)
+   ============================================ */
+.featured-section {
+  background: var(--light);
+  padding: 60px 0;
+  overflow: hidden;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.featured-label {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 32px;
+}
+
+.featured-track-wrap { overflow: hidden; }
+
+.featured-track {
+  display: flex;
+  gap: 80px;
+  align-items: center;
+  animation: marqueeScroll 30s linear infinite;
+}
+
+.featured-track img {
+  height: 28px;
+  opacity: 0.4;
+  filter: grayscale(1);
+  transition: opacity 0.3s;
+}
+
+.featured-track img:hover { opacity: 0.7; }
+
+/* Placeholder logos as text */
+.featured-logo {
+  font-family: var(--ff-primary);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gray);
+  white-space: nowrap;
+  opacity: 0.4;
+}
+
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ============================================
+   9. TESTIMONIALS (hero quote + glassmorphic cards)
+   ============================================ */
+.testimonials-section {
+  background: var(--dark);
+  padding: var(--section-pad) 0;
+  position: relative;
+}
+
+.testimonials-section.grain::before { z-index: 0; }
+
+.testimonials-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--purple-edge);
+  background: var(--accent);
+  z-index: 5;
+}
+
+/* Hero testimonial */
+.testimonial-hero {
+  text-align: center;
+  margin-bottom: clamp(60px, 8vw, 100px);
+  position: relative;
+  z-index: 2;
+}
+
+.testimonial-hero-marks {
+  font-family: var(--ff-primary);
+  font-size: 48px;
+  color: var(--accent);
+  opacity: 0.5;
+  line-height: 1;
+  margin-bottom: 24px;
+}
+
+.testimonial-hero-quote {
+  font-family: var(--ff-primary);
+  font-weight: 800;
+  font-size: clamp(28px, 4vw, 56px);
+  line-height: 1.1;
+  color: var(--white);
+  max-width: 900px;
+  margin: 0 auto 32px;
+}
+
+.testimonial-hero-quote .accent { color: var(--accent); }
+.testimonial-hero-quote .muted { color: rgba(255, 255, 255, 0.3); }
+
+.testimonial-hero-author {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.testimonial-hero-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.testimonial-hero-info {
+  text-align: left;
+}
+
+.testimonial-hero-info strong {
+  color: var(--white);
+  font-size: 15px;
+  display: block;
+}
+
+.testimonial-hero-info span {
+  color: var(--gray);
+  font-size: 13px;
+}
+
+/* Cards grid */
+.testimonial-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  position: relative;
+  z-index: 2;
+}
+
+.testimonial-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  padding: clamp(28px, 3vw, 36px);
+  display: flex;
+  flex-direction: column;
+}
+
+.testimonial-card-quote {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.7;
+  flex: 1;
+  margin-bottom: 24px;
+}
+
+.testimonial-card-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.testimonial-card-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.testimonial-card-info strong {
+  color: var(--white);
+  font-size: 14px;
+  display: block;
+}
+
+.testimonial-card-info span {
+  color: var(--gray);
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
+  .testimonial-cards { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+}
+
+/* ============================================
+   10. FAQ (accordion)
+   ============================================ */
+.faq-section {
+  background: var(--white);
+  padding: var(--section-pad) 0;
+}
+
+.faq-header {
+  text-align: center;
+  margin-bottom: clamp(48px, 6vw, 80px);
+}
+
+.faq-header h2 { font-size: clamp(32px, 4vw, 52px); }
+
+.faq-list {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 0;
+  font-family: var(--ff-primary);
+  font-size: clamp(17px, 1.5vw, 20px);
+  font-weight: 700;
+  text-align: left;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--black);
+  transition: color 0.3s;
+}
+
+.faq-question:hover { color: var(--accent); }
+
+.faq-icon {
+  font-size: 24px;
+  font-weight: 300;
+  color: var(--gray);
+  transition: transform 0.3s;
+  flex-shrink: 0;
+  margin-left: 20px;
+}
+
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-answer-inner {
+  padding: 0 0 28px;
+  font-size: 15px;
+  color: var(--gray);
+  line-height: 1.7;
+  max-width: 620px;
+}
+
+@media (max-width: 768px) {
+  .faq-question { cursor: pointer; }
+}
+
+/* ============================================
+   11. CTA
+   ============================================ */
+.cta-section {
+  background: var(--light);
+  padding: clamp(100px, 14vw, 200px) 0;
+  text-align: center;
+}
+
+.cta-section h2 {
+  font-size: clamp(36px, 5vw, 68px);
+  margin-bottom: 24px;
+}
+
+.cta-section h2 .accent { color: var(--accent); }
+
+.cta-section p {
+  font-size: clamp(16px, 1.3vw, 19px);
+  color: var(--gray);
+  max-width: 520px;
+  margin: 0 auto 48px;
+  line-height: 1.7;
+}
+
+/* ============================================
+   12. FOOTER
+   ============================================ */
+footer {
+  background: var(--dark);
+  color: var(--white);
+  padding: 60px 0 40px;
+  position: relative;
+}
+
+footer::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--purple-edge);
+  background: var(--accent);
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.footer-brand .nav-logo { color: var(--white); font-size: 32px; }
+
+.footer-brand p {
+  color: var(--gray);
+  font-size: 14px;
+  margin-top: 12px;
+  max-width: 280px;
+}
+
+.footer-links { display: flex; gap: 60px; }
+
+.footer-col h4 {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 16px;
+  font-family: var(--ff-body);
+}
+
+.footer-col a {
+  display: block;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 10px;
+  transition: color 0.3s;
+}
+
+.footer-col a:hover { color: var(--accent); }
+
+.social-icons {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.social-icon:hover {
+  border-color: var(--accent);
+  background: rgba(90, 92, 249, 0.1);
+}
+
+.social-icon svg {
+  width: 16px;
+  height: 16px;
+  fill: rgba(255, 255, 255, 0.7);
+}
+
+.social-icon:hover svg { fill: var(--accent); }
+
+.footer-bottom {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--gray);
+}
+
+@media (max-width: 768px) {
+  .footer-inner { flex-direction: column; }
+  .footer-links { flex-direction: column; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-logo">FP<span class="dot">.</span></div>
+  <div class="loader-sub">Brand Therapist</div>
+  <div class="loader-line"></div>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">FP<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="#process">The Process</a></li>
+      <li><a href="#spectrum">Who It's For</a></li>
+      <li><a href="#testimonials">Proof</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="nav-cta" target="_blank" rel="noopener">Book a Call</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- =============================================
+     1. HERO
+     ============================================= -->
+<section class="hero" id="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-label">Brand Therapist</div>
+      <h1>
+        <span class="word"><span class="word-inner">Clarity</span></span>
+        <span class="word"><span class="word-inner">That</span></span>
+        <span class="word"><span class="word-inner">Makes</span></span>
+        <span class="word"><span class="word-inner">You</span></span><br>
+        <span class="word"><span class="word-inner accent">Impossible</span></span>
+        <span class="word"><span class="word-inner">to</span></span>
+        <span class="word"><span class="word-inner">Ignore.</span></span>
+      </h1>
+      <p class="hero-sub">Brand strategy for the person behind the business... and the business they're building.</p>
+      <div class="hero-ctas">
+        <a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="btn-primary" target="_blank" rel="noopener"><span>Book Your Free Intro Call</span></a>
+        <a href="#process" class="btn-ghost">See how it works <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
+    <div class="hero-image-wrap" id="heroImage">
+      <img src="images/florian/florian-editorial-lens-bw.png" alt="Florian Philippe holding a glass lens, revealing clarity through brand strategy" loading="eager">
+    </div>
+  </div>
+  <div class="hero-scroll-indicator" id="scrollIndicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- =============================================
+     2. DARK STATEMENT (word-by-word scroll)
+     ============================================= -->
+<section class="statement-section grain" id="statementSection">
+  <div class="container--wide">
+    <p class="statement-text" id="statementText">
+      In <em>a world drowning in noise,</em> your identity becomes your biggest competitive asset. The brands that win aren't louder. They're <em>clearer.</em>
+    </p>
+  </div>
+</section>
+
+<!-- =============================================
+     3. CIRCLE WIPE (dark → light)
+     ============================================= -->
+<section class="noise-section" id="noise">
+  <div class="noise-sticky">
+    <div class="clarity-reveal" id="clarityReveal">
+      <div class="clarity-inner">
+        <h2>Most people don't have a branding problem. They have a <span style="color: var(--accent);">clarity</span> problem.</h2>
+        <p>Brand Therapy starts with the truth. A diagnostic-first approach to brand strategy... for founders and leaders who want clarity that drives decisions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     4. BRAND THERAPY PROCESS
+     ============================================= -->
+<section class="process-section" id="process">
+  <div class="container">
+    <div class="process-grid">
+      <div class="process-text">
+        <div class="eyebrow">The process</div>
+        <h2>Brand Therapy</h2>
+        <p>A diagnostic-first clarity process. Not a rebrand. Not a content plan. A structured conversation that gets to the root of what makes you... you.</p>
+        <p>Built around the Focus Star framework, it maps five dimensions to find the position that's already yours. You just haven't said it out loud yet.</p>
+
+        <div class="focus-star-grid">
+          <div class="focus-star-card">
+            <h4>Audience</h4>
+            <p>Not everyone. The specific people who need what only you offer.</p>
+          </div>
+          <div class="focus-star-card">
+            <h4>Purpose</h4>
+            <p>Why you do this work. What drives you beneath the title.</p>
+          </div>
+          <div class="focus-star-card">
+            <h4>DNA</h4>
+            <p>Your non-negotiables. How you operate and what you refuse to compromise.</p>
+          </div>
+          <div class="focus-star-card">
+            <h4>Personality</h4>
+            <p>How you sound and show up. Your archetype and communication style.</p>
+          </div>
+          <div class="focus-star-card">
+            <h4>Offering</h4>
+            <p>The category you own, the problem you solve, the transformation you deliver.</p>
+          </div>
+        </div>
+      </div>
+      <div class="process-image">
+        <img src="images/florian/web/florian-consulting-session-mountain.jpg" alt="Florian Philippe in a brand therapy session" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     5. BENEFITS
+     ============================================= -->
+<section class="benefits-section" id="benefits">
+  <div class="container">
+    <div class="benefits-header">
+      <div class="eyebrow">What clarity does</div>
+      <h2>Strategy that changes how your brand competes.</h2>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <h3>A market position that wins</h3>
+        <p>Positioning built around what makes you genuinely different... so you attract the clients worth having and stop competing on price.</p>
+      </div>
+      <div class="benefit-card">
+        <h3>A brand system that scales</h3>
+        <p>Visual identity, messaging architecture, and strategic guidelines your whole team can execute from.</p>
+      </div>
+      <div class="benefit-card">
+        <h3>Clarity that closes deals</h3>
+        <p>When your brand says exactly what you do, who it's for, and why you're the obvious choice... the first call is shorter and the close rate goes up.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     6. BRAND SPECTRUM (placeholder — built separately)
+     ============================================= -->
+<section class="spectrum-section grain" id="spectrum">
+  <div class="container">
+    <div class="spectrum-header">
+      <div class="eyebrow">Where do you sit?</div>
+      <h2 style="color: var(--white);">Every brand lives somewhere on the spectrum.</h2>
+      <p>From faceless companies to personal brands... the ones that win know exactly where they stand. And they own it.</p>
+    </div>
+    <div class="spectrum-embed">
+      <iframe src="founder-spectrum/index.html" loading="lazy" title="Brand Spectrum"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     7. TWO WAYS TO WORK TOGETHER
+     ============================================= -->
+<section class="paths-section" id="paths">
+  <div class="container">
+    <div class="paths-header">
+      <h2>Two ways to work together</h2>
+      <p>Most people do one or the other. The real leverage is understanding how personal brand and company brand reinforce each other.</p>
+    </div>
+    <div class="paths-grid">
+      <div class="path-card">
+        <div class="eyebrow">Personal Brand Strategy</div>
+        <h3>For Founders &amp; CEOs</h3>
+        <p class="tagline">Your brand. Your voice. Your visibility.</p>
+        <p>A guided clarity process that turns who you actually are into a sharp identity, a clean position, and a voice the right people recognize. Built around the Focus Star framework. Delivered in 2 weeks.</p>
+        <a href="/founders" class="btn-ghost">Learn more <span class="arrow">&rarr;</span></a>
+      </div>
+      <div class="path-card">
+        <div class="eyebrow">Company Brand Strategy</div>
+        <h3>For Founder-Led Companies</h3>
+        <p class="tagline">Your company's brand. Built to scale.</p>
+        <p>Full brand strategy, positioning, and identity for companies where the founder's vision is the competitive advantage. From diagnostic to deliverable. Strategy that your team can execute from.</p>
+        <a href="/companies" class="btn-ghost">Learn more <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     8. FEATURED IN
+     ============================================= -->
+<section class="featured-section">
+  <div class="featured-label">Featured In &amp; Trusted By</div>
+  <div class="featured-track-wrap">
+    <div class="featured-track" id="featuredTrack">
+      <span class="featured-logo">Chapman University</span>
+      <span class="featured-logo">ABAIE</span>
+      <span class="featured-logo">Fabian Geyrhalter</span>
+      <span class="featured-logo">Cachet Advisory</span>
+      <span class="featured-logo">Verdant Strategies</span>
+      <span class="featured-logo">Renogy</span>
+      <span class="featured-logo">Acer</span>
+      <span class="featured-logo">TAITRA</span>
+      <!-- Duplicate for seamless loop -->
+      <span class="featured-logo">Chapman University</span>
+      <span class="featured-logo">ABAIE</span>
+      <span class="featured-logo">Fabian Geyrhalter</span>
+      <span class="featured-logo">Cachet Advisory</span>
+      <span class="featured-logo">Verdant Strategies</span>
+      <span class="featured-logo">Renogy</span>
+      <span class="featured-logo">Acer</span>
+      <span class="featured-logo">TAITRA</span>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     9. TESTIMONIALS
+     ============================================= -->
+<section class="testimonials-section grain" id="testimonials">
+  <div class="container">
+    <!-- Hero quote -->
+    <div class="testimonial-hero">
+      <div class="testimonial-hero-marks">&ldquo;</div>
+      <div class="testimonial-hero-quote">
+        He's a <span class="accent">fucking unicorn.</span> <span class="muted">There is no one else on the planet doing what Florian does at the level he does it.</span>
+      </div>
+      <div class="testimonial-hero-author">
+        <img src="images/florian/florian-brand-therapy-book-with-fabian-geyrhalter.png" alt="Fabian Geyrhalter" class="testimonial-hero-avatar" loading="lazy">
+        <div class="testimonial-hero-info">
+          <strong>Fabian Geyrhalter</strong>
+          <span>Author, Brand Strategist</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="testimonial-cards">
+      <div class="testimonial-card">
+        <p class="testimonial-card-quote">"Far and away the most skilled Marketing and Branding executive I have come across. Super smart, imaginative, incredibly creative, and yet he brings the technical expertise in equal measure."</p>
+        <div class="testimonial-card-author">
+          <div class="testimonial-card-avatar" style="width:40px;height:40px;background:var(--gray);border-radius:50%;"></div>
+          <div class="testimonial-card-info">
+            <strong>Jon Tull</strong>
+            <span>Managing Partner, Cachet</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-card-quote">"Florian brings a rare combination of vision and execution. He sees the big picture with strategic perspective, yet he's equally skilled at rolling up his sleeves to deliver results on the ground."</p>
+        <div class="testimonial-card-author">
+          <div class="testimonial-card-avatar" style="width:40px;height:40px;background:var(--gray);border-radius:50%;"></div>
+          <div class="testimonial-card-info">
+            <strong>Kevin Meredith</strong>
+            <span>Founder, 4th Sector Innovations</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-card-quote">"His feedback goes far beyond surface-level reactions. Thoughtful, structured insight that pushes the work toward clarity, coherence, and stronger decision-making."</p>
+        <div class="testimonial-card-author">
+          <img src="images/client-assets/adam-freed/adam-freed-headshot.png" alt="Adam Freed" class="testimonial-card-avatar" loading="lazy">
+          <div class="testimonial-card-info">
+            <strong>Adam Freed</strong>
+            <span>Cannabis Operations Leader</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     10. FAQ
+     ============================================= -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <div class="faq-header">
+      <div class="eyebrow">Questions</div>
+      <h2>Frequently asked.</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          What is Brand Therapy?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Brand Therapy is a guided clarity process that turns what you do into a sharp position, a voice, and a story people actually feel. It is part strategy, part identity work, part decision making.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          Who is Brand Therapy for?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Founders, entrepreneurs, and service providers who want to be known for something specific and need crisp positioning, messaging, and a voice that sounds like a real human.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          I work for a company. Is this still relevant?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Yes. Company brands do not replace personal credibility anymore. Your career, your opportunities, and your influence travel with you. Brand Therapy helps you communicate your value clearly while still serving the company you work for.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          Is this actual therapy?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Not in the clinical sense. But it can feel therapeutic because alignment changes how you see yourself, how you speak, and what you believe you are allowed to do. Brand Therapy is a brand strategy process with a human, reflective approach.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          What's the Focus Star framework?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">The proprietary framework at the heart of Brand Therapy. Five edges: Audience, Purpose, Personality, DNA, and Offering. Each gets explored through guided discovery. The final star becomes the strategic blueprint.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     11. CTA
+     ============================================= -->
+<section class="cta-section" id="cta">
+  <div class="container">
+    <div class="eyebrow">Your next move</div>
+    <h2>Let's find your <span class="accent">clarity.</span></h2>
+    <p>Your next real brand conversation is free. Twenty minutes. No pitch. Just clarity on whether now is the right time to move.</p>
+    <a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="btn-primary" target="_blank" rel="noopener">Book Your Free Intro Call</a>
+  </div>
+</section>
+
+<!-- =============================================
+     12. FOOTER
+     ============================================= -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo">FP<span class="dot">.</span></div>
+        <p>Brand strategy for the person behind the business... and the business they're building.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <a href="/the-story">The Story</a>
+          <a href="/founders">For Founders</a>
+          <a href="/companies">For Companies</a>
+          <a href="/blog">Blog</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="mailto:connect@florianp.com">connect@florianp.com</a>
+          <a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" target="_blank" rel="noopener">Book a Call</a>
+          <div class="social-icons">
+            <a href="https://linkedin.com/in/florianphilippe" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://youtube.com/@florianphilippe" target="_blank" rel="noopener" class="social-icon" aria-label="YouTube">
+              <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Florian P. All rights reserved.</span>
+      <span>Beverly Hills, CA</span>
+    </div>
+  </div>
+</footer>
+
+<!-- =============================================
+     JAVASCRIPT
+     ============================================= -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+  // ========== LENIS ==========
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smooth: true,
+  });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+  gsap.ticker.lagSmoothing(0);
+  lenis.stop();
+
+  // Expose for preview debugging
+  window.lenis = lenis;
+
+  // ========== CUSTOM CURSOR ==========
+  const cursor = document.getElementById('cursor');
+  if (window.innerWidth > 768) {
+    let cx = 0, cy = 0, tx = 0, ty = 0;
+    document.addEventListener('mousemove', (e) => { tx = e.clientX; ty = e.clientY; });
+
+    gsap.ticker.add(() => {
+      cx += (tx - cx) * 0.15;
+      cy += (ty - cy) * 0.15;
+      cursor.style.left = cx + 'px';
+      cursor.style.top = cy + 'px';
+    });
+
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+    });
+  }
+
+  // ========== LOADER ==========
+  const loaderTl = gsap.timeline({
+    onComplete: () => {
+      gsap.to('#loader', { opacity: 0, duration: 0.5, onComplete: () => {
+        document.getElementById('loader').style.display = 'none';
+        lenis.start();
+        heroEntrance();
+      }});
+    }
+  });
+
+  loaderTl
+    .to('.loader-logo', { opacity: 1, duration: 0.6, ease: 'power2.out' })
+    .to('.loader-sub', { opacity: 1, duration: 0.5, ease: 'power2.out' }, '-=0.2')
+    .to('.loader-line', { scaleX: 1, duration: 0.8, ease: 'power2.inOut' }, '-=0.3')
+    .to({}, { duration: 0.3 });
+
+  // ========== HERO ENTRANCE ==========
+  function heroEntrance() {
+    const tl = gsap.timeline();
+    tl.to('.hero .word-inner', { y: 0, duration: 0.9, stagger: 0.06, ease: 'power3.out' })
+      .to('.hero-sub', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.4')
+      .to('.hero-ctas', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.5')
+      .to('.hero-image-wrap img', { scale: 1, duration: 1.4, ease: 'power2.out' }, 0)
+      .to('#scrollIndicator', { opacity: 1, duration: 0.6 }, '-=0.3');
+  }
+
+  // ========== NAV: hidden on hero ==========
+  ScrollTrigger.create({
+    trigger: '.hero',
+    start: 'bottom 80%',
+    onEnter: () => { document.getElementById('mainNav').classList.add('visible'); },
+    onLeaveBack: () => { document.getElementById('mainNav').classList.remove('visible'); },
+  });
+
+  // ========== PROGRESS BAR ==========
+  gsap.to('#progressBar', {
+    scaleX: 1, ease: 'none',
+    scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 0.3 }
+  });
+
+  // ========== HERO PARALLAX ==========
+  gsap.to('.hero-image-wrap img', {
+    y: -80,
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+  });
+
+  gsap.to('#scrollIndicator', {
+    opacity: 0,
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=200', scrub: true }
+  });
+
+  // ========== 2. STATEMENT: WORD-BY-WORD ==========
+  const statementEl = document.getElementById('statementText');
+  const statementHTML = statementEl.innerHTML;
+  const wrappedHTML = statementHTML.replace(/(<em>.*?<\/em>|\S+)/g, (match) => {
+    if (match.startsWith('<em>')) {
+      return match.replace(/<em>(.*?)<\/em>/, (m, inner) => {
+        return '<em>' + inner.split(/\s+/).map(w => `<span class="word">${w}</span>`).join(' ') + '</em>';
+      });
+    }
+    return `<span class="word">${match}</span>`;
+  });
+  statementEl.innerHTML = wrappedHTML;
+
+  const stWords = statementEl.querySelectorAll('.word');
+  ScrollTrigger.create({
+    trigger: '#statementSection',
+    start: 'top center',
+    end: 'bottom center',
+    scrub: true,
+    onUpdate: (self) => {
+      const progress = self.progress;
+      stWords.forEach((word, i) => {
+        word.classList.toggle('active', (i / stWords.length) < progress);
+      });
+    }
+  });
+
+  // ========== 3. CIRCLE WIPE ==========
+  gsap.to('#clarityReveal', {
+    clipPath: 'circle(75% at 50% 50%)',
+    ease: 'none',
+    scrollTrigger: { trigger: '.noise-section', start: '20% top', end: '60% top', scrub: 1 }
+  });
+
+  gsap.timeline({
+    scrollTrigger: { trigger: '.noise-section', start: '40% top', end: '70% top', scrub: 1 }
+  })
+  .to('.clarity-inner h2', { opacity: 1, y: 0, duration: 1 })
+  .to('.clarity-inner p', { opacity: 1, y: 0, duration: 1 }, '-=0.5');
+
+  // ========== 4. PROCESS REVEAL ==========
+  gsap.from('.process-text', {
+    opacity: 0, y: 40, duration: 0.8,
+    scrollTrigger: { trigger: '.process-section', start: 'top 70%', toggleActions: 'play none none none' }
+  });
+
+  gsap.from('.process-image', {
+    opacity: 0, y: 40, duration: 0.8, delay: 0.2,
+    scrollTrigger: { trigger: '.process-section', start: 'top 70%', toggleActions: 'play none none none' }
+  });
+
+  gsap.utils.toArray('.focus-star-card').forEach((card, i) => {
+    gsap.from(card, {
+      opacity: 0, y: 20, duration: 0.5, delay: i * 0.1,
+      scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none none' }
+    });
+  });
+
+  // ========== 5. BENEFITS ==========
+  gsap.utils.toArray('.benefit-card').forEach((card) => {
+    gsap.to(card, {
+      opacity: 1, y: 0, duration: 0.7,
+      scrollTrigger: { trigger: card, start: 'top 85%', toggleActions: 'play none none none' }
+    });
+  });
+
+  // ========== 6. SPECTRUM ==========
+  gsap.from('.spectrum-embed', {
+    opacity: 0, y: 40,
+    scrollTrigger: { trigger: '.spectrum-section', start: 'top 60%', toggleActions: 'play none none none' }
+  });
+
+  // ========== 7. PATHS ==========
+  gsap.utils.toArray('.path-card').forEach((card, i) => {
+    gsap.from(card, {
+      opacity: 0, y: 30, duration: 0.6, delay: i * 0.15,
+      scrollTrigger: { trigger: '.paths-section', start: 'top 70%', toggleActions: 'play none none none' }
+    });
+  });
+
+  // ========== 9. TESTIMONIALS ==========
+  gsap.from('.testimonial-hero-quote', {
+    opacity: 0, y: 40, duration: 0.8,
+    scrollTrigger: { trigger: '.testimonials-section', start: 'top 60%', toggleActions: 'play none none none' }
+  });
+
+  gsap.utils.toArray('.testimonial-card').forEach((card, i) => {
+    gsap.from(card, {
+      opacity: 0, y: 30, duration: 0.6, delay: i * 0.12,
+      scrollTrigger: { trigger: '.testimonial-cards', start: 'top 80%', toggleActions: 'play none none none' }
+    });
+  });
+
+  // ========== 10. FAQ ACCORDION ==========
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const answer = item.querySelector('.faq-answer');
+      const isOpen = item.classList.contains('open');
+
+      // Close all
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-answer').style.maxHeight = null;
+        i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+      });
+
+      // Open clicked if wasn't open
+      if (!isOpen) {
+        item.classList.add('open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // ========== 11. CTA ==========
+  gsap.from('.cta-section h2', {
+    opacity: 0, y: 40,
+    scrollTrigger: { trigger: '.cta-section', start: 'top 60%', toggleActions: 'play none none none' }
+  });
+
+  gsap.from('.cta-section p', {
+    opacity: 0, y: 30, delay: 0.1,
+    scrollTrigger: { trigger: '.cta-section', start: 'top 55%', toggleActions: 'play none none none' }
+  });
+
+  gsap.from('.cta-section .btn-primary', {
+    opacity: 0, y: 20, delay: 0.2,
+    scrollTrigger: { trigger: '.cta-section', start: 'top 50%', toggleActions: 'play none none none' }
+  });
+
+}); // end DOMContentLoaded
+</script>
+
+</body>
+</html>

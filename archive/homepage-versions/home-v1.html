@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Florian P. | Brand Therapist — Clarity That Makes You Impossible to Ignore</title>
+<meta name="description" content="Brand strategy for founders and the companies they lead. Florian Philippe helps you turn who you actually are into a sharp identity, clean position, and a voice people trust.">
+
+<!-- Fonts: Bricolage Grotesque (primary) + Inter (secondary) — locked, never change -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================
+   FP. DESIGN TOKENS
+   Source of truth: Visual System Notion page
+   ============================================ */
+:root {
+  /* Colors */
+  --brand-accent: #5A5CF9;    /* Electric Indigo / Blurple */
+  --dark-base: #1D1D1D;       /* Near-Black */
+  --light-base: #F6F6F6;      /* Off-White */
+  --pure-white: #FFFFFF;
+  --pure-black: #000000;
+  --mid-gray: #949494;
+
+  /* Typography */
+  --font-primary: 'Bricolage Grotesque', sans-serif;
+  --font-secondary: 'Inter', sans-serif;
+
+  /* Spacing */
+  --section-padding: clamp(80px, 10vw, 140px);
+  --container-max: 1200px;
+  --container-padding: clamp(20px, 5vw, 60px);
+
+  /* Purple edge detail: 3px line at bottom of dark sections */
+  --purple-edge: 3px;
+}
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-secondary);
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--pure-black);
+  background-color: var(--light-base);
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* ============================================
+   TYPOGRAPHY
+   Bricolage Grotesque: headlines
+   Inter: body, captions, UI
+   ============================================ */
+h1, h2, h3, h4 {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: clamp(2.8rem, 6vw, 5.5rem); }
+h2 { font-size: clamp(2rem, 4vw, 3.5rem); }
+h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
+
+p {
+  font-family: var(--font-secondary);
+  font-size: clamp(1rem, 1.1vw, 1.15rem);
+  line-height: 1.75;
+  max-width: 680px;
+}
+
+/* ============================================
+   LAYOUT
+   ============================================ */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+section {
+  padding: var(--section-padding) 0;
+}
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 20px 0;
+  background: rgba(246, 246, 246, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  transition: all 0.3s ease;
+}
+
+nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-family: var(--font-primary);
+  font-weight: 800;
+  font-size: 1.6rem;
+  letter-spacing: -0.03em;
+}
+
+.logo .dot { color: var(--brand-accent); }
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  align-items: center;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: var(--font-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--mid-gray);
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover { color: var(--pure-black); }
+
+/* ============================================
+   BUTTONS
+   Website: Sharp corners only. No pills, no border-radius.
+   Purple = reserved for single most important CTA per page.
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 16px 32px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+
+/* Primary: solid black */
+.btn-primary {
+  background: var(--pure-black);
+  color: var(--pure-white);
+}
+
+.btn-primary:hover {
+  background: #333;
+  transform: translateY(-1px);
+}
+
+/* Purple: ONLY for the single most important CTA */
+.btn-purple {
+  background: var(--brand-accent);
+  color: var(--pure-white);
+}
+
+.btn-purple:hover {
+  background: #4A4CE9;
+  transform: translateY(-1px);
+}
+
+/* Ghost: text + arrow */
+.btn-ghost {
+  background: transparent;
+  color: var(--pure-black);
+  padding: 16px 0;
+}
+
+.btn-ghost::after {
+  content: '→';
+  transition: transform 0.2s ease;
+}
+
+.btn-ghost:hover::after {
+  transform: translateX(4px);
+}
+
+/* On dark backgrounds */
+.btn-ghost-light {
+  background: transparent;
+  color: var(--pure-white);
+  padding: 16px 0;
+}
+
+.btn-ghost-light::after {
+  content: '→';
+  transition: transform 0.2s ease;
+}
+
+.btn-ghost-light:hover::after {
+  transform: translateX(4px);
+}
+
+/* Focus visible for accessibility (WCAG 2.4.7) */
+.btn:focus-visible {
+  outline: 3px solid var(--brand-accent);
+  outline-offset: 3px;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--brand-accent);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   SECTION 1: HERO
+   Mode B (light). Signature image large.
+   ============================================ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 100px;
+  background: var(--light-base);
+  overflow: hidden;
+}
+
+.hero .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+}
+
+.hero-content {
+  max-width: 560px;
+}
+
+.hero-label {
+  font-family: var(--font-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--brand-accent);
+  margin-bottom: 24px;
+}
+
+.hero h1 {
+  margin-bottom: 28px;
+}
+
+.hero h1 .accent {
+  color: var(--brand-accent);
+}
+
+.hero-body {
+  color: #555;
+  margin-bottom: 40px;
+}
+
+.hero-cta-group {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.hero-image {
+  position: relative;
+}
+
+.hero-image img {
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  object-position: center top;
+  filter: grayscale(100%);
+}
+
+/* Selective color reveal on the lens/eye — CSS approximation of the signature image treatment */
+.hero-image::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: transparent;
+}
+
+/* ============================================
+   MARQUEE — Scrolling tagline
+   Approved: March 2026 visual direction session
+   ============================================ */
+.marquee-section {
+  background: var(--pure-white);
+  padding: 32px 0;
+  overflow: hidden;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.marquee-track {
+  display: flex;
+  animation: marquee 30s linear infinite;
+  white-space: nowrap;
+}
+
+.marquee-track span {
+  font-family: var(--font-primary);
+  font-size: clamp(1.2rem, 2vw, 1.8rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(0,0,0,0.08);
+  padding: 0 60px;
+  flex-shrink: 0;
+}
+
+.marquee-track span .marquee-dot {
+  color: var(--brand-accent);
+  opacity: 0.3;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ============================================
+   SECTION 2: THE TENSION
+   DARK SECTION — emotional anchor
+   Grain texture + purple edge at bottom
+   ============================================ */
+.tension {
+  background: var(--dark-base);
+  color: var(--pure-white);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Grain texture: SVG feTurbulence at ~3-4% opacity — matte metal feel */
+.tension::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Purple edge: 3px line at bottom */
+.tension::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: var(--purple-edge);
+  background: var(--brand-accent);
+  z-index: 2;
+}
+
+.tension .container {
+  position: relative;
+  z-index: 3;
+  max-width: 800px;
+}
+
+.tension h2 {
+  margin-bottom: 40px;
+}
+
+.tension h2 .accent {
+  color: var(--brand-accent);
+}
+
+.tension p {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 24px;
+  max-width: 700px;
+}
+
+.tension p:last-of-type {
+  margin-bottom: 0;
+}
+
+.tension-highlight {
+  color: var(--pure-white) !important;
+  font-weight: 500;
+}
+
+/* ============================================
+   SECTION 3: BRAND THERAPY — THE METHOD
+   Mode B (light). Clean, tight.
+   ============================================ */
+.method {
+  background: var(--pure-white);
+}
+
+.method .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+}
+
+.method-content h2 {
+  margin-bottom: 28px;
+}
+
+.method-content p {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.method-edges {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 36px;
+}
+
+.edge-item {
+  padding: 20px;
+  border: 1.5px solid rgba(0,0,0,0.08);
+  transition: border-color 0.2s ease;
+}
+
+.edge-item:hover {
+  border-color: var(--brand-accent);
+}
+
+.edge-label {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brand-accent);
+  margin-bottom: 4px;
+}
+
+.edge-desc {
+  font-family: var(--font-secondary);
+  font-size: 0.85rem;
+  color: var(--mid-gray);
+  line-height: 1.5;
+}
+
+.method-image img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ============================================
+   SECTION 4: TESTIMONIALS
+   Mode B — off-white background
+   ============================================ */
+.testimonials {
+  background: var(--light-base);
+}
+
+.testimonials h2 {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.testimonial-card {
+  background: var(--pure-white);
+  padding: 40px 32px;
+  border: 1px solid rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.testimonial-quote {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 1.3rem;
+  line-height: 1.3;
+  color: var(--pure-black);
+}
+
+.testimonial-body {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.7;
+  flex: 1;
+}
+
+.testimonial-author {
+  font-family: var(--font-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--mid-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+/* ============================================
+   SECTION 5: TWO PATHS
+   Mode B — white background, two route cards
+   ============================================ */
+.paths {
+  background: var(--pure-white);
+}
+
+.paths-intro {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 64px;
+}
+
+.paths-intro h2 {
+  margin-bottom: 20px;
+}
+
+.paths-intro p {
+  margin: 0 auto;
+  color: #555;
+}
+
+.paths-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.path-card {
+  padding: 48px 40px;
+  border: 1.5px solid rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.path-card:hover {
+  border-color: var(--brand-accent);
+  transform: translateY(-4px);
+}
+
+.path-label {
+  font-family: var(--font-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--brand-accent);
+}
+
+.path-card h3 {
+  line-height: 1.2;
+}
+
+.path-tagline {
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--mid-gray);
+  font-style: italic;
+}
+
+.path-desc {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.7;
+  flex: 1;
+}
+
+.path-intersection {
+  text-align: center;
+  padding: 40px 0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.path-intersection p {
+  font-family: var(--font-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--mid-gray);
+  margin: 0 auto;
+}
+
+/* ============================================
+   SECTION 6: CTA
+   DARK SECTION — final conversion
+   Grain texture + purple edge at bottom
+   ============================================ */
+.cta-section {
+  background: var(--dark-base);
+  color: var(--pure-white);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Grain texture */
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Purple edge */
+.cta-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: var(--purple-edge);
+  background: var(--brand-accent);
+  z-index: 2;
+}
+
+.cta-section .container {
+  position: relative;
+  z-index: 3;
+  max-width: 700px;
+}
+
+.cta-section h2 {
+  margin-bottom: 24px;
+}
+
+.cta-section p {
+  color: rgba(255,255,255,0.7);
+  margin: 0 auto 40px;
+  text-align: center;
+}
+
+.cta-section .btn-purple {
+  font-size: 1.05rem;
+  padding: 20px 44px;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+footer {
+  background: var(--dark-base);
+  color: rgba(255,255,255,0.5);
+  padding: 40px 0;
+  font-family: var(--font-secondary);
+  font-size: 0.8rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+footer .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+footer .logo {
+  color: var(--pure-white);
+  font-size: 1.2rem;
+}
+
+footer a {
+  color: rgba(255,255,255,0.5);
+  transition: color 0.2s ease;
+}
+
+footer a:hover { color: var(--pure-white); }
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+
+/* ============================================
+   SCROLL ANIMATIONS
+   Approved: "Scroll-triggered reveal animations"
+   ============================================ */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   RESPONSIVE
+   Desktop-first, responsive down to mobile
+   ============================================ */
+@media (max-width: 1024px) {
+  .hero .container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .hero-content { max-width: 100%; }
+  .hero-cta-group { justify-content: center; }
+  .hero-image {
+    order: -1;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .method .container {
+    grid-template-columns: 1fr;
+  }
+  .method-image {
+    order: -1;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .testimonial-grid {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .paths-grid {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.6rem; }
+  .method-edges {
+    grid-template-columns: 1fr;
+  }
+  .path-card { padding: 32px 24px; }
+  .testimonial-card { padding: 28px 20px; }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   WCAG 2.1 AA compliance
+   ============================================ */
+/* Skip to content link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--brand-accent);
+  color: var(--pure-white);
+  padding: 8px 16px;
+  z-index: 200;
+  font-family: var(--font-secondary);
+  font-size: 0.9rem;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+  .fade-up { opacity: 1; transform: none; transition: none; }
+  * { transition-duration: 0.01ms !important; }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .testimonial-card { border-width: 2px; border-color: var(--pure-black); }
+  .path-card { border-width: 2px; border-color: var(--pure-black); }
+  .edge-item { border-width: 2px; border-color: var(--pure-black); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Skip to content: WCAG 2.4.1 -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- ============================================
+     NAVIGATION
+     ============================================ -->
+<nav role="navigation" aria-label="Main navigation">
+  <div class="container">
+    <a href="/" class="logo" aria-label="Florian P. homepage">FP<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="/the-story">The Story</a></li>
+      <li><a href="/for-founders-and-ceos">For Founders</a></li>
+      <li><a href="/founder-led-companies">For Companies</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="btn btn-primary" style="padding: 10px 24px; font-size: 0.85rem;">Book a Call</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============================================
+     SECTION 1: HERO
+     Mode B. Signature lens image. Both audiences.
+     ============================================ -->
+<main id="main-content">
+<section class="hero" aria-label="Introduction">
+  <div class="container">
+    <div class="hero-content fade-up">
+      <p class="hero-label">Brand Therapist</p>
+      <h1>Clarity That Makes You <span class="accent">Impossible</span> to Ignore.</h1>
+      <p class="hero-body">Brand strategy for the person behind the business... and the business they're building. For founders and executives who know their value and are ready to make the market see it.</p>
+      <div class="hero-cta-group">
+        <a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="btn btn-purple">Book Your Free Intro Call</a>
+        <a href="#paths" class="btn btn-ghost">See how it works</a>
+      </div>
+    </div>
+    <div class="hero-image fade-up">
+      <!-- THE signature image: florian-editorial-lens-bw
+           B&W close-up, glass square over one eye, eye in full color through glass.
+           This IS the brand concept made literal: clarity, seeing through, controlled revelation. -->
+      <img src="images/florian/web/florian-editorial-lens-bw.jpg"
+           alt="Florian Philippe holding a glass square over one eye, revealing clarity through the lens"
+           width="560" height="700"
+           loading="eager">
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     MARQUEE — Scrolling tagline
+     Approved in March 2026 visual direction session
+     ============================================ -->
+<div class="marquee-section" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Clarity That Makes You Impossible to Ignore <span class="marquee-dot">.</span></span>
+    <span>Brand Therapy <span class="marquee-dot">.</span></span>
+    <span>Positioning <span class="marquee-dot">.</span></span>
+    <span>Identity <span class="marquee-dot">.</span></span>
+    <span>Strategy <span class="marquee-dot">.</span></span>
+    <span>Clarity That Makes You Impossible to Ignore <span class="marquee-dot">.</span></span>
+    <span>Brand Therapy <span class="marquee-dot">.</span></span>
+    <span>Positioning <span class="marquee-dot">.</span></span>
+    <span>Identity <span class="marquee-dot">.</span></span>
+    <span>Strategy <span class="marquee-dot">.</span></span>
+  </div>
+</div>
+
+<!-- ============================================
+     SECTION 2: THE TENSION
+     DARK — emotional anchor. This earns "therapy."
+     Draws from: shadow work, Resonance Room,
+     "lack of permission" insight, Content Pillar 4
+     ============================================ -->
+<section class="tension" aria-label="The real problem">
+  <div class="container">
+    <h2 class="fade-up">You know your work is <span class="accent">good</span>.<br>So why does putting that into words feel so hard?</h2>
+
+    <p class="fade-up tension-highlight">It's not a marketing problem. It's a permission problem.</p>
+
+    <p class="fade-up">You keep tweaking instead of showing up. Perfecting the deck instead of making the call. Watching people with half your depth get twice your attention... and wondering what they know that you don't.</p>
+
+    <p class="fade-up">Here's what they know: it's not about being louder. It's about being clearer.</p>
+
+    <p class="fade-up">And clarity doesn't come from templates, AI tools, or another brand agency. It comes from someone asking you the questions you've been avoiding.</p>
+
+    <p class="fade-up tension-highlight" style="margin-top: 32px; font-family: var(--font-primary); font-size: 1.3rem; font-weight: 600; line-height: 1.4;">Strategy is the what. Mindset is the why it's hard.<br>Brand Therapy addresses both.</p>
+  </div>
+</section>
+
+<!-- ============================================
+     SECTION 3: BRAND THERAPY — THE METHOD
+     Mode B (light). Tight, sharp.
+     ============================================ -->
+<section class="method" aria-label="Brand Therapy methodology">
+  <div class="container">
+    <div class="method-content">
+      <h2 class="fade-up">Brand Therapy</h2>
+      <p class="fade-up">A diagnostic-first clarity process. Not a rebrand. Not a content plan. A structured conversation that gets to the root of what makes you... you.</p>
+      <p class="fade-up">Built around the Focus Star framework, it maps five dimensions to find the position that's already yours. You just haven't said it out loud yet.</p>
+
+      <div class="method-edges fade-up">
+        <div class="edge-item">
+          <div class="edge-label">Audience</div>
+          <div class="edge-desc">Not everyone. The specific people who need what only you offer.</div>
+        </div>
+        <div class="edge-item">
+          <div class="edge-label">Purpose</div>
+          <div class="edge-desc">Why you do this work. What drives you beneath the title.</div>
+        </div>
+        <div class="edge-item">
+          <div class="edge-label">DNA</div>
+          <div class="edge-desc">Your non-negotiables. How you operate and what you refuse to compromise.</div>
+        </div>
+        <div class="edge-item">
+          <div class="edge-label">Personality</div>
+          <div class="edge-desc">How you sound and show up. Your archetype and communication style.</div>
+        </div>
+        <div class="edge-item" style="grid-column: span 2;">
+          <div class="edge-label">Offering</div>
+          <div class="edge-desc">The category you own, the problem you solve, the transformation you deliver.</div>
+        </div>
+      </div>
+    </div>
+    <div class="method-image fade-up">
+      <img src="images/florian/web/florian-consulting-session-mountain.jpg"
+           alt="Florian Philippe in a consulting session, seated near a window with mountain view"
+           width="560" height="740"
+           loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     SECTION 4: TESTIMONIALS
+     Mode B — light background
+     ============================================ -->
+<section class="testimonials" aria-label="Client testimonials">
+  <div class="container">
+    <h2 class="fade-up">What people say</h2>
+    <div class="testimonial-grid">
+
+      <article class="testimonial-card fade-up">
+        <p class="testimonial-quote">"He's a fucking unicorn"</p>
+        <p class="testimonial-body">Florian is far and away the most skilled Marketing and Branding executive I have come across. He's super smart, imaginative, incredibly creative, and yet he brings the technical expertise and the project management expertise in equal measure.</p>
+        <p class="testimonial-author">Jon Tull — Managing Partner, Cachet</p>
+      </article>
+
+      <article class="testimonial-card fade-up">
+        <p class="testimonial-quote">"Every detail he touches is intentional"</p>
+        <p class="testimonial-body">Florian brings a rare combination of vision and execution. He sees the big picture with a high-level, strategic perspective, yet he's equally skilled at rolling up his sleeves to deliver results on the ground.</p>
+        <p class="testimonial-author">Kevin Meredith — Founder, 4th Sector Innovations</p>
+      </article>
+
+      <article class="testimonial-card fade-up">
+        <p class="testimonial-quote">"His guidance has been genuinely invaluable"</p>
+        <p class="testimonial-body">His feedback goes far beyond surface-level reactions. He consistently brings thoughtful, structured insight that pushes the work toward clarity, coherence, and stronger decision-making.</p>
+        <p class="testimonial-author">Sam Goldman — Tech Founder</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     SECTION 5: TWO PATHS
+     Mode B — white. Route visitors to right page.
+     ============================================ -->
+<section class="paths" id="paths" aria-label="Services">
+  <div class="container">
+    <div class="paths-intro fade-up">
+      <h2>Two ways to work together</h2>
+      <p>Most people do one or the other. The real leverage is understanding how personal brand and company brand reinforce each other.</p>
+    </div>
+
+    <div class="paths-grid">
+      <a href="/for-founders-and-ceos" class="path-card fade-up" aria-label="Brand Therapy for Founders and CEOs">
+        <p class="path-label">Personal Brand Strategy</p>
+        <h3>For Founders &amp; CEOs</h3>
+        <p class="path-tagline">Your brand. Your voice. Your visibility.</p>
+        <p class="path-desc">A guided clarity process that turns who you actually are into a sharp identity, a clean position, and a voice the right people recognize. Built around the Focus Star framework. Delivered in 2 weeks.</p>
+        <span class="btn btn-ghost">Learn more</span>
+      </a>
+
+      <a href="/founder-led-companies" class="path-card fade-up" aria-label="Brand Strategy for Founder-Led Companies">
+        <p class="path-label">Company Brand Strategy</p>
+        <h3>For Founder-Led Companies</h3>
+        <p class="path-tagline">Your company's brand. Built to scale.</p>
+        <p class="path-desc">Full brand strategy, positioning, and identity for companies where the founder's vision is the competitive advantage. From diagnostic to deliverable. Strategy that your team can execute from.</p>
+        <span class="btn btn-ghost">Learn more</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     SECTION 6: CTA
+     DARK — final conversion.
+     Grain texture + purple edge.
+     ============================================ -->
+<section class="cta-section" aria-label="Book a call">
+  <div class="container">
+    <h2 class="fade-up">Your next real brand conversation is free.</h2>
+    <p class="fade-up">No deck. No pitch. Just 20 minutes to find out if the problem you're sitting on has a sharper answer than you think.</p>
+    <a href="https://app.reclaim.ai/m/brand-therapy/brand-therapy-intro" class="btn btn-purple fade-up">Book Your Intro Call</a>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================
+     FOOTER
+     ============================================ -->
+<footer role="contentinfo">
+  <div class="container">
+    <div>
+      <a href="/" class="logo">FP<span class="dot">.</span></a>
+      <p style="margin-top: 8px;">Brand Therapist</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="mailto:connect@florianp.com">connect@florianp.com</a></li>
+      <li><a href="/the-story">The Story</a></li>
+      <li><a href="/blog">Blog</a></li>
+    </ul>
+    <p>Beverly Hills, CA</p>
+  </div>
+</footer>
+
+<!-- ============================================
+     SCROLL ANIMATION SCRIPT
+     Intersection Observer for fade-up reveals
+     ============================================ -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Respect reduced motion preference
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+});
+</script>
+
+</body>
+</html>

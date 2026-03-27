@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spectrum Slider — Visual Focus</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      background: #F6F6F6;
+      color: #1D1D1D;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .canvas {
+      max-width: 1080px;
+      width: 100%;
+      background: #FFFFFF;
+      border-radius: 16px;
+      padding: 48px 24px 40px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03), 0 8px 30px rgba(0,0,0,0.04);
+    }
+
+    /* ============================================
+       FLOATING ANIMATIONS
+       Very slow, wide drift. 12-15s cycles.
+       Smooth and ambient — not attention-grabbing.
+       ============================================ */
+    @keyframes driftA {
+      0%   { transform: translate(0, 0); }
+      20%  { transform: translate(14px, -5px); }
+      40%  { transform: translate(-10px, -9px); }
+      60%  { transform: translate(12px, -4px); }
+      80%  { transform: translate(-8px, -7px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    @keyframes driftB {
+      0%   { transform: translate(0, 0); }
+      15%  { transform: translate(-12px, -6px); }
+      35%  { transform: translate(14px, -3px); }
+      55%  { transform: translate(-10px, -8px); }
+      75%  { transform: translate(12px, -5px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    /* Meta: very subtle — mostly vertical hover,
+       minimal horizontal so it stays beside Zuck */
+    @keyframes driftC {
+      0%   { transform: translate(0, 0); }
+      25%  { transform: translate(3px, -7px); }
+      50%  { transform: translate(-2px, -3px); }
+      75%  { transform: translate(4px, -8px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    /* Gary Vee: wider horizontal drift so logo peeks
+       out from both sides of his head/shoulders */
+    @keyframes driftD {
+      0%   { transform: translate(0, 0); }
+      15%  { transform: translate(-30px, -6px); }
+      35%  { transform: translate(32px, -3px); }
+      55%  { transform: translate(-28px, -8px); }
+      75%  { transform: translate(34px, -5px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    /* ---- PANORAMA ROW ---- */
+    .panorama {
+      display: flex;
+      gap: 0;
+      margin-bottom: 28px;
+    }
+
+    .p-col {
+      flex: 1;
+      cursor: pointer;
+      padding: 12px 6px 14px;
+      border-radius: 12px;
+      transition: background 0.35s ease, box-shadow 0.35s ease;
+      text-align: center;
+    }
+
+    .p-col:hover {
+      background: rgba(246, 246, 246, 0.5);
+    }
+
+    .p-col.active {
+      background: rgba(90, 92, 249, 0.03);
+      box-shadow: 0 0 0 1px rgba(90, 92, 249, 0.08);
+    }
+
+    /* ---- VISUAL COMPOSITION ---- */
+    .p-visual {
+      width: 100%;
+      height: 260px;
+      position: relative;
+      margin-bottom: 12px;
+      overflow: visible;
+    }
+
+    /* Person — ALL SAME SIZE, ALWAYS FULL OPACITY */
+    .p-person {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 190px;
+      display: block;
+      object-fit: contain;
+      filter: grayscale(1);
+      transition: filter 0.6s ease;
+    }
+
+    .p-col.active .p-person {
+      filter: grayscale(0);
+    }
+
+    .p-col:hover .p-person {
+      filter: grayscale(0.4);
+    }
+
+    .p-col.active:hover .p-person {
+      filter: grayscale(0);
+    }
+
+    /* Logo badge — ALL SAME SIZE frame
+       Reduced padding so logos fill the frame better.
+       Logos have whitespace in their PNGs, so we give
+       the img more room to compensate. */
+    .p-badge {
+      position: absolute;
+      width: 88px;
+      height: 88px;
+      background: rgba(255, 255, 255, 0.97);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 14px rgba(0,0,0,0.06), 0 10px 28px rgba(0,0,0,0.03);
+      filter: grayscale(1);
+      opacity: 0.55;
+      transition: filter 0.6s ease, opacity 0.6s ease, box-shadow 0.6s ease;
+      /* Animation paused by default — only runs on active */
+      animation-play-state: paused;
+    }
+
+    .p-col.active .p-badge {
+      filter: grayscale(0);
+      opacity: 1;
+      box-shadow: 0 2px 6px rgba(90,92,249,0.06), 0 8px 20px rgba(90,92,249,0.1), 0 14px 36px rgba(90,92,249,0.05);
+      animation-play-state: running;
+    }
+
+    .p-col:hover .p-badge {
+      filter: grayscale(0.4);
+      opacity: 0.75;
+    }
+
+    .p-col.active:hover .p-badge {
+      filter: grayscale(0);
+      opacity: 1;
+    }
+
+    /* Default img: fill the badge generously */
+    .p-badge img {
+      display: block;
+      max-width: 80px;
+      max-height: 80px;
+      object-fit: contain;
+    }
+
+    /* Very slow animation classes — 12-15s per cycle
+       Using longhand properties so they don't override
+       animation-play-state set on .p-badge */
+    .drift-a { animation-name: driftA; animation-duration: 22s; animation-timing-function: linear; animation-iteration-count: infinite; }
+    .drift-b { animation-name: driftB; animation-duration: 26s; animation-timing-function: linear; animation-iteration-count: infinite; }
+    .drift-c { animation-name: driftC; animation-duration: 24s; animation-timing-function: linear; animation-iteration-count: infinite; }
+    .drift-d { animation-name: driftD; animation-duration: 24s; animation-timing-function: linear; animation-iteration-count: infinite; }
+
+    /* ---- LABELS ---- */
+    .p-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #949494;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+      margin-bottom: 2px;
+      transition: color 0.35s ease;
+    }
+
+    .p-col.active .p-label { color: #5A5CF9; }
+    .p-col:hover .p-label { color: #6B6B6B; }
+    .p-col.active:hover .p-label { color: #5A5CF9; }
+
+    .p-example {
+      font-size: 10px;
+      color: #B8B8B8;
+      font-weight: 500;
+      transition: color 0.35s ease;
+    }
+
+    .p-col.active .p-example { color: #949494; }
+
+    /* ---- SPECTRUM BAR ---- */
+    .s-bar {
+      padding: 0 9.5%;
+    }
+
+    .s-bar-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .s-bar-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #949494;
+    }
+
+    .s-bar-track {
+      height: 2px;
+      background: #E8E8E8;
+      border-radius: 99px;
+      position: relative;
+    }
+
+    .s-bar-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #5A5CF9, #8B8DFF);
+      border-radius: 99px;
+      transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .s-nodes {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .s-node {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 2px solid #E8E8E8;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .s-node.passed {
+      background: #5A5CF9;
+      border-color: #5A5CF9;
+    }
+
+    .s-node.active {
+      width: 14px;
+      height: 14px;
+      background: #5A5CF9;
+      border-color: #5A5CF9;
+      margin-top: -2px;
+      box-shadow: 0 0 0 4px rgba(90,92,249,0.15), 0 2px 8px rgba(90,92,249,0.25);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="canvas">
+
+    <div class="panorama" id="panorama">
+
+      <!-- ============================================
+           POSITION 1: Pure Company Brand (Shein)
+           Logo: FRONT + CENTER, right in front of
+           the anonymous person. Logo dominates.
+           ============================================ -->
+      <div class="p-col" data-pos="0">
+        <div class="p-visual">
+          <img class="p-person" src="Anonymous.png" alt=""
+               style="z-index: 1;">
+          <!-- Logo centered on the person, z-index in front -->
+          <div class="p-badge drift-a"
+               style="top: 50%; left: 50%; margin-top: -44px; margin-left: -44px; z-index: 5;">
+            <img src="Shein.png" alt="Shein" style="max-width: 82px;">
+          </div>
+        </div>
+        <div class="p-label">Company<br>Only</div>
+        <div class="p-example">Shein</div>
+      </div>
+
+      <!-- ============================================
+           POSITION 2: Company-Led (BoA / Moynihan)
+           Logo: FRONT at CHEST level — overtakes him
+           but NEVER covers his face.
+           Brian's face stays clear above the badge.
+           ============================================ -->
+      <div class="p-col" data-pos="1">
+        <div class="p-visual">
+          <img class="p-person" src="Brian Moynihan.png" alt="Brian Moynihan"
+               style="z-index: 1;">
+          <!-- Badge at chest level, centered, in front -->
+          <div class="p-badge drift-b"
+               style="bottom: 22px; left: 50%; margin-left: -44px; z-index: 5;">
+            <img src="BoA.png" alt="Bank of America" style="max-width: 82px; max-height: 82px;">
+          </div>
+        </div>
+        <div class="p-label">Corporate<br>Spokesperson</div>
+        <div class="p-example">BoA / Brian Moynihan</div>
+      </div>
+
+      <!-- ============================================
+           POSITION 3: Paired Brands (Meta / Zuckerberg)
+           Logo: TRUE SIDE BY SIDE — Zuck shifted left,
+           Meta at his right at the same head height.
+           Neither in front nor behind. Equals.
+           ============================================ -->
+      <div class="p-col active" data-pos="2">
+        <div class="p-visual">
+          <img class="p-person" src="Mark Zuckerberg.png" alt="Mark Zuckerberg"
+               style="z-index: 2; transform: translateX(-72%);">
+          <!-- Badge beside him, same height as his head — true equals -->
+          <div class="p-badge drift-c"
+               style="top: 28%; right: 0px; z-index: 2;">
+            <img src="Meta.png" alt="Meta">
+          </div>
+        </div>
+        <div class="p-label">Paired<br>Brands</div>
+        <div class="p-example">Meta / Mark Zuckerberg</div>
+      </div>
+
+      <!-- ============================================
+           POSITION 4: Founder-Led (Tesla / Elon)
+           Logo: BEHIND person at shoulder level.
+           Elon is in front. Logo drifts and peeks
+           out from behind his shoulder.
+           ============================================ -->
+      <div class="p-col" data-pos="3">
+        <div class="p-visual">
+          <img class="p-person" src="Elon Musk.png" alt="Elon Musk"
+               style="z-index: 5;">
+          <!-- Badge behind Elon, near right shoulder -->
+          <div class="p-badge drift-a"
+               style="top: 38%; right: 6px; z-index: 1;">
+            <img src="Tesla.png" alt="Tesla">
+          </div>
+        </div>
+        <div class="p-label">Founder-<br>Led</div>
+        <div class="p-example">Tesla / Elon Musk</div>
+      </div>
+
+      <!-- ============================================
+           POSITION 5: Founder IS the Brand (Gary Vee)
+           Logo: BEHIND person's head — mostly hidden.
+           Centered behind head/shoulders so the person
+           fully blocks it. Drift makes it barely peek.
+           ============================================ -->
+      <div class="p-col" data-pos="4">
+        <div class="p-visual">
+          <img class="p-person" src="Gary Vee.png" alt="Gary Vaynerchuk"
+               style="z-index: 5;">
+          <!-- Badge behind his head/shoulders, lower than before -->
+          <div class="p-badge drift-d"
+               style="top: 34%; left: 50%; margin-left: -14px; z-index: 1;">
+            <img src="Unknown Company.png" alt="" style="max-width: 76px; max-height: 76px;">
+          </div>
+        </div>
+        <div class="p-label">Founder IS<br>the Brand</div>
+        <div class="p-example">Gary Vaynerchuk</div>
+      </div>
+
+    </div>
+
+    <!-- Spectrum Bar -->
+    <div class="s-bar" id="spectrumBar">
+      <div class="s-bar-labels">
+        <span class="s-bar-label">Company Brand</span>
+        <span class="s-bar-label">Personal Brand</span>
+      </div>
+      <div class="s-bar-track">
+        <div class="s-bar-fill" id="barFill" style="width: 50%;"></div>
+        <div class="s-nodes" id="barNodes">
+          <div class="s-node passed" data-node="0"></div>
+          <div class="s-node passed" data-node="1"></div>
+          <div class="s-node active" data-node="2"></div>
+          <div class="s-node" data-node="3"></div>
+          <div class="s-node" data-node="4"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    var cols = document.querySelectorAll('#panorama .p-col');
+    var nodes = document.querySelectorAll('.s-node');
+    var barFill = document.getElementById('barFill');
+
+    function setActive(idx) {
+      cols.forEach(function(c) { c.classList.remove('active'); });
+      cols[idx].classList.add('active');
+
+      var pct = (idx / 4) * 100;
+      barFill.style.width = pct + '%';
+
+      nodes.forEach(function(n, i) {
+        n.classList.remove('active', 'passed');
+        if (i < idx) n.classList.add('passed');
+        if (i === idx) n.classList.add('active');
+      });
+    }
+
+    cols.forEach(function(col) {
+      col.addEventListener('click', function() {
+        setActive(parseInt(col.dataset.pos));
+      });
+    });
+
+    nodes.forEach(function(node) {
+      node.addEventListener('click', function() {
+        setActive(parseInt(node.dataset.node));
+      });
+    });
+  </script>
+
+</body>
+</html>
