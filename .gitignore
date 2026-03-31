@@ -45,5 +45,15 @@ temporary/
 brand-assets/fp-brand-moodboard.html
 brand-assets/fp-design-skills-architecture.docx
 
+# Design experiment HTML files (local working files, not for git)
+color-system.html
+composition-hierarchy.html
+grain-test.html
+motion-interaction.html
+proportions-compare.html
+seo-technical.html
+typography-system.html
+brand-assets/fp-direction-editorial-presence.html
+
 # PDFs (client deliverables)
 brand-assets/**/*.pdf
