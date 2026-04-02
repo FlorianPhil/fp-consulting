@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FP. Creative Direction — Inspiration Feedback Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --purple: #5A5CF9; --dark: #1D1D1D; --light: #F6F6F6; --gray: #949494; }
+  body { font-family: 'Inter', sans-serif; background: #fff; color: #1D1D1D; line-height: 1.6; }
+
+  header {
+    background: var(--dark);
+    color: white;
+    padding: 64px 48px;
+  }
+  header h1 {
+    font-family: 'Bricolage Grotesque', serif;
+    font-weight: 800;
+    font-size: clamp(32px, 5vw, 56px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+  header h1 span { color: var(--purple); }
+  header p { font-size: 14px; color: rgba(255,255,255,0.5); max-width: 600px; line-height: 1.7; }
+  header .meta { margin-top: 24px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
+
+  .vision {
+    padding: 64px 48px;
+    background: var(--light);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .vision h2 {
+    font-family: 'Bricolage Grotesque', serif;
+    font-weight: 800;
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+  .vision p { font-size: 15px; color: #555; max-width: 700px; line-height: 1.8; margin-bottom: 12px; }
+  .vision strong { color: var(--dark); }
+
+  .tier-header {
+    padding: 48px 48px 24px;
+    border-top: 3px solid var(--purple);
+  }
+  .tier-header h2 {
+    font-family: 'Bricolage Grotesque', serif;
+    font-weight: 800;
+    font-size: 32px;
+    letter-spacing: -0.02em;
+  }
+  .tier-header p { font-size: 13px; color: var(--gray); margin-top: 8px; }
+
+  .group {
+    padding: 32px 48px 48px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .group h3 {
+    font-family: 'Bricolage Grotesque', serif;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: var(--purple);
+  }
+  .group .group-desc {
+    font-size: 13px;
+    color: var(--gray);
+    margin-bottom: 24px;
+  }
+
+  .card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: start;
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+  .card:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .card .info { padding-top: 8px; }
+  .card .filename {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 8px;
+    word-break: break-all;
+  }
+  .card .source {
+    font-size: 12px;
+    color: var(--gray);
+    margin-bottom: 12px;
+  }
+  .card .feedback {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #333;
+  }
+  .card .feedback strong { color: var(--dark); }
+  .card .takeaway {
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: rgba(90,92,249,0.05);
+    font-size: 13px;
+    line-height: 1.6;
+    color: #444;
+  }
+  .card .takeaway::before {
+    content: 'TAKEAWAY';
+    display: block;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--purple);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .urls {
+    padding: 32px 48px;
+    background: var(--light);
+  }
+  .urls h3 {
+    font-family: 'Bricolage Grotesque', serif;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+  .urls a {
+    display: block;
+    font-size: 14px;
+    color: var(--purple);
+    margin-bottom: 8px;
+    text-decoration: none;
+  }
+
+  footer {
+    background: var(--dark);
+    padding: 32px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer .logo {
+    font-family: 'Bricolage Grotesque', serif;
+    font-weight: 800;
+    font-size: 20px;
+    color: white;
+  }
+  footer .logo span { color: var(--purple); }
+  footer .copy { font-size: 11px; color: var(--gray); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Inspiration <span>Feedback</span> Reference</h1>
+  <p>38 screenshots analyzed, tiered, and annotated with Florian's feedback. This is the source of truth for what resonates and why. Session: March 28-30, 2026.</p>
+  <div class="meta">Editorial Presence + Clarity Lens / Creative Direction</div>
+</header>
+
+<!-- VISION SUMMARY -->
+<section class="vision">
+  <h2>The Vision (Summary)</h2>
+  <p><strong>Core concept:</strong> "Clarity as a visual experience." The visual language should feel like the Brand Therapy process itself: things coming into focus, being uncovered, seen through a lens for the first time.</p>
+  <p><strong>Magazine cover metaphor:</strong> The brand presents Florian the way a magazine presents its cover subject. The subconscious message: Brand Therapy helps brands become "front page worthy." Big title, subject cutout, metadata at corners like a masthead.</p>
+  <p><strong>Dark-to-light narrative:</strong> Homepage starts dark (confusion) and transitions to light (clarity). This IS the Brand Therapy promise. Not a dark website. A clarity journey. Transition happens fast.</p>
+  <p><strong>Glass/lens metaphor:</strong> Not a trend. Connects to the lens photo, the prism concept, the idea of seeing clearly for the first time. Shows up as text being "uncovered" on scroll, subtle glass panels, the feeling that clarity is being applied in real time.</p>
+  <p><strong>Purple as ultraviolet:</strong> Part of the light spectrum. Not just a brand color but part of the visual story about light and seeing.</p>
+  <p><strong>The goal:</strong> "I want people to share my website just because of how cool it looks. Not even because of the content, but because of how impressive it is."</p>
+</section>
+
+<!-- REFERENCE URLS -->
+<section class="urls">
+  <h3>Reference URLs</h3>
+  <a href="https://bogdankolomiyets.com/">bogdankolomiyets.com</a>
+  <a href="https://tempo.xyz/">tempo.xyz</a>
+  <a href="https://sachith-tharinda-2026.webflow.io/">sachith-tharinda-2026.webflow.io</a>
+  <a href="https://valentincheval.design/">valentincheval.design</a>
+  <a href="https://niore.framer.website/">niore.framer.website</a>
+  <a href="https://portavia.framer.website/">portavia.framer.website</a>
+  <a href="https://luzia.framer.website/">luzia.framer.website</a>
+  <a href="https://integratedbiosciences.com/">integratedbiosciences.com (text reveal)</a>
+  <a href="https://www.therawmaterials.com/work">therawmaterials.com (Lottie logo animation)</a>
+  <a href="https://www.wakawaka.world/">wakawaka.world (magazine zoom concept)</a>
+</section>
+
+<!-- ============ T1: CORE DIRECTION ============ -->
+<div class="tier-header">
+  <h2>T1: Core Direction</h2>
+  <p>9 screenshots. These define where the brand is going.</p>
+</div>
+
+<!-- T1 GROUP: Magazine Cover / Type + Portrait Integration -->
+<section class="group">
+  <h3>Magazine Cover Structure: Type + Portrait Integration</h3>
+  <div class="group-desc">The consistent thread: massive name, cutout subject interacting with text, metadata at edges.</div>
+
+  <div class="card">
+    <img src="T1-johnson-gill-harley-davidson-poster-oversized-type-photography.png" alt="">
+    <div class="info">
+      <div class="filename">T1-johnson-gill-harley-davidson-poster</div>
+      <div class="source">Johnson Gill / Lark Creatives</div>
+      <div class="feedback">
+        The magazine feel comes from the <strong>big title in the middle</strong> plus the <strong>three titles at top</strong> that you don't even need to read. It's almost like a movie poster. Likes the <strong>cutout of the subject</strong> with text behind it that you can still read. Also likes one word in a <strong>different color</strong>, especially when animated.
+      </div>
+      <div class="takeaway">Magazine feel = big title + small masthead metadata at top/bottom + cutout subject. One accent-colored word in the headline. The structure creates the editorial authority, not the content.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T1-bogdan-hero-oversized-type-portrait-integration-warm-gradient.png" alt="">
+    <div class="info">
+      <div class="filename">T1-bogdan-hero</div>
+      <div class="source">bogdankolomiyets.com</div>
+      <div class="feedback">
+        Likes the <strong>cutout of the subject</strong> with text in the back. The same principle as Johnson Gill but as a website hero. Considering whether to use gradient or flat. Leaning flat but open to gradients that connect to the glass/light metaphor.
+      </div>
+      <div class="takeaway">Cutout portrait with type wrapping around the body. Gradient consideration: flat is the default, but gradient is acceptable if it serves the lens/light metaphor (not just decoration).</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T1-arock-massive-name-portrait-dark-creator-curator.png" alt="">
+    <div class="info">
+      <div class="filename">T1-arock</div>
+      <div class="source">AROCK portfolio</div>
+      <div class="feedback">
+        The subject is <strong>behind the text</strong>, which changes the dynamic. Likes the really big title + subject combination. The background is <strong>subtle and refined</strong>. Wondering whether to go completely solid background or with a little texture.
+      </div>
+      <div class="takeaway">Subject BEHIND text creates depth. AROCK's background is the reference for subtlety: not flat black, not heavy gradient, just barely there. Portrait behind text = less "look at me" and more editorial.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T1-richard-william-purple-gradient-massive-name-portrait.png" alt="">
+    <div class="info">
+      <div class="filename">T1-richard-william</div>
+      <div class="source">richard.design</div>
+      <div class="feedback">
+        Likes the idea of the <strong>lens or glass behind the subject</strong> that covers the title. Maybe a different layer order could work. The <strong>background is interesting</strong>: not flat, has depth. The glass effect <strong>emphasizes the background</strong>.
+      </div>
+      <div class="takeaway">Glass/lens panel behind the portrait creates a depth layer. This is the closest to the FP palette (purple gradient). The glass effect is a design element, not just a filter. Background treatment matters: depth without being heavy.</div>
+    </div>
+  </div>
+</section>
+
+<!-- T1 GROUP: Dark Hero / Editorial Presence -->
+<section class="group">
+  <h3>Dark Hero: Editorial Authority</h3>
+  <div class="group-desc">Dark backgrounds with warm or focused accents. The feeling of editorial control and drama.</div>
+
+  <div class="card">
+    <img src="T1-cheval-contact-massive-portrait-warm-gradient-editorial.png" alt="">
+    <div class="info">
+      <div class="filename">T1-cheval-contact</div>
+      <div class="source">valentincheval.design</div>
+      <div class="feedback">
+        Likes the subject and how text scrolls next to the portrait and the portrait moves around. <strong>Does NOT like the arrogant posture</strong>. This is the anti-reference for tone: editorial presence without ego. Acknowledged the imposter syndrome of using his own image at this scale but recognizes it's literally what he helps others do.
+      </div>
+      <div class="takeaway">The animation and scroll interaction is excellent. The posture/tone is the anti-reference: editorial, NOT arrogant. The imposter syndrome is real but the irony is the point. The design IS the proof of concept for what Brand Therapy delivers.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T1-cheval-dark-hero-massive-name-portrait-orange-accent.png" alt="">
+    <div class="info">
+      <div class="filename">T1-cheval-dark-hero</div>
+      <div class="source">valentincheval.design</div>
+      <div class="feedback">
+        Likes the composition: text is readable quickly. Name stands out in different color. <strong>Lots of white space</strong>. Big headers that <strong>change color as you scroll</strong>. The design always tells you what to look at. Works well on dark but "don't know if that would apply to us."
+      </div>
+      <div class="takeaway">Color-change on scroll is a keeper. The design guides attention (you never have to figure out where to look). White space is critical. Dark works for the hero moment but not as the whole site.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T1-cheval-services-list-expandable-orange-highlight-dark.png" alt="">
+    <div class="info">
+      <div class="filename">T1-cheval-services-list</div>
+      <div class="source">valentincheval.design</div>
+      <div class="feedback">
+        (Reviewed as part of the Cheval site analysis. The expandable service list with active item highlighted in accent color was called out as a component pattern to adopt.)
+      </div>
+      <div class="takeaway">Numbered expandable service list. Active item in accent color with description expanded. Simple, clean, guides attention to one service at a time.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T1-colt-gibson-dark-dramatic-gold-accent-massive-serif-name.png" alt="">
+    <div class="info">
+      <div class="filename">T1-colt-gibson</div>
+      <div class="source">Colt Gibson (Framer)</div>
+      <div class="feedback">
+        "Not as cool" on second look. But likes the <strong>dot, the little color dot</strong>, same way FP uses the purple dot on the logo.
+      </div>
+      <div class="takeaway">The colored period/dot as a signature detail is confirmed. The overall template energy is less interesting than the specific dot detail.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T1-michael-carter-oversized-portrait-clean-white.png" alt="">
+    <div class="info">
+      <div class="filename">T1-michael-carter</div>
+      <div class="source">Michael Carter (Framer)</div>
+      <div class="feedback">
+        Likes the composition: <strong>name top-left, menu middle, CTA top-right</strong>. Goes along with the magazine feel. But the CTA <strong>should NOT be a button</strong> on the top right because it would break the magazine feel. Likes the gradient/opacity glass feel at the bottom. "Would feel too imposter syndrome if it was just my face like that, but I need to get over this."
+      </div>
+      <div class="takeaway">Nav structure: logo left, links center, text CTA right (no button). The face-forward approach is the direction but needs editorial framing to feel earned. Glass/opacity at bottom edges is a nice touch.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ T2: USEFUL ELEMENTS ============ -->
+<div class="tier-header">
+  <h2>T2: Useful Elements</h2>
+  <p>20 screenshots. Specific components, treatments, and patterns to extract.</p>
+</div>
+
+<!-- T2 GROUP: Text + Copy Treatments -->
+<section class="group">
+  <h3>Text + Copy Treatments</h3>
+  <div class="group-desc">How text is displayed, revealed, and animated.</div>
+
+  <div class="card">
+    <img src="T2-bogdan-what-i-do-clean-large-type-video-embed.png" alt="">
+    <div class="info">
+      <div class="filename">T2-bogdan-what-i-do</div>
+      <div class="source">bogdankolomiyets.com</div>
+      <div class="feedback">
+        Likes how the <strong>video displays</strong> (reference for embedding video on site). The bold title + sub-text structure. Most importantly: <strong>don't ask the user to look at many things at the same time</strong>. There's a story, a flow. Very simple, to the point.
+      </div>
+      <div class="takeaway">Video embed reference. One focal point at a time. Guided flow, not competing elements.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T2-bogdan-handwritten-bold-type-mix-system-statement.png" alt="">
+    <div class="info">
+      <div class="filename">T2-bogdan-handwritten-bold</div>
+      <div class="source">bogdankolomiyets.com</div>
+      <div class="feedback">
+        (No specific feedback. Captured for the type contrast treatment.)
+      </div>
+      <div class="takeaway">Handwritten + bold type contrast. Florian said he might not want a different font for himself, but the principle of one word standing out (via color, not font) is confirmed.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T2-integrated-bio-text-reveal-animation-blocks.png" alt="">
+    <div class="info">
+      <div class="filename">T2-integrated-bio-text-reveal</div>
+      <div class="source">integratedbiosciences.com</div>
+      <div class="feedback">
+        This is a <strong>key reference</strong>. The text being <strong>uncovered as you scroll</strong> is a metaphor for clarity. "We shouldn't do it for every text, but the big headers like this, it makes sense." Wants to <strong>pair it with glassmorphism</strong>: "It's how clarity happens. It's a metaphor for uncovering clarity."
+      </div>
+      <div class="takeaway">Text reveal on scroll = the central interaction metaphor. Glass blocks covering text that slide away. Use for hero statements and key messages only, not body text. The reveal IS Brand Therapy made visual.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T2-experimental-typography-layered-red-white-design-services.png" alt="">
+    <div class="info">
+      <div class="filename">T2-experimental-typography</div>
+      <div class="source">Unknown designer portfolio</div>
+      <div class="feedback">
+        "Maybe too artistic. But something with how I like big copies." Not as strong as other references.
+      </div>
+      <div class="takeaway">Low priority. The oversized type principle is captured better in the T1 references.</div>
+    </div>
+  </div>
+</section>
+
+<!-- T2 GROUP: Layout + Structure Patterns -->
+<section class="group">
+  <h3>Layout + Structure Patterns</h3>
+  <div class="group-desc">Section layouts, grids, and structural approaches worth extracting.</div>
+
+  <div class="card">
+    <img src="T2-tempo-dark-numbered-columns-hover-reveal.png" alt="">
+    <div class="info">
+      <div class="filename">T2-tempo-numbered-columns</div>
+      <div class="source">tempo.xyz</div>
+      <div class="feedback">
+        Likes the <strong>animation and hover interaction</strong>. Could be interesting for the process section. "Maybe a bit too dark, but just sharing."
+      </div>
+      <div class="takeaway">Numbered columns with hover-reveal for process/values. The interaction pattern is useful, not the dark treatment specifically.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T2-tempo-numbered-list-clean-layout-wireframe-illustration.png" alt="">
+    <div class="info">
+      <div class="filename">T2-tempo-numbered-list</div>
+      <div class="source">tempo.xyz</div>
+      <div class="feedback">
+        Likes the <strong>animated glass frames on the right side</strong>. They represent what he's trying to do with the glass held in the hero image. "There is something interesting here" with the lens/glass concept translated to illustration.
+      </div>
+      <div class="takeaway">Animated glass/lens frames as an illustration element. Connects the hero portrait (holding glass) to the broader visual language. Glass as a recurring motif, not just a CSS effect.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T2-nolan-carter-clean-light-bento-grid-portfolio.png" alt="">
+    <div class="info">
+      <div class="filename">T2-nolan-carter-bento-grid</div>
+      <div class="source">Nolan Carter (Framer)</div>
+      <div class="feedback">
+        "A little too Apple" but likes the <strong>square blocks with glass morphism</strong> for presenting clients or portfolio. Reminds him of an earlier idea for the Brand Therapy Blueprint: a summary frame with archetypes, bio, portrait in rounded-corner blocks. "Probably not as a main brand signature" but useful as a component.
+      </div>
+      <div class="takeaway">Bento/card grid for portfolio or blueprint presentation. Secondary pattern, not primary. Could work for the Brand Therapy Blueprint deliverable visualization.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T2-duncan-robert-services-accordion-light.png" alt="">
+    <div class="info">
+      <div class="filename">T2-duncan-robert-services-accordion</div>
+      <div class="source">Duncan Robert (Framer)</div>
+      <div class="feedback">
+        "I forgot exactly why I screenshot that one." Low priority.
+      </div>
+      <div class="takeaway">Service accordion pattern already captured better in Cheval reference (T1).</div>
+    </div>
+  </div>
+</section>
+
+<!-- T2 GROUP: Photography + Portrait Treatments -->
+<section class="group">
+  <h3>Photography + Portrait Treatments</h3>
+  <div class="group-desc">How portraits and editorial photography are framed and presented.</div>
+
+  <div class="card">
+    <img src="T2-tempo-testimonial-large-portrait-quote-overlay.png" alt="">
+    <div class="info">
+      <div class="filename">T2-tempo-testimonial</div>
+      <div class="source">tempo.xyz (Metalab)</div>
+      <div class="feedback">
+        The animation was amazing. Looks like a <strong>Polaroid picture</strong>. As you scroll, the person gets behind the picture. "There is that idea of photography, visibility, magazine cover, editorial portrait." Likes the <strong>frame/Polaroid metaphor</strong> for portraits.
+      </div>
+      <div class="takeaway">Portrait inside a frame that scrolls independently. Polaroid/editorial frame treatment for testimonials or about sections. The frame adds editorial quality to any portrait.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T2-cheval-about-editorial-photo-clean-serif-text.png" alt="">
+    <div class="info">
+      <div class="filename">T2-cheval-about</div>
+      <div class="source">valentincheval.design (about page)</div>
+      <div class="feedback">
+        Similar to earlier: one image on one side, text on the other. "It only works when you scroll through it." Likes how it's <strong>a little bit artistic and not just basic UI</strong>.
+      </div>
+      <div class="takeaway">Asymmetric photo + text layouts need scroll interaction to come alive. Static two-column is basic. Movement makes it editorial.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T2-editorial-photography-carousel-bw-red-accent.png" alt="">
+    <div class="info">
+      <div class="filename">T2-editorial-photography-carousel</div>
+      <div class="source">Unknown</div>
+      <div class="feedback">
+        Could be how we have <strong>pop-ups for newsletter, contact form</strong>. The left side's glassmorphism/blur treatment for overlays.
+      </div>
+      <div class="takeaway">Glass/blur treatment for modals, popups, newsletter signup. The blurred photography behind a form creates the lens effect.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T2-duncan-robert-digital-designer-portrait-light.png" alt="">
+    <div class="info">
+      <div class="filename">T2-duncan-robert-light</div>
+      <div class="source">Duncan Robert (Framer)</div>
+      <div class="feedback">
+        Likes the composition but <strong>prefers cutout portraits</strong> over boxed/framed ones. "Don't like the font." Same in dark mode (next screenshot).
+      </div>
+      <div class="takeaway">Cutout is preferred over framed for hero/main portraits. Framed is for secondary/editorial contexts.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T2-duncan-robert-portrait-dark-mode-neon-accent.png" alt="">
+    <div class="info">
+      <div class="filename">T2-duncan-robert-dark</div>
+      <div class="source">Duncan Robert (Framer)</div>
+      <div class="feedback">Same as above in dark mode. Noted for the light/dark toggle concept.</div>
+      <div class="takeaway">Same site in light and dark. The toggle concept is interesting but secondary.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T2-michael-carter-testimonials-3d-bust-italic-serif.png" alt="">
+    <div class="info">
+      <div class="filename">T2-michael-carter-testimonials</div>
+      <div class="source">Michael Carter (Framer)</div>
+      <div class="feedback">
+        Likes the <strong>heading/paragraph at top where copy changes color as you scroll</strong>. Already doing something similar. Wants to combine color-change-on-scroll with the text reveal blocks.
+      </div>
+      <div class="takeaway">Scroll-triggered color change on text + text reveal blocks = combined effect. Text starts gray/hidden, becomes black/purple as it scrolls into view.</div>
+    </div>
+  </div>
+</section>
+
+<!-- T2 GROUP: Product / SaaS Layouts -->
+<section class="group">
+  <h3>Product / SaaS Layouts (Ivy App)</h3>
+  <div class="group-desc">Clean minimal product showcases. Mostly captured for animation and glass feel.</div>
+
+  <div class="card">
+    <img src="T2-ivy-plan-do-reflect-clean-minimal-saas-hero.png" alt="">
+    <div class="info">
+      <div class="filename">T2-ivy-hero</div>
+      <div class="source">Ivy app</div>
+      <div class="feedback">Mostly for the <strong>animation and glassmorphism</strong> treatment.</div>
+      <div class="takeaway">Glass feel that's subtle, not in your face.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T2-ivy-optimized-follow-through-product-feature-layout.png" alt="">
+    <div class="info">
+      <div class="filename">T2-ivy-features</div>
+      <div class="source">Ivy app</div>
+      <div class="feedback">Likes how it has a <strong>glass feel but not "in your face."</strong> The color is almost the same as the background but you still have that little feel of a glass lens. Very subtle.</div>
+      <div class="takeaway">Subtle glass = almost-same-color panels with barely visible borders and slight blur. This is the right level of glassmorphism for FP: felt, not seen.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T2-ivy-three-layers-focus-product-showcase.png" alt="">
+    <div class="info">
+      <div class="filename">T2-ivy-layers</div>
+      <div class="source">Ivy app</div>
+      <div class="feedback">Mostly the animation and how the <strong>composition and design is very clean</strong>.</div>
+      <div class="takeaway">Clean composition reference. The layered device mockup presentation could work for showing the Brand Therapy Blueprint deliverable.</div>
+    </div>
+  </div>
+</section>
+
+<!-- T2 GROUP: Illustration + Wireframe Style -->
+<section class="group">
+  <h3>Illustration + Wireframe Style</h3>
+  <div class="group-desc">How to handle illustrations, icons, and visual diagrams.</div>
+
+  <div class="card">
+    <img src="T2-brand-guidelines-wireframe-illustration-dark.png" alt="">
+    <div class="info">
+      <div class="filename">T2-brand-guidelines-wireframe</div>
+      <div class="source">Unknown</div>
+      <div class="feedback">
+        Likes the <strong>minimalism</strong>. Thinking about illustration style. "I've always had trouble finding the right way to illustrate." Even though purple is the brand color, this <strong>thin-line, just black and white</strong> approach for icons and illustrations makes sense. No colors in illustrations.
+      </div>
+      <div class="takeaway">Illustration direction: thin-line, B&W only, no fill, no color. Let photography carry the visual weight. Illustrations are structural, not decorative.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T2-cheval-floating-discipline-words-dark-spatial.png" alt="">
+    <div class="info">
+      <div class="filename">T2-cheval-floating-words</div>
+      <div class="source">valentincheval.design</div>
+      <div class="feedback">
+        (Part of the Cheval graph/spatial section. Liked as a way to display expertise areas or focus disciplines in a spatial, non-linear way.)
+      </div>
+      <div class="takeaway">Floating words in space for showing disciplines/expertise. Non-linear, spatial typography. Could work for a "What I Work With" section.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T2-niore-service-cards-photography-carousel-clean.png" alt="">
+    <div class="info">
+      <div class="filename">T2-niore-service-cards</div>
+      <div class="source">niore.framer.website</div>
+      <div class="feedback">
+        "Going back to those glass morphism blocks. I think there's space for that somewhere, but not as a primary design direction."
+      </div>
+      <div class="takeaway">Glass/rounded service cards are a component option, not a direction. Secondary to the editorial structure.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ T3: REFERENCE / CONTEXT ============ -->
+<div class="tier-header">
+  <h2>T3: Reference / Context</h2>
+  <p>9 screenshots. Not direction-setting, but specific elements or ideas worth noting.</p>
+</div>
+
+<section class="group">
+  <h3>Strategic Ideas + Glass Morphism Reference</h3>
+  <div class="group-desc">These aren't design direction references. They're specific ideas or glass/lens texture references.</div>
+
+  <div class="card">
+    <img src="T3-offbrand-ai-summary-icons.png" alt="">
+    <div class="info">
+      <div class="filename">T3-offbrand-ai-summary</div>
+      <div class="source">Off+Brand</div>
+      <div class="feedback">
+        "Not for design purposes." An <strong>extremely smart idea</strong> to have AI summary links on the homepage. Sends a message of being AI-savvy. Benefits for SEO/GEO. Can send users to a pre-prompted AI chat that provides third-party validation. "Somehow very good PR."
+      </div>
+      <div class="takeaway">AI summary badge is a strategic decision, not a design one. Pre-prompted AI chat link = controlled third-party validation. Implement as a fixed-position badge.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T3-sachith-id-badge-concept-creative-metaphor.png" alt="">
+    <div class="info">
+      <div class="filename">T3-sachith-id-badge</div>
+      <div class="source">sachith-tharinda-2026.webflow.io</div>
+      <div class="feedback">
+        Likes the <strong>Polaroid frame concept</strong> and that it's not taking over the whole screen, just centered in the middle. His homepage was just this badge.
+      </div>
+      <div class="takeaway">Small, centered object on a large canvas. The negative space IS the design. Polaroid/badge as a contained composition rather than full-bleed.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T3-glass-morphism-textures-collage-instagram.png" alt="">
+    <div class="info">
+      <div class="filename">T3-glass-morphism-textures</div>
+      <div class="source">Instagram / glass morphism reference</div>
+      <div class="feedback">
+        "A little bit too extreme." But maybe usable as a <strong>loading screen animation</strong>: glass frames sweeping across the whole screen. Movie poster vibes through glass.
+      </div>
+      <div class="takeaway">Glass morphism at this intensity = loading animation or transition effect only. Not for static design. The idea of glass frames as a loading/transition is interesting.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T3-nivora-creative-minds-team-portraits-dark.png" alt="">
+    <div class="info">
+      <div class="filename">T3-nivora-team</div>
+      <div class="source">portavia.framer.website</div>
+      <div class="feedback">
+        Likes the <strong>Polaroid frame combined with glass morphism</strong>. The frame + glass treatment on portraits.
+      </div>
+      <div class="takeaway">Frame + glass on portraits. Useful for testimonial sections or team/client displays.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T3-dark-glass-contact-form-gradient-blur.png" alt="">
+    <div class="info">
+      <div class="filename">T3-dark-glass-contact</div>
+      <div class="source">Unknown</div>
+      <div class="feedback">"The idea of the glass here, but not so important."</div>
+      <div class="takeaway">Glass card for contact/form sections. Low priority reference.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T3-dark-service-cards-grid-icons-purple-accent.png" alt="">
+    <div class="info">
+      <div class="filename">T3-dark-service-cards</div>
+      <div class="source">Unknown</div>
+      <div class="feedback">"We've gone over this." Glass block reference, not directional.</div>
+      <div class="takeaway">Glass service cards. Already captured in other references.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T3-hyperflow-pricing-gradient-glass-cards.png" alt="">
+    <div class="info">
+      <div class="filename">T3-hyperflow-pricing</div>
+      <div class="source">Hyperflow agency</div>
+      <div class="feedback">"The idea of glass blocks."</div>
+      <div class="takeaway">Glass cards for pricing. Low priority.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T3-omar-rahman-dark-portfolio-template-generic.png" alt="">
+    <div class="info">
+      <div class="filename">T3-omar-rahman</div>
+      <div class="source">Omar Rahman portfolio</div>
+      <div class="feedback">"Meh. We've seen better examples of composition."</div>
+      <div class="takeaway">Not useful. Generic template energy.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="T3-design-process-numbered-grid-colorful-generic.png" alt="">
+    <div class="info">
+      <div class="filename">T3-design-process-grid</div>
+      <div class="source">Unknown (Framer)</div>
+      <div class="feedback">
+        Likes the <strong>little blocks, especially because one is almost the FP purple</strong>. Some interesting composition.
+      </div>
+      <div class="takeaway">The colored numbered blocks as a process visualization. Minor reference. The purple block resonating is a nice data point.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">FP<span>.</span></div>
+  <div class="copy">Inspiration Feedback Reference / March 2026</div>
+</footer>
+
+</body>
+</html>
