@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Should I Care About Branding Yet? | Florian P.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================
+     FP. SLIDE DECK — MODE A (Dark + Purple)
+     Design System: Bricolage 800 + Inter 400
+     Palette: #1D1D1D / #5A5CF9 / #FFFFFF
+     ============================================ */
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --purple: #5A5CF9;
+    --dark: #1D1D1D;
+    --darker: #141414;
+    --white: #FFFFFF;
+    --gray: #949494;
+    --light-gray: #CCCCCC;
+    --glass-border: rgba(255,255,255,0.12);
+    --glass-fill: rgba(255,255,255,0.06);
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: var(--dark);
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    color: var(--white);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* --- Grain Texture Overlay --- */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='512' height='512' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-size: 512px 512px;
+  }
+
+  /* --- Slide Container --- */
+  .deck {
+    width: 100vw; height: 100vh;
+    position: relative;
+  }
+
+  .slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 72px 96px;
+    opacity: 0;
+    visibility: hidden;
+    background: var(--dark);
+    z-index: 1;
+  }
+
+  .slide.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
+  }
+
+  /* --- Slide Variants --- */
+  .slide--purple {
+    background: var(--purple);
+  }
+
+  .slide--darker {
+    background: var(--darker);
+  }
+
+  .slide--split {
+    flex-direction: row;
+    padding: 0;
+    gap: 0;
+  }
+
+  .slide--left-align {
+    align-items: flex-start;
+  }
+
+  /* --- Purple Bottom Edge --- */
+  .slide--dark-edge::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 3px;
+    background: var(--purple);
+  }
+
+  /* --- Typography --- */
+  .t-display {
+    font-family: 'Bricolage Grotesque', serif;
+    font-weight: 800;
+    font-size: 89px;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+  }
+
+  .t-hero {
+    font-family: 'Bricolage Grotesque', serif;
+    font-weight: 800;
+    font-size: 67px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .t-title {
+    font-family: 'Bricolage Grotesque', serif;
+    font-weight: 800;
+    font-size: 50px;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+
+  .t-section {
+    font-family: 'Bricolage Grotesque', serif;
+    font-weight: 700;
+    font-size: 37px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  .t-subtitle {
+    font-family: 'Bricolage Grotesque', serif;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 1.2;
+  }
+
+  .t-body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 1.55;
+  }
+
+  .t-small {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .t-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  /* --- Accent --- */
+  .purple { color: var(--purple); }
+  .gray { color: var(--gray); }
+  .light-gray { color: var(--light-gray); }
+
+  /* --- Glass Card --- */
+  .glass {
+    background: var(--glass-fill);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 4px;
+    padding: 40px;
+  }
+
+  .glass--sm {
+    padding: 24px 30px;
+  }
+
+  /* --- Layout Helpers --- */
+  .center { text-align: center; }
+  .left { text-align: left; }
+  .max-w-800 { max-width: 800px; }
+  .max-w-900 { max-width: 900px; }
+  .max-w-1000 { max-width: 1000px; }
+  .max-w-1100 { max-width: 1100px; }
+  .max-w-full { max-width: 100%; }
+  .w-full { width: 100%; }
+  .mb-16 { margin-bottom: 16px; }
+  .mb-22 { margin-bottom: 22px; }
+  .mb-30 { margin-bottom: 30px; }
+  .mb-40 { margin-bottom: 40px; }
+  .mb-54 { margin-bottom: 54px; }
+  .mb-72 { margin-bottom: 72px; }
+  .mt-30 { margin-top: 30px; }
+  .mt-40 { margin-top: 40px; }
+
+  .flex { display: flex; }
+  .flex-col { flex-direction: column; }
+  .gap-16 { gap: 16px; }
+  .gap-22 { gap: 22px; }
+  .gap-30 { gap: 30px; }
+  .gap-40 { gap: 40px; }
+  .gap-54 { gap: 54px; }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 22px;
+  }
+
+  .grid-5 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+
+  /* --- Split Slide Panels --- */
+  .split-left, .split-right {
+    width: 50%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 72px;
+  }
+
+  .split-left { background: var(--darker); }
+  .split-right { background: var(--dark); }
+
+  /* --- Quote Style --- */
+  .quote {
+    position: relative;
+    padding-left: 30px;
+    border-left: 3px solid var(--purple);
+  }
+
+  .quote-mark {
+    font-family: 'Bricolage Grotesque', serif;
+    font-weight: 800;
+    font-size: 120px;
+    line-height: 0.7;
+    color: var(--purple);
+    opacity: 0.3;
+    position: absolute;
+    top: -20px; left: -10px;
+  }
+
+  /* --- Spectrum Bar --- */
+  .spectrum-bar {
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(to right, var(--purple), var(--gray));
+    border-radius: 0;
+    position: relative;
+    margin: 40px 0;
+  }
+
+  .spectrum-labels {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .spectrum-marker {
+    width: 20px; height: 20px;
+    background: var(--purple);
+    border: 3px solid var(--white);
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* --- Focus Star --- */
+  .star-container {
+    width: 400px; height: 400px;
+    position: relative;
+    margin: 0 auto;
+  }
+
+  .star-point {
+    position: absolute;
+    text-align: center;
+    width: 120px;
+  }
+
+  .star-point .label {
+    font-family: 'Bricolage Grotesque', serif;
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: 0.02em;
+  }
+
+  .star-point .desc {
+    font-size: 13px;
+    color: var(--gray);
+    margin-top: 6px;
+  }
+
+  /* Pentagon lines */
+  .star-svg {
+    width: 100%; height: 100%;
+  }
+
+  /* --- Progress Bar --- */
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: var(--purple);
+    z-index: 10000;
+    transition: width 0.4s var(--ease-out-expo);
+  }
+
+  /* --- Slide Counter --- */
+  .counter {
+    position: fixed;
+    bottom: 30px;
+    right: 40px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray);
+    z-index: 10000;
+    letter-spacing: 0.02em;
+  }
+
+  /* --- FP Logo --- */
+  .fp-logo {
+    position: fixed;
+    bottom: 30px;
+    left: 40px;
+    font-family: 'Bricolage Grotesque', serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--white);
+    z-index: 10000;
+    letter-spacing: -0.01em;
+  }
+
+  .fp-logo span { color: var(--purple); }
+
+  /* --- Part Label --- */
+  .part-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 22px;
+  }
+
+  /* --- Number Accent --- */
+  .num {
+    font-family: 'Bricolage Grotesque', serif;
+    font-weight: 800;
+    font-size: 120px;
+    line-height: 1;
+    color: var(--purple);
+    opacity: 0.15;
+    position: absolute;
+    top: 40px;
+    right: 72px;
+  }
+
+  /* --- Step Cards --- */
+  .step-card {
+    background: var(--glass-fill);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+    border-radius: 4px;
+    padding: 24px;
+    border-left: 3px solid var(--purple);
+  }
+
+  .step-num {
+    font-family: 'Bricolage Grotesque', serif;
+    font-weight: 800;
+    font-size: 37px;
+    color: var(--purple);
+    opacity: 0.5;
+    margin-bottom: 12px;
+  }
+
+  /* --- Horizontal Divider --- */
+  .divider {
+    width: 60px;
+    height: 3px;
+    background: var(--purple);
+    margin: 30px 0;
+  }
+
+  /* --- Bullet List (minimal) --- */
+  .bullet-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .bullet-list li {
+    padding: 8px 0;
+    padding-left: 20px;
+    position: relative;
+    font-size: 18px;
+    line-height: 1.45;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .bullet-list li:last-child { border-bottom: none; }
+
+  .bullet-list li::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--purple);
+    position: absolute;
+    left: 0;
+    top: 16px;
+  }
+
+  /* --- Timer Circle --- */
+  .timer-circle {
+    width: 280px; height: 280px;
+    border: 4px solid var(--purple);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  .timer-num {
+    font-family: 'Bricolage Grotesque', serif;
+    font-weight: 800;
+    font-size: 89px;
+    color: var(--purple);
+  }
+
+  /* --- Spectrum Visual --- */
+  .spectrum-visual {
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 40px 0;
+  }
+
+  .spectrum-end {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .spectrum-end--left {
+    background: rgba(90, 92, 249, 0.12);
+    border-left: 3px solid var(--purple);
+  }
+
+  .spectrum-end--right {
+    background: rgba(255, 255, 255, 0.04);
+    border-right: 3px solid var(--gray);
+    text-align: right;
+  }
+
+  .spectrum-middle {
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    background: rgba(255,255,255,0.02);
+  }
+
+  /* --- Brand Level Stairs --- */
+  .level-stairs {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 200px;
+    width: 100%;
+  }
+
+  .level-stair {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 16px 12px;
+    background: var(--glass-fill);
+    border: 1px solid var(--glass-border);
+    border-radius: 4px 4px 0 0;
+  }
+
+  /* Accessibility: focus outline for keyboard navigation */
+  *:focus-visible {
+    outline: 2px solid var(--purple);
+    outline-offset: 3px;
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="fp-logo">FP<span>.</span></div>
+<div class="counter" id="counter"></div>
+
+<div class="deck" id="deck">
+
+<!-- =============================================
+     SLIDE 1: TITLE
+     ============================================= -->
+<div class="slide slide--purple active" data-slide="1">
+  <div class="center max-w-1000">
+    <div class="t-label" style="color: rgba(255,255,255,0.7); margin-bottom: 40px;">BRAND STRATEGY FOR STARTUPS</div>
+    <h1 class="t-display" style="margin-bottom: 30px;">Should I Care About <br>Branding Yet?</h1>
+    <div class="divider" style="margin: 30px auto;"></div>
+    <p class="t-body" style="opacity: 0.85;">Florian Philippe / Brand Therapist</p>
+  </div>
+</div>
+
+<!-- =============================================
+     SLIDE 2: SETH GODIN QUOTE
+     ============================================= -->
+<div class="slide slide--dark-edge" data-slide="2">
+  <div class="center max-w-900">
+    <div class="quote-mark" style="position: relative; top: 0; left: 0; margin-bottom: -20px;">"</div>
+    <p class="t-hero" style="margin-bottom: 40px;">Every interaction in any form, is <span class="purple">branding.</span></p>
+    <p class="t-small gray">Seth Godin</p>
+  </div>
+</div>
+
+<!-- =============================================
+     SLIDE 3: INTRODUCTION
+     ============================================= -->
+<div class="slide slide--left-align slide--dark-edge" data-slide="3">
+  <div class="max-w-1000">
+    <div class="part-label">INTRODUCTION</div>
+    <h2 class="t-title mb-40">Florian Philippe</h2>
+    <div class="grid-2" style="gap: 54px;">
+      <div>
+        <p class="t-body" style="margin-bottom: 22px;">10 years in B2B brand strategy across 6 countries. France, China, Vietnam, Taiwan, and the US.</p>
+        <p class="t-body" style="margin-bottom: 22px;">Founded a design and branding agency in Taiwan focused on solving business issues through positioning.</p>
+        <p class="t-body">Recently rebranded as a <span class="purple">brand therapist</span> because the work that matters most isn't visual. It's clarity.</p>
+      </div>
+      <div class="glass" style="display: flex; flex-direction: column; gap: 16px;">
+        <p class="t-body" style="font-weight: 500;">"Building a brand is emotionally violent. We all need someone who can support that."</p>
+        <div class="divider"></div>
+        <p class="t-small gray">I care about the emotional side of branding. Not just how to communicate emotion... but because the process itself demands emotional resilience.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =============================================
+     SLIDE 4: EXERCISE SETUP
+     ============================================= -->
+<div class="slide" data-slide="4">
+  <div class="center max-w-800">
+    <div class="part-label">EXERCISE</div>
+    <h2 class="t-hero mb-40">Grab a pen <br>and paper<span class="purple">.</span></h2>
+    <p class="t-body gray">We're going to do a quick exercise together.</p>
+  </div>
+</div>
+
+<!-- =============================================
+     SLIDE 5: 30 SECOND TIMER
+     ============================================= -->
+<div class="slide" data-slide="5">
+  <div class="center max-w-800">
+    <div class="timer-circle">
+      <div class="timer-num">30</div>
+    </div>
+    <p class="t-section mt-40" style="margin-bottom: 22px;">Draw as many logos <br>as you can from memory<span class="purple">.</span></p>
+    <p class="t-body gray">No letters. Just pictograms. Don't share yet.</p>
+  </div>
+</div>
+
+<!-- =============================================
+     SLIDE 6: SHARE
+     ============================================= -->
+<div class="slide" data-slide="6">
+  <div class="center max-w-800">
+    <h2 class="t-hero mb-40">What did you draw<span class="purple">?</span></h2>
+    <div class="grid-3" style="max-width: 600px; margin: 0 auto;">
+      <div class="glass glass--sm center">
+        <p class="t-subtitle">Nike</p>
+      </div>
+      <div class="glass glass--sm center">
+        <p class="t-subtitle">Apple</p>
+      </div>
+      <div class="glass glass--sm center">
+        <p class="t-subtitle">Mercedes</p>
+      </div>
+      <div class="glass glass--sm center">
+        <p class="t-subtitle">Adidas</p>
+      </div>
+      <div class="glass glass--sm center">
+        <p class="t-subtitle">Windows</p>
+      </div>
+      <div class="glass glass--sm center">
+        <p class="t-subtitle">...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =============================================
+     SLIDE 7: THOSE ARE NOT BRANDS
+     ============================================= -->
+<div class="slide slide--purple" data-slide="7">
+  <div class="center max-w-900">
+    <h2 class="t-display">Those are not <br>brands<span style="color: var(--dark);">.</span></h2>
+  </div>
+</div>
+
+<!-- =============================================
+     SLIDE 8: BRAND IDENTITY
+     ============================================= -->
+<div class="slide slide--left-align slide--dark-edge" data-slide="8">
+  <div class="max-w-1000">
+    <div class="part-label">THE DISTINCTION</div>
+    <h2 class="t-title mb-30">Those are <span class="purple">signatures.</span></h2>
+    <p class="t-body mb-40" style="max-width: 700px;">Connections between a drawing and a company. They're part of the <strong>brand identity</strong>: all the tangible assets a company uses to communicate its identity.</p>
+    <div class="glass max-w-800">
+      <p class="t-body mb-22">Colors. Fonts. Shapes. Logos.</p>
+      <p class="t-body">A good logo can be drawn by anyone in seconds. That means it's memorable, recognizable, and scalable. But it's still just a piece of drawing.</p>
+    </div>
+  </div>
+</div>
+
+<!-- =============================================
+     SLIDES 9-12: LOGO DECONSTRUCTION
+     ============================================= -->
+<div class="slide" data-slide="9">
+  <div class="center max-w-800">
+    <div class="part-label">LOGO DECONSTRUCTION</div>
+    <h2 class="t-title mb-40">Mastercard<span class="purple">.</span></h2>
+    <p class="t-section mb-30" style="color: var(--light-gray);">Two circles. Two colors.</p>
+    <p class="t-body gray">Everyone knows what company it is. That's how powerful design can be.</p>
+  </div>
+</div>
+
+<div class="slide" data-slide="10">
+  <div class="center max-w-800">
+    <div class="part-label">LOGO DECONSTRUCTION</div>
+    <h2 class="t-title mb-40">Amazon<span class="purple">.</span></h2>
+    <p class="t-section mb-30" style="color: var(--light-gray);">A smile from A to Z.</p>
+    <p class="t-body gray">Simple, scalable, loaded with meaning.</p>
+  </div>
+</div>
+
+<div class="slide" data-slide="11">
+  <div class="center max-w-800">
+    <div class="part-label">LOGO DECONSTRUCTION</div>
+    <h2 class="t-title mb-40">Shell<span class="purple">.</span></h2>
+    <p class="t-section mb-30" style="color: var(--light-gray);">A shell.</p>
+    <p class="t-body gray">Same principle. Memorable. Recognizable. Scalable.</p>
+  </div>
+</div>
+
+<!-- =============================================
+     SLIDE 12: BUT STILL NOT A BRAND
+     ============================================= -->
+<div class="slide" data-slide="12">
+  <div class="center max-w-900">
+    <h2 class="t-hero mb-40">Powerful design<span class="purple">.</span> <br><span class="gray">Still not a brand.</span></h2>
+    <p class="t-body gray" style="max-width: 600px; margin: 0 auto;">If a brand is not a collection of tangible assets... then a brand is something else entirely.</p>
+  </div>
+</div>
+
+<!-- =============================================
+     SLIDE 13: THE BRAND IS INTANGIBLE
+     ============================================= -->
+<div class="slide slide--purple" data-slide="13">
+  <div class="center max-w-900">
+    <h2 class="t-display">A brand is <br>intangible.</h2>
+  </div>
+</div>
+
+<!-- =============================================
+     SLIDE 14: WHAT IS A BRAND
+     ============================================= -->
+<div class="slide slide--dark-edge" data-slide="14">
+  <div class="center max-w-1000">
+    <div class="part-label">DEFINITION</div>
+    <h2 class="t-title mb-54">What is a brand<span class="purple">?</span></h2>
+    <div class="grid-2" style="max-width: 800px; margin: 0 auto;">
+      <div class="glass glass--sm center">
+        <p class="t-subtitle">A feeling</p>
+      </div>
+      <div class="glass glass--sm center">
+        <p class="t-subtitle">A promise</p>
+      </div>
+      <div class="glass glass--sm center">
+        <p class="t-subtitle">A reputation</p>
+      </div>
+      <div class="glass glass--sm center">
+        <p class="t-subtitle">A bubble</p>
+      </div>
+    </div>
+    <p class="t-body gray mt-40">It's what people say about you when you're not in the room.</p>
+  </div>
+</div>
+
+<!-- =============================================
+     SLIDE 15: THE BUBBLE ANALOGY
+     ============================================= -->
+<div class="slide slide--left-align slide--dark-edge" data-slide="15">
+  <div class="max-w-1100">
+    <div class="part-label">THE BUBBLE ANALOGY</div>
+    <h2 class="t-title mb-40">Your product lives inside a <span class="purple">bubble.</span></h2>
+    <div class="grid-2" style="gap: 54px;">
+      <div>
+        <p class="t-body mb-22">Anyone who wants to discover or buy your product needs to poke inside the bubble.</p>
+        <p class="t-body mb-22">There is no way to see the product without seeing the brand first.</p>
+        <p class="t-body" style="color: var(--light-gray);">Your job as an entrepreneur: make the outside of that bubble attractive. Not just visually. The positioning, the offer, the story... all of it.</p>
+      </div>
+      <div class="glass" style="display: flex; align-items: center; justify-content: center;">
+        <div style="text-align: center;">
+          <div style="width: 200px; height: 200px; border: 2px solid var(--purple); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; position: relative;">
+            <div style="font-family: 'Bricolage Grotesque', serif; font-weight: 800; font-size: 16px; color: var(--gray);">YOUR<br>PRODUCT</div>
+            <div style="position: absolute; top: -12px; right: 20px; font-family: 'Inter', sans-serif; font-size: 11px; color: var(--purple); text-transform: uppercase; letter-spacing: 0.1em;">brand</div>
+            <div style="position: absolute; bottom: -12px; left: 20px; font-family: 'Inter', sans-serif; font-size: 11px; color: var(--purple); text-transform: uppercase; letter-spacing: 0.1em;">brand</div>
+          </div>
+          <p class="t-small gray mt-30">If no one is interested in poking inside, you will never sell your product as good as it can be.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =============================================
+     SLIDE 16: TOUCHPOINTS
+     ============================================= -->
+<div class="slide slide--left-align" data-slide="16">
+  <div class="max-w-1000">
+    <div class="part-label">TOUCHPOINTS</div>
+    <h2 class="t-title mb-40">How the bubble shows up <br>in the <span class="purple">world.</span></h2>
+    <div class="grid-3">
+      <div class="glass glass--sm"><p class="t-body">Email marketing</p></div>
+      <div class="glass glass--sm"><p class="t-body">Business cards</p></div>
+      <div class="glass glass--sm"><p class="t-body">The music at the restaurant</p></div>
+      <div class="glass glass--sm"><p class="t-body">Your logo</p></div>
+      <div class="glass glass--sm"><p class="t-body">The way you dress</p></div>
+      <div class="glass glass--sm"><p class="t-body">The way you shake hands</p></div>
+    </div>
+    <p class="t-body gray mt-40">Every interaction creates the bubble. First impressions set the tone.</p>
+  </div>
+</div>
+
+<!-- =============================================
+     SLIDE 17: JESSICA WALSH QUOTE
+     ============================================= -->
+<div class="slide" data-slide="17">
+  <div class="center max-w-900">
+    <div class="quote-mark" style="position: relative; top: 0; left: 0; margin-bottom: -20px;">"</div>
+    <p class="t-hero" style="margin-bottom: 40px;">If no one hates it, no one really <span class="purple">loves</span> it.</p>
+    <p class="t-small gray">Jessica Walsh</p>
+    <p class="t-body mt-40" style="max-width: 600px; margin-left: auto; margin-right: auto; color: var(--light-gray);">Attraction is subjective. You will never attract everyone. Even Apple has haters. That's okay.</p>
+  </div>
+</div>
+
+<!-- =============================================
+     SLIDE 18: BRAIN POWER
+     ============================================= -->
+<div class="slide slide--dark-edge" data-slide="18">
+  <div class="center max-w-1000">
+    <div class="part-label">THE SCIENCE</div>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 72px; margin-bottom: 40px;">
+      <div>
+        <div class="t-display" style="font-size: 120px; color: var(--purple);">90%</div>
+        <p class="t-body mt-30">Emotional &amp; unconscious</p>
+      </div>
+      <div style="width: 2px; height: 160px; background: rgba(255,255,255,0.1);"></div>
+      <div>
+        <div class="t-display" style="font-size: 120px; color: var(--gray); opacity: 0.4;">10%</div>
+        <p class="t-body mt-30 gray">Rational thinking</p>
+      </div>
+    </div>
+    <p class="t-body" style="max-width: 700px; margin: 0 auto; color: var(--light-gray);">If you bet on only 10% with your marketing, you're bound to fail. People make emotional decisions first, then use rational thinking to justify them afterward.</p>
+  </div>
+</div>
+
+<!-- =============================================
+     SLIDE 19: THE CLARITY PROBLEM (NEW - replaces Sinek)
+     ============================================= -->
+<div class="slide slide--purple" data-slide="19">
+  <div class="center max-w-900">
+    <h2 class="t-display" style="margin-bottom: 30px;">This isn't a marketing problem.</h2>
+    <div class="divider" style="margin: 30px auto; background: var(--white);"></div>
+    <h2 class="t-hero" style="opacity: 0.85;">It's a clarity problem.</h2>
+  </div>
+</div>
+
+<!-- =============================================
+     SLIDE 20: CLARITY REFRAME EXPLAINED
+     ============================================= -->
+<div class="slide slide--left-align slide--dark-edge" data-slide="20">
+  <div class="max-w-1000">
+    <div class="part-label">THE REFRAME</div>
+    <h2 class="t-title mb-40">Connecting emotionally isn't about creative direction<span class="purple">.</span></h2>
+    <p class="t-body mb-30" style="max-width: 700px;">It's about gaining clarity for ourselves AND our audience, so the bubble attracts people.</p>
+    <div class="glass max-w-800">
+      <p class="t-body mb-22"><strong style="color: var(--purple);">Clarity</strong> through differentiation and positioning.</p>
+      <p class="t-body"><strong style="color: var(--purple);">Consistency</strong> applied across every touch point.</p>
+    </div>
+    <p class="t-body gray mt-40">So how do we actually do it? Let's start with a question most branding people skip.</p>
+  </div>
+</div>
+
+<!-- =============================================
+     PART 2: THE FOUNDER-BRAND SPECTRUM (NEW)
+     ============================================= -->
+
+<!-- SLIDE 21: SPECTRUM INTRO -->
+<div class="slide slide--purple" data-slide="21">
+  <div class="center max-w-900">
+    <div class="t-label" style="color: rgba(255,255,255,0.7); margin-bottom: 30px;">THE QUESTION NOBODY ASKS</div>
+    <h2 class="t-display">Where do <em>you</em> sit<br>on the spectrum?</h2>
+  </div>
+</div>
+
+<!-- SLIDE 22: THE SPECTRUM VISUAL -->
+<div class="slide slide--left-align slide--dark-edge" data-slide="22">
+  <div class="max-w-1100 w-full">
+    <div class="part-label">THE FOUNDER-BRAND SPECTRUM</div>
+    <h2 class="t-title mb-16">Every founder sits somewhere on this <span class="purple">spectrum.</span></h2>
+    <p class="t-body gray mb-30">Where you sit changes everything: your website, content, pricing, hiring, exit plan.</p>
+
+    <div class="spectrum-visual">
+      <div class="spectrum-end spectrum-end--left">
+        <p class="t-subtitle" style="color: var(--purple);">Founder Brand</p>
+        <p class="t-body">The founder IS the brand. Their name, face, and voice drive everything.</p>
+        <p class="t-small gray" style="margin-top: 8px;">Gary Vaynerchuk, Oprah, Chris Do</p>
+      </div>
+      <div class="spectrum-middle">
+        <div style="text-align: center;">
+          <p class="t-small" style="color: var(--purple); font-weight: 600;">SHARED</p>
+          <p class="t-small gray" style="margin-top: 6px; font-size: 13px;">Both reinforce each other</p>
+        </div>
+      </div>
+      <div class="spectrum-end spectrum-end--right">
+        <p class="t-subtitle" style="color: var(--gray);">Company Brand</p>
+        <p class="t-body">The company IS the brand. The founder is invisible.</p>
+        <p class="t-small gray" style="margin-top: 8px;">Most B2B, most Fortune 500</p>
+      </div>
+    </div>
+
+    <p class="t-body" style="text-align: center; color: var(--light-gray);">Most founders make this decision <strong>by accident</strong>, defaulting to wherever they're comfortable... which usually means hiding behind the company.</p>
+  </div>
+</div>
+
+<!-- SLIDE 23: SPECTRUM - WHEN TO DO WHAT -->
+<div class="slide slide--left-align slide--dark-edge" data-slide="23">
+  <div class="max-w-1100 w-full">
+    <div class="part-label">STRATEGIC DECISIONS</div>
+    <h2 class="t-title mb-40">This isn't a preference. It's a <span class="purple">strategy.</span></h2>
+    <div class="grid-2" style="gap: 30px;">
+      <div class="step-card">
+        <p class="t-subtitle mb-16" style="color: var(--purple);">Invest in the founder</p>
+        <ul class="bullet-list">
+          <li>Early-stage companies</li>
+          <li>Service businesses</li>
+          <li>Thought leadership plays</li>
+          <li>Fundraising (investors back people)</li>
+        </ul>
+      </div>
+      <div class="step-card">
+        <p class="t-subtitle mb-16">Invest in the company</p>
+        <ul class="bullet-list">
+          <li>Product companies at scale</li>
+          <li>Preparing for exit or acquisition</li>
+          <li>Multiple founders, no single face</li>
+          <li>Regulated industries</li>
+        </ul>
+      </div>
+      <div class="step-card">
+        <p class="t-subtitle mb-16" style="color: var(--purple);">Do both</p>
+        <ul class="bullet-list">
+          <li>Most cases</li>
+          <li>Make them reinforce each other</li>
+          <li>Founder opens doors, company closes deals</li>
+        </ul>
+      </div>
+      <div class="step-card">
+        <p class="t-subtitle mb-16">Let one go</p>
+        <ul class="bullet-list">
+          <li>Founder brand carrying a dead company brand</li>
+          <li>Company outgrew the founder's involvement</li>
+          <li>Pivot or rebrand required</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 24: SPECTRUM - WHY THIS MATTERS -->
+<div class="slide" data-slide="24">
+  <div class="center max-w-900">
+    <h2 class="t-hero mb-40">The answer to this question changes <span class="purple">everything.</span></h2>
+    <div class="grid-3" style="max-width: 800px; margin: 0 auto;">
+      <div class="glass glass--sm center"><p class="t-body">Website</p></div>
+      <div class="glass glass--sm center"><p class="t-body">Content strategy</p></div>
+      <div class="glass glass--sm center"><p class="t-body">Pricing</p></div>
+      <div class="glass glass--sm center"><p class="t-body">Hiring</p></div>
+      <div class="glass glass--sm center"><p class="t-body">Exit plan</p></div>
+      <div class="glass glass--sm center"><p class="t-body">Everything</p></div>
+    </div>
+    <p class="t-body gray mt-40">Now that you know where you sit... let's talk about how to differentiate.</p>
+  </div>
+</div>
+
+<!-- =============================================
+     PART 3: THE FOCUS STAR
+     ============================================= -->
+
+<!-- SLIDE 25: FOCUS STAR INTRO -->
+<div class="slide slide--purple" data-slide="25">
+  <div class="center max-w-900">
+    <div class="t-label" style="color: rgba(255,255,255,0.7); margin-bottom: 30px;">THE FRAMEWORK</div>
+    <h2 class="t-display">The Focus Star</h2>
+    <p class="t-body mt-30" style="opacity: 0.85;">Five dimensions of brand differentiation.</p>
+  </div>
+</div>
+
+<!-- SLIDE 26: FOCUS STAR FRAMEWORK -->
+<div class="slide slide--dark-edge" data-slide="26">
+  <div class="center max-w-1100 w-full">
+    <div class="part-label">THE FOCUS STAR</div>
+    <h2 class="t-title mb-54">Five attributes. One <span class="purple">position.</span></h2>
+    <div class="grid-5">
+      <div class="glass glass--sm center" style="padding-top: 30px; padding-bottom: 30px;">
+        <p class="t-subtitle mb-16" style="color: var(--purple);">Audience</p>
+        <p class="t-small gray">Who you serve</p>
+      </div>
+      <div class="glass glass--sm center" style="padding-top: 30px; padding-bottom: 30px;">
+        <p class="t-subtitle mb-16" style="color: var(--purple);">Purpose</p>
+        <p class="t-small gray">Why you exist</p>
+      </div>
+      <div class="glass glass--sm center" style="padding-top: 30px; padding-bottom: 30px;">
+        <p class="t-subtitle mb-16" style="color: var(--purple);">DNA</p>
+        <p class="t-small gray">What you're about</p>
+      </div>
+      <div class="glass glass--sm center" style="padding-top: 30px; padding-bottom: 30px;">
+        <p class="t-subtitle mb-16" style="color: var(--purple);">Personality</p>
+        <p class="t-small gray">How you show up</p>
+      </div>
+      <div class="glass glass--sm center" style="padding-top: 30px; padding-bottom: 30px;">
+        <p class="t-subtitle mb-16" style="color: var(--purple);">Product</p>
+        <p class="t-small gray">What you offer</p>
+      </div>
+    </div>
+    <p class="t-body mt-40" style="color: var(--light-gray); max-width: 700px; margin-left: auto; margin-right: auto;">The goal is not to differentiate on just one. Find the right <strong>combination</strong> of all five. Most companies don't have a differentiated product... and that's actually most cases.</p>
+  </div>
+</div>
+
+<!-- SLIDE 27: PRODUCT - WD-40 -->
+<div class="slide slide--left-align slide--dark-edge" data-slide="27">
+  <span class="num">01</span>
+  <div class="max-w-1000">
+    <div class="part-label">FOCUS STAR / PRODUCT</div>
+    <h2 class="t-title mb-30">WD-40. Q-Tips. <span class="purple">Kleenex.</span></h2>
+    <p class="t-body mb-22" style="max-width: 700px;">Brands that became the product category itself.</p>
+    <p class="t-body gray" style="max-width: 700px;">Requires monopoly-level marketing power and legacy. Nearly impossible for startups, especially in services.</p>
+    <div class="glass mt-40" style="max-width: 600px;">
+      <p class="t-body">If your only differentiation is rational product features (price, speed, customer service), those are <strong>table stakes</strong>. When someone does the same thing cheaper, there's no loyalty.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 28: PERSONALITY - ONE LOGISTICS -->
+<div class="slide slide--left-align slide--dark-edge" data-slide="28">
+  <span class="num">02</span>
+  <div class="max-w-1000">
+    <div class="part-label">FOCUS STAR / PERSONALITY</div>
+    <h2 class="t-title mb-30">ONE <span class="purple">Logistics.</span></h2>
+    <p class="t-body mb-22" style="max-width: 700px;">Flashy pink containers and boats. Looks wildly different from every other logistics company.</p>
+    <p class="t-body mb-22" style="max-width: 700px; color: var(--light-gray);">But nothing behind it. Not great pricing, not special to work with. No purpose. No substance.</p>
+    <div class="glass mt-40" style="max-width: 600px;">
+      <p class="t-body"><span class="purple">Personality alone is not enough.</span> Looking different without being different is a house of cards.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 29: DNA - RED BULL / STARBUCKS -->
+<div class="slide slide--left-align slide--dark-edge" data-slide="29">
+  <span class="num">03</span>
+  <div class="max-w-1100">
+    <div class="part-label">FOCUS STAR / DNA</div>
+    <h2 class="t-title mb-40">The one thing you're fundamentally <span class="purple">about.</span></h2>
+    <div class="grid-2" style="gap: 30px;">
+      <div class="glass">
+        <p class="t-subtitle mb-16" style="color: var(--purple);">Red Bull</p>
+        <p class="t-body mb-16">DNA = Adrenaline culture.</p>
+        <p class="t-body gray">Every ad has nothing to do with the product. Sports cars, planes, extreme sports. They barely mention the drink. The product is almost irrelevant.</p>
+      </div>
+      <div class="glass">
+        <p class="t-subtitle mb-16" style="color: var(--purple);">Starbucks</p>
+        <p class="t-body mb-16">DNA = Convenience.</p>
+        <p class="t-body gray">App design, name-calling system, order-ready efficiency. Not about the coffee (which isn't that good). Just convenience everywhere.</p>
+      </div>
+    </div>
+    <p class="t-body mt-30 gray" style="max-width: 700px;">Should be expressible in one word. Companies with 8-10 values on their website are saying nothing.</p>
+  </div>
+</div>
+
+<!-- SLIDE 30: PURPOSE - TOMS -->
+<div class="slide slide--left-align slide--dark-edge" data-slide="30">
+  <span class="num">04</span>
+  <div class="max-w-1000">
+    <div class="part-label">FOCUS STAR / PURPOSE</div>
+    <h2 class="t-title mb-30">TOMS<span class="purple">.</span></h2>
+    <p class="t-body mb-22" style="max-width: 700px;">One-for-one: buy a pair, give a pair to a child in need.</p>
+    <p class="t-body mb-22" style="max-width: 700px; color: var(--light-gray);">Product isn't differentiated. Design isn't great. No clear DNA.</p>
+    <p class="t-body mb-30" style="max-width: 700px;">But people joined a <span class="purple">movement</span>, not a product company.</p>
+    <div class="glass" style="max-width: 600px;">
+      <p class="t-body">Their slogan isn't a tagline. It's an identity: <strong>"One for One."</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 31: AUDIENCE - RAD COFFEE -->
+<div class="slide slide--left-align slide--dark-edge" data-slide="31">
+  <span class="num">05</span>
+  <div class="max-w-1100">
+    <div class="part-label">FOCUS STAR / AUDIENCE</div>
+    <h2 class="t-title mb-30">Rad <span class="purple">Coffee.</span></h2>
+    <div class="grid-2" style="gap: 40px;">
+      <div>
+        <p class="t-body mb-22">Small punk rock coffee shop in Upland, CA. 10-person capacity, no chairs, always a line.</p>
+        <p class="t-body mb-22"><span class="purple">140K Instagram followers</span> for 3 locations.</p>
+        <p class="t-body gray">Full of obscure punk band posters from the 70s-90s. Fans drive far because it's their place.</p>
+      </div>
+      <div class="glass">
+        <p class="t-subtitle mb-22">The Four Brand Levels</p>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="padding: 12px 16px; background: rgba(255,255,255,0.02); border-left: 2px solid var(--gray);">
+            <p class="t-small gray">Level 1: Product focus</p>
+          </div>
+          <div style="padding: 12px 16px; background: rgba(255,255,255,0.03); border-left: 2px solid var(--gray);">
+            <p class="t-small" style="color: var(--light-gray);">Level 2: Benefits</p>
+          </div>
+          <div style="padding: 12px 16px; background: rgba(255,255,255,0.04); border-left: 2px solid var(--light-gray);">
+            <p class="t-small">Level 3: Emotion</p>
+          </div>
+          <div style="padding: 12px 16px; background: rgba(90,92,249,0.1); border-left: 3px solid var(--purple);">
+            <p class="t-body" style="font-weight: 500; color: var(--purple);">Level 4: Self-identification</p>
+            <p class="t-small gray">"I choose this because I AM..."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =============================================
+     HALO EFFECT + TRIANGLE
+     ============================================= -->
+
+<!-- SLIDE 32: HALO EFFECT -->
+<div class="slide slide--left-align slide--dark-edge" data-slide="32">
+  <div class="max-w-1100">
+    <div class="part-label">THE HALO EFFECT</div>
+    <h2 class="t-title mb-40">Credibility in one area makes people assume you're good at <span class="purple">everything.</span></h2>
+    <div class="grid-3">
+      <div class="glass glass--sm">
+        <p class="t-subtitle mb-16" style="color: var(--purple);">Apple</p>
+        <p class="t-small gray">Computer company makes music players, then phones. It works because brand credibility.</p>
+      </div>
+      <div class="glass glass--sm">
+        <p class="t-subtitle mb-16">Microsoft</p>
+        <p class="t-small gray">Makes a music player. Nobody wants it. No halo effect outside computers.</p>
+      </div>
+      <div class="glass glass--sm">
+        <p class="t-subtitle mb-16" style="color: var(--purple);">Celebrities</p>
+        <p class="t-small gray">Actor plays 3 guitar chords, everyone loses their minds. Athletes get asked about geopolitics.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 33: THE TRIANGLE -->
+<div class="slide slide--left-align slide--dark-edge" data-slide="33">
+  <div class="max-w-1000">
+    <div class="part-label">NARROWING YOUR AUDIENCE</div>
+    <h2 class="t-title mb-40">The <span class="purple">Triangle.</span></h2>
+    <div style="display: flex; flex-direction: column; gap: 16px; max-width: 700px;">
+      <div style="padding: 22px 30px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); width: 100%;">
+        <p class="t-body gray">"We sell drinks"</p>
+        <p class="t-small gray" style="margin-top: 6px;">Competing with everything. Including free water.</p>
+      </div>
+      <div style="padding: 22px 30px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); width: 80%; margin-left: 10%;">
+        <p class="t-body" style="color: var(--light-gray);">"We sell great coffee"</p>
+        <p class="t-small gray" style="margin-top: 6px;">Competing with every coffee shop.</p>
+      </div>
+      <div style="padding: 22px 30px; background: rgba(90,92,249,0.1); border: 1px solid rgba(90,92,249,0.3); width: 60%; margin-left: 20%;">
+        <p class="t-body" style="color: var(--purple); font-weight: 500;">"Coffee for Pokemon fans"</p>
+        <p class="t-small" style="margin-top: 6px; color: var(--light-gray);">Every fan in 30 miles comes, posts, talks. You grow fast.</p>
+      </div>
+    </div>
+    <p class="t-body gray mt-40">Back to Rad Coffee: their tribe is emo/goth/punk. But the halo effect means non-tribe people come too.</p>
+  </div>
+</div>
+
+<!-- =============================================
+     PART 4: APPLYING THE FOCUS STAR
+     ============================================= -->
+
+<!-- SLIDE 34: HOW ATTRIBUTES WORK TOGETHER -->
+<div class="slide slide--purple" data-slide="34">
+  <div class="center max-w-900">
+    <div class="t-label" style="color: rgba(255,255,255,0.7); margin-bottom: 30px;">APPLYING IT</div>
+    <h2 class="t-display">How the five attributes work together.</h2>
+  </div>
+</div>
+
+<!-- SLIDE 35: WHAT EACH ATTRIBUTE INFORMS -->
+<div class="slide slide--left-align slide--dark-edge" data-slide="35">
+  <div class="max-w-1100 w-full">
+    <div class="part-label">FOCUS STAR IN ACTION</div>
+    <h2 class="t-title mb-40">Each attribute <span class="purple">informs</span> real decisions.</h2>
+    <div class="grid-3" style="gap: 22px;">
+      <div class="step-card">
+        <p class="t-subtitle mb-16" style="color: var(--purple);">Audience</p>
+        <p class="t-small gray">Brand identity, product adaptation, content targeting, platform choices</p>
+      </div>
+      <div class="step-card">
+        <p class="t-subtitle mb-16" style="color: var(--purple);">DNA</p>
+        <p class="t-small gray">Content filter, UX alignment, delightful details. "Would Red Bull show a guy on a couch? No."</p>
+      </div>
+      <div class="step-card">
+        <p class="t-subtitle mb-16" style="color: var(--purple);">Personality</p>
+        <p class="t-small gray">Visual language, colors, typography, photography style, tone of voice</p>
+      </div>
+      <div class="step-card">
+        <p class="t-subtitle mb-16" style="color: var(--purple);">Purpose</p>
+        <p class="t-small gray">Vision, recruitment, culture, partnerships, pro bono, "why should people join?"</p>
+      </div>
+      <div class="step-card">
+        <p class="t-subtitle mb-16" style="color: var(--purple);">Product</p>
+        <p class="t-small gray">Innovation direction, feature priorities, usability, design decisions</p>
+      </div>
+      <div class="step-card">
+        <p class="t-subtitle mb-16">Consistency</p>
+        <p class="t-small gray">Apply everything everywhere. Adapt to mediums, but keep promise, identity, and audience constant.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 36: APPLE HOLD MUSIC EXAMPLE -->
+<div class="slide slide--dark-edge" data-slide="36">
+  <div class="center max-w-900">
+    <div class="part-label">DELIGHTFUL DETAILS</div>
+    <h2 class="t-title mb-40">Apple lets you choose your <span class="purple">hold music.</span></h2>
+    <p class="t-body mb-22" style="max-width: 600px; margin: 0 auto;">Simple. Cheap to implement. Completely aligned with their UX-first DNA.</p>
+    <p class="t-body gray" style="max-width: 600px; margin: 0 auto;">Pre-purchase, purchase, post-purchase. Every touchpoint is an opportunity to reinforce the brand. Top to bottom of the funnel.</p>
+  </div>
+</div>
+
+<!-- =============================================
+     CLOSING
+     ============================================= -->
+
+<!-- SLIDE 37: SETH GODIN REPRISE -->
+<div class="slide" data-slide="37">
+  <div class="center max-w-900">
+    <div class="quote-mark" style="position: relative; top: 0; left: 0; margin-bottom: -20px;">"</div>
+    <p class="t-hero" style="margin-bottom: 40px;">Every interaction in any form, is <span class="purple">branding.</span></p>
+    <p class="t-body mt-40" style="max-width: 600px; margin-left: auto; margin-right: auto; color: var(--light-gray);">The way I'm talking to you right now... my accent, my mistakes, my vulnerability... this is my brand, whether I choose to brand it on purpose or not.</p>
+  </div>
+</div>
+
+<!-- SLIDE 38: AI / AUTHENTICITY (NEW) -->
+<div class="slide slide--darker slide--dark-edge" data-slide="38">
+  <div class="center max-w-900">
+    <div class="part-label">2026 AND BEYOND</div>
+    <h2 class="t-hero mb-40">In a world where AI can mimic everything except <span class="purple">authenticity</span>...</h2>
+    <p class="t-section" style="color: var(--light-gray);">Your identity becomes your biggest competitive asset.</p>
+  </div>
+</div>
+
+<!-- SLIDE 39: STEVE FORBES -->
+<div class="slide" data-slide="39">
+  <div class="center max-w-900">
+    <div class="quote-mark" style="position: relative; top: 0; left: 0; margin-bottom: -20px;">"</div>
+    <p class="t-hero" style="margin-bottom: 40px;">Your brand is the single most important investment you can make in your <span class="purple">business.</span></p>
+    <p class="t-small gray">Steve Forbes</p>
+    <p class="t-body mt-40 gray">Because it compounds over time.</p>
+  </div>
+</div>
+
+<!-- SLIDE 40: CLOSING STATEMENT -->
+<div class="slide slide--purple" data-slide="40">
+  <div class="center max-w-900">
+    <h2 class="t-display" style="margin-bottom: 30px;">Your brand is already being built.</h2>
+    <div class="divider" style="margin: 30px auto; background: var(--white);"></div>
+    <p class="t-hero" style="opacity: 0.85;">It's up to you to take control of it.</p>
+  </div>
+</div>
+
+<!-- SLIDE 41: CTA (NEW) -->
+<div class="slide slide--dark-edge" data-slide="41">
+  <div class="center max-w-900">
+    <div class="part-label">WHAT'S NEXT</div>
+    <h2 class="t-title mb-40">Not sure where you sit on the spectrum<span class="purple">?</span></h2>
+    <div class="glass" style="max-width: 600px; margin: 0 auto;">
+      <p class="t-body mb-30">I do a free 20-minute call. No pitch. Just clarity on whether now is the right time to figure this out.</p>
+      <div style="display: inline-block; background: var(--purple); padding: 16px 40px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.04em;">BOOK A DISCOVERY CALL</div>
+    </div>
+    <div style="margin-top: 54px; display: flex; flex-direction: column; align-items: center; gap: 12px;">
+      <p class="t-section">Florian Philippe</p>
+      <p class="t-body gray">florianp.com</p>
+      <p class="t-small gray">Brand Therapist</p>
+    </div>
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<script>
+  // ============================================
+  // SLIDE NAVIGATION
+  // ============================================
+
+  const slides = document.querySelectorAll('.slide');
+  const progress = document.getElementById('progress');
+  const counter = document.getElementById('counter');
+  let current = 0;
+
+  function goTo(n) {
+    if (n < 0 || n >= slides.length) return;
+    slides.forEach(s => s.classList.remove('active'));
+    current = n;
+    slides[current].classList.add('active');
+    updateUI();
+  }
+
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  function updateUI() {
+    const pct = ((current + 1) / slides.length) * 100;
+    progress.style.width = pct + '%';
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+      e.preventDefault();
+      next();
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault();
+      prev();
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      goTo(0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      goTo(slides.length - 1);
+    }
+  });
+
+  // Click navigation (left third = prev, right two-thirds = next)
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('a, button')) return;
+    const x = e.clientX / window.innerWidth;
+    if (x < 0.33) prev();
+    else next();
+  });
+
+  // Touch swipe
+  let touchStartX = 0;
+  document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', (e) => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) next();
+      else prev();
+    }
+  });
+
+  // Init
+  updateUI();
+</script>
+</body>
+</html>
